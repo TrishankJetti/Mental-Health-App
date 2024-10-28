@@ -59,6 +59,12 @@ namespace Gmail_Test.Areas.Identity.Pages.Account.Manage
             [Phone]
             [Display(Name = "Phone number")]
             public string PhoneNumber { get; set; }
+
+            [Display(Name = "First Name")]
+            public string FirstName { get; set; }
+
+            [Display(Name = "Last Name")]
+            public string LastName { get; set; }
         }
 
         private async Task LoadAsync(Gmail_TestUser user)
@@ -70,20 +76,11 @@ namespace Gmail_Test.Areas.Identity.Pages.Account.Manage
 
             Input = new InputModel
             {
-                PhoneNumber = phoneNumber
+                PhoneNumber = phoneNumber,
+                FirstName = user.FirstName,  // assuming FirstName property exists on Gmail_TestUser
+                LastName = user.LastName,
+              
             };
-        }
-
-        public async Task<IActionResult> OnGetAsync()
-        {
-            var user = await _userManager.GetUserAsync(User);
-            if (user == null)
-            {
-                return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
-            }
-
-            await LoadAsync(user);
-            return Page();
         }
 
         public async Task<IActionResult> OnPostAsync()
@@ -109,6 +106,18 @@ namespace Gmail_Test.Areas.Identity.Pages.Account.Manage
                     StatusMessage = "Unexpected error when trying to set phone number.";
                     return RedirectToPage();
                 }
+            }
+
+            // Update custom fields
+            user.FirstName = Input.FirstName;
+            user.LastName = Input.LastName;
+           
+
+            var updateResult = await _userManager.UpdateAsync(user);
+            if (!updateResult.Succeeded)
+            {
+                StatusMessage = "Unexpected error when updating profile.";
+                return RedirectToPage();
             }
 
             await _signInManager.RefreshSignInAsync(user);

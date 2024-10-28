@@ -9,5 +9,7 @@ namespace Gmail_Test.Areas.Identity.Data;
 // Add profile data for application users by adding properties to the Gmail_TestUser class
 public class Gmail_TestUser : IdentityUser
 {
+    public string FirstName { get; set; }
+    public string LastName { get; set; }
 }
 

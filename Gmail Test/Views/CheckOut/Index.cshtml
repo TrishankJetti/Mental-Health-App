@@ -1,0 +1,50 @@
+﻿@model List<ProductEntity>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+
+<h2>Our Products</h2>
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+}
+
+<form asp-action="CheckOut" method="post">
+    <table class="table table-responsive table-light table-hover" style="width:100%">
+        <tr>
+            <th>Select</th>
+            <th>Name</th>
+            <th>Image</th>
+            <th>Price Per Item</th>
+            <th>Quantity</th>
+            <th>Total Price</th>
+        </tr>
+
+        @for (int i = 0; i < Model.Count; i++)
+        {
+            <tr>
+                <td>
+                    <input type="checkbox" asp-for="@Model[i].IsSelected" />
+                    <input type="hidden" asp-for="@Model[i].Product" />
+                    <input type="hidden" asp-for="@Model[i].Rate" />
+                    <input type="hidden" asp-for="@Model[i].ImagePath" />
+                </td>
+                <td>@Model[i].Product</td>
+                <td><img src="@Model[i].ImagePath" style="width:200px; height:200px;" /></td>
+                <td>$@Model[i].Rate</td>
+                <td>
+                    <input type="number" asp-for="@Model[i].Quantity" min="1" value="@Model[i].Quantity" style="width:60px;"
+                           onchange="updateTotal(@i)" />
+                </td>
+                <td>
+                    <span id="total-@i">$@(Model[i].Rate * Model[i].Quantity)</span>
+                </td>
+            </tr>
+        }
+    </table>
+    <button type="submit" class="btn btn-success btn-lg">
+        <i class="fa-solid fa-dollar-sign fa-bounce"></i> Proceed to Checkout?
+    </button>
+</form>
+
+

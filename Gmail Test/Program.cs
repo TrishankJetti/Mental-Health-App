@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Gmail_Test.Data;
 using Gmail_Test.Areas.Identity.Data;
 using System.Configuration;
+using Stripe;
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("Gmail_TestContextConnection") ?? throw new InvalidOperationException("Connection string 'Gmail_TestContextConnection' not found.");
 
@@ -34,6 +35,8 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+
+StripeConfiguration.ApiKey = builder.Configuration.GetSection("Stripe:SecretKey").Get<string>();
 
 app.UseAuthorization();
 
