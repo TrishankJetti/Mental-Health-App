@@ -94,8 +94,8 @@ namespace Gmail_Test.Controllers
                 SuccessUrl = domain + "/CheckOut/OrderConfirmation",
                 CancelUrl = domain + "/CheckOut/Cancelled",
                 LineItems = new List<SessionLineItemOptions>(),
-                Mode = "payment",
-                CustomerEmail = "trishankjetti@gmail.com",
+                Mode = "payment"
+            
             };
 
             foreach (var item in selectedItems)

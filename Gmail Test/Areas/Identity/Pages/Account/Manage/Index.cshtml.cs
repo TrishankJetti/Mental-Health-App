@@ -52,19 +52,23 @@ namespace Gmail_Test.Areas.Identity.Pages.Account.Manage
         /// </summary>
         public class InputModel
         {
-            /// <summary>
-            ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-            ///     directly from your code. This API may change or be removed in future releases.
-            /// </summary>
-            [Phone]
-            [Display(Name = "Phone number")]
-            public string PhoneNumber { get; set; }
+            
+            [Display(Name = "Date of Birth")]
+            public DateTime DateOfBirth { get; set; }
 
+           
+            [RegularExpression(@"^[A-Z][a-zA-Z\s]*$", ErrorMessage = "First Name must start with a capital letter and contain only letters.")]
             [Display(Name = "First Name")]
             public string FirstName { get; set; }
 
+            
+            [RegularExpression(@"^[A-Z][a-zA-Z\s]*$", ErrorMessage = "Last Name must start with a capital letter and contain only letters.")]
             [Display(Name = "Last Name")]
             public string LastName { get; set; }
+
+            [Phone(ErrorMessage = "Invalid phone number format.")]
+            [Display(Name = "Phone Number")]
+            public string PhoneNumber { get; set; }
         }
 
         private async Task LoadAsync(Gmail_TestUser user)
@@ -77,9 +81,11 @@ namespace Gmail_Test.Areas.Identity.Pages.Account.Manage
             Input = new InputModel
             {
                 PhoneNumber = phoneNumber,
-                FirstName = user.FirstName,  // assuming FirstName property exists on Gmail_TestUser
+                FirstName = user.FirstName,
                 LastName = user.LastName,
-              
+                DateOfBirth = user.DateOfBirth.HasValue
+                    ? user.DateOfBirth.Value.ToDateTime(TimeOnly.MinValue) // Convert DateOnly to DateTime
+                    : DateTime.Now // Use a default DateTime if null
             };
         }
 
@@ -111,7 +117,7 @@ namespace Gmail_Test.Areas.Identity.Pages.Account.Manage
             // Update custom fields
             user.FirstName = Input.FirstName;
             user.LastName = Input.LastName;
-           
+            user.DateOfBirth = DateOnly.FromDateTime(Input.DateOfBirth); // Convert DateTime to DateOnly
 
             var updateResult = await _userManager.UpdateAsync(user);
             if (!updateResult.Succeeded)
@@ -124,5 +130,7 @@ namespace Gmail_Test.Areas.Identity.Pages.Account.Manage
             StatusMessage = "Your profile has been updated";
             return RedirectToPage();
         }
+
+
     }
 }
