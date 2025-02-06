@@ -1,4 +1,12 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity
+@using Gmail_Test.Areas.Identity.Data
+@using Gmail_Test.Models
+
+@inject SignInManager<CustomUser> SignInManager
+@inject UserManager<CustomUser> UserManager
+
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -8,6 +16,112 @@
    
 </head>
 <body>
+    @if (SignInManager.IsSignedIn(User))
+    {
+
+        // Retrieve the current user
+        var currentUser = await UserManager.GetUserAsync(User);
+        var firstName = currentUser?.FirstName ?? "User";
+
+        <br />
+        <h1 style="font-size:65px; text-align:center; color:#6b44b3" class="tracking-in-expand">
+            Welcome, @firstName!
+        </h1>
+
+    }
+    else
+    {
+        <h1 style="font-size:65px; text-align:center;" class="tracking-in-expand">
+            Welcome, Guest!
+        </h1>
+    }
+    <hr />
+    <div style="display: flex; justify-content: center; margin-top: 20px;">
+        <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel" style="width: 600px;">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src="~/img/Group 3 (2).png" class="d-block w-100" alt="First slide" />
+                </div>
+                <div class="carousel-item">
+                    <img class="d-block w-100" src="/img/Group 5 (1).png"  alt="Second slide">
+                </div>
+                <div class="carousel-item">
+                    <img class="d-block w-100" src="..."  alt="Third slide">
+                </div>
+            </div>
+            <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true" style="background-color: rgba(0, 0, 0, 0.5); border-radius: 50%;"></span>
+                <span class="visually-hidden">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true" style="background-color: rgba(0, 0, 0, 0.5); border-radius: 50%;"></span>
+                <span class="visually-hidden">Next</span>
+            </a>
+        </div>
+    </div>
+
+
+
+   
+
     
+
+
+
+
+
+
 </body>
 </html>
+
+
+
+
+
+
+
+<!-- Text animation for homepage.-->
+<style>
+    .tracking-in-expand {
+        -webkit-animation: tracking-in-expand 0.7s cubic-bezier(0.215, 0.610, 0.355, 1.000) both;
+        animation: tracking-in-expand 0.7s 2s cubic-bezier(0.215, 0.610, 0.355, 1.000) forwards;  /*Delayed aniamtion for 2 seconds so that the animation will show after laoder and not play during it.*/
+    }
+
+
+@@-webkit-keyframes tracking-in-expand {
+  0% {
+    letter-spacing: -0.5em;
+    opacity: 0;
+  }
+  40% {
+    opacity: 0.6;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@@keyframes tracking-in-expand {
+  0% {
+    letter-spacing: -0.5em;
+    opacity: 0;
+  }
+  40% {
+    opacity: 0.6;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+    html, body {
+        overflow-y: scroll; /* Only vertical scrolling */
+    }
+
+
+
+   
+
+
+
+
+</style>

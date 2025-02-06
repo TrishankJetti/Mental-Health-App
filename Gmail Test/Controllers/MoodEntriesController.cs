@@ -15,9 +15,9 @@ namespace Gmail_Test.Controllers
     [Authorize]
     public class MoodEntriesController : Controller
     {
-        private readonly Gmail_TestContext _context;
+        private readonly MentalHealthContext _context;
 
-        public MoodEntriesController(Gmail_TestContext context)
+        public MoodEntriesController(MentalHealthContext context)
         {
             _context = context;
         }
@@ -25,7 +25,7 @@ namespace Gmail_Test.Controllers
         // GET: MoodEntries
         public async Task<IActionResult> Index()
         {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier); //Initilizes the userID variable by grabbing the Identity Claim : 
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier); //Initilizes the userID variable by grabbing the Identity Claim
                                                                          //Name Identifier from the Identity User.
             var userMoodEntries = _context.MoodEntries.Where(m => m.UserId == userId);
             return View(await userMoodEntries.ToListAsync());
@@ -56,22 +56,35 @@ namespace Gmail_Test.Controllers
             return View();
         }
 
-        // POST: MoodEntries/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,UserId,Mood,Date,Notes")] MoodEntry moodEntry)
         {
             if (!ModelState.IsValid)
             {
-                moodEntry.UserId = User.FindFirstValue(ClaimTypes.NameIdentifier); //If the record is a valid record it will make sure to set the user ID to the userID variable defined above.
+                // Set UserId
+                moodEntry.UserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+                // Check if the mood is "Stressed", "Sad", or "Angry"
+                if (moodEntry.Mood == Mood.Stressed || moodEntry.Mood == Mood.Sad || moodEntry.Mood == Mood.Angry)
+                {
+                    // Store an alert message in TempData to show on the next page
+                    TempData["MoodAlert"] = "It looks like you're feeling down. Remember, it's okay to ask for help!";
+                }
+
+
                 _context.Add(moodEntry);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index)); // Redirect after saving entry
             }
-            return View(moodEntry);
+
+            return View(moodEntry); // If model is invalid, return the current view
         }
+
+
+
+
+
 
         // GET: MoodEntries/Edit/5
         public async Task<IActionResult> Edit(int? id)

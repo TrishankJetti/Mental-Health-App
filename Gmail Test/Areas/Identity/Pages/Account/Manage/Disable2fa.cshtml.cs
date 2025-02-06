@@ -14,11 +14,11 @@ namespace Gmail_Test.Areas.Identity.Pages.Account.Manage
 {
     public class Disable2faModel : PageModel
     {
-        private readonly UserManager<Gmail_TestUser> _userManager;
+        private readonly UserManager<CustomUser> _userManager;
         private readonly ILogger<Disable2faModel> _logger;
 
         public Disable2faModel(
-            UserManager<Gmail_TestUser> userManager,
+            UserManager<CustomUser> userManager,
             ILogger<Disable2faModel> logger)
         {
             _userManager = userManager;

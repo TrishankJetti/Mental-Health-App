@@ -25,6 +25,7 @@ namespace Gmail_Test.Models
         [DataType(DataType.Date)]
         public DateTime Date { get; set; } = DateTime.Now; // Auto-sets date
 
+
         [StringLength(200)]
         public string Notes { get; set; } // Optional notes
     }

@@ -1,6 +1,11 @@
-html {
-  font-size: 14px;
+
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+body {
+    font-family: 'Poppins', sans-serif;
 }
+
 
 @media (min-width: 768px) {
   html {
@@ -26,7 +31,7 @@ html {
     left: 0;
     width: 100%;
     height: 100%;
-    background: #333333; /* Semi-transparent white */
+    background: linear-gradient(135deg, #c9a6f5, #6b44b3);
     display: flex;
     flex-direction: column; /* Stack loader and text vertically */
     justify-content: center;
@@ -37,21 +42,21 @@ html {
 
 /* Loader spinner */
 .loader {
-  border: 8px solid #77bfa3;
-  border-top: 8px solid #333333;
-  border-radius: 50%;
-  width: 60px;
-  height: 60px;
-  animation: spin 1.3s linear infinite;
-  margin-bottom: 20px; /* Space between spinner and text */
+    border: 8px solid rgba(255, 255, 255, 0.3);
+    border-top: 8px solid white;
+    border-radius: 50%;
+    width: 600px;
+    height: 600px;
+    animation: spin 1.3s linear infinite;
+    margin-bottom: 20px; /* Space between spinner and text */
 }
 
 /* Text styling */
 .loader-text {
-  color: #333333;
-  font-size: 1.2rem;
-  font-family: Arial, sans-serif;
-  text-align: center;
+    position: absolute;
+    color: white;
+    font-size: 30px;
+    text-align: center;
 }
 
 /* Spin animation */
@@ -65,3 +70,15 @@ html {
   0%, 70% { opacity: 1; }
   100% { opacity: 0; visibility: hidden; }
 }
+
+
+
+.carousel {
+    max-width: 400px; /* Adjust width as needed */
+    margin: auto; /* Centers the carousel */
+}
+
+    .carousel img {
+        height: 250px; /* Adjust height as needed */
+        object-fit: cover; /* Ensures images fit well */
+    }

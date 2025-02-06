@@ -14,12 +14,12 @@ namespace Gmail_Test.Areas.Identity.Pages.Account.Manage
 {
     public class TwoFactorAuthenticationModel : PageModel
     {
-        private readonly UserManager<Gmail_TestUser> _userManager;
-        private readonly SignInManager<Gmail_TestUser> _signInManager;
+        private readonly UserManager<CustomUser> _userManager;
+        private readonly SignInManager<CustomUser> _signInManager;
         private readonly ILogger<TwoFactorAuthenticationModel> _logger;
 
         public TwoFactorAuthenticationModel(
-            UserManager<Gmail_TestUser> userManager, SignInManager<Gmail_TestUser> signInManager, ILogger<TwoFactorAuthenticationModel> logger)
+            UserManager<CustomUser> userManager, SignInManager<CustomUser> signInManager, ILogger<TwoFactorAuthenticationModel> logger)
         {
             _userManager = userManager;
             _signInManager = signInManager;

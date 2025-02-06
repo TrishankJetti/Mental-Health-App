@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Gmail_Test.Migrations
 {
-    [DbContext(typeof(Gmail_TestContext))]
+    [DbContext(typeof(MentalHealthContext))]
     partial class Gmail_TestContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

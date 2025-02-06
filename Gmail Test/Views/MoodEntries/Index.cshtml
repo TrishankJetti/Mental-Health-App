@@ -4,17 +4,35 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+@if (TempData["MoodAlert"] != null)
+{
+    <div class="alert alert-warning">
+        @TempData["MoodAlert"]
+    </div>
+}
+else
+{
+    <div class="alert alert-success" style="text-align:center">Seems like you're doing fine! Good job!</div>
+}
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
+
+<h1 style="text-align: center; color:#6b44b3" class="tracking-in-expand">Your Mood Entries</h1>
+
+<!--Creation button-->
+<a asp-controller="MoodEntries" asp-action="Create"
+   class="btn-success"
+   style="border-radius: 100%; background-color: #6b44b3; font-size: 90px;
+           display: flex; justify-content: center; align-items: center;
+           width: 120px; height: 120px; border: none; text-decoration: none; color: white;">
+    +
+</a>
+
+<hr />
+
+<table class="table table-hover">
+    
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.UserId)
-            </th>
             <th>
                 @Html.DisplayNameFor(model => model.Mood)
             </th>
@@ -29,10 +47,8 @@
     </thead>
     <tbody>
 @foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.UserId)
-            </td>
+            <tr>
+            
             <td>
                 @Html.DisplayFor(modelItem => item.Mood)
             </td>
@@ -45,9 +61,49 @@
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                <a asp-action="Delete" asp-route-id="@item.Id">Scrap Note</a>
             </td>
         </tr>
 }
     </tbody>
 </table>
+
+
+            <style>
+
+    .tracking-in-expand {
+        -webkit-animation: tracking-in-expand 0.7s cubic-bezier(0.215, 0.610, 0.355, 1.000) both;
+        animation: tracking-in-expand 0.7s 2s cubic-bezier(0.215, 0.610, 0.355, 1.000) both;
+    }
+   
+
+
+@@-webkit-keyframes tracking-in-expand {
+  0% {
+    letter-spacing: -0.5em;
+    opacity: 0;
+  }
+  40% {
+    opacity: 0.6;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@@keyframes tracking-in-expand {
+  0% {
+    letter-spacing: -0.5em;
+    opacity: 0;
+  }
+  40% {
+    opacity: 0.6;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+ 
+
+
+            </style>

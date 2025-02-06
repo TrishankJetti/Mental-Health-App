@@ -18,13 +18,13 @@ namespace Gmail_Test.Areas.Identity.Pages.Account.Manage
 {
     public class EmailModel : PageModel
     {
-        private readonly UserManager<Gmail_TestUser> _userManager;
-        private readonly SignInManager<Gmail_TestUser> _signInManager;
+        private readonly UserManager<CustomUser> _userManager;
+        private readonly SignInManager<CustomUser> _signInManager;
         private readonly IEmailSender _emailSender;
 
         public EmailModel(
-            UserManager<Gmail_TestUser> userManager,
-            SignInManager<Gmail_TestUser> signInManager,
+            UserManager<CustomUser> userManager,
+            SignInManager<CustomUser> signInManager,
             IEmailSender emailSender)
         {
             _userManager = userManager;
@@ -74,7 +74,7 @@ namespace Gmail_Test.Areas.Identity.Pages.Account.Manage
             public string NewEmail { get; set; }
         }
 
-        private async Task LoadAsync(Gmail_TestUser user)
+        private async Task LoadAsync(CustomUser user)
         {
             var email = await _userManager.GetEmailAsync(user);
             Email = email;

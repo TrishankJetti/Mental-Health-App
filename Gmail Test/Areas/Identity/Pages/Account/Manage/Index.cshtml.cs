@@ -15,12 +15,12 @@ namespace Gmail_Test.Areas.Identity.Pages.Account.Manage
 {
     public class IndexModel : PageModel
     {
-        private readonly UserManager<Gmail_TestUser> _userManager;
-        private readonly SignInManager<Gmail_TestUser> _signInManager;
+        private readonly UserManager<CustomUser> _userManager;
+        private readonly SignInManager<CustomUser> _signInManager;
 
         public IndexModel(
-            UserManager<Gmail_TestUser> userManager,
-            SignInManager<Gmail_TestUser> signInManager)
+            UserManager<CustomUser> userManager,
+            SignInManager<CustomUser> signInManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -71,7 +71,7 @@ namespace Gmail_Test.Areas.Identity.Pages.Account.Manage
             public string PhoneNumber { get; set; }
         }
 
-        private async Task LoadAsync(Gmail_TestUser user)
+        private async Task LoadAsync(CustomUser user)
         {
             var userName = await _userManager.GetUserNameAsync(user);
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);

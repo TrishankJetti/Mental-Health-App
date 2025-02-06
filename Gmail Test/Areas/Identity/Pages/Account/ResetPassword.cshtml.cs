@@ -17,9 +17,9 @@ namespace Gmail_Test.Areas.Identity.Pages.Account
 {
     public class ResetPasswordModel : PageModel
     {
-        private readonly UserManager<Gmail_TestUser> _userManager;
+        private readonly UserManager<CustomUser> _userManager;
 
-        public ResetPasswordModel(UserManager<Gmail_TestUser> userManager)
+        public ResetPasswordModel(UserManager<CustomUser> userManager)
         {
             _userManager = userManager;
         }

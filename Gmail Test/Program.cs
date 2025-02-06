@@ -7,9 +7,9 @@ using Stripe;
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("Gmail_TestContextConnection") ?? throw new InvalidOperationException("Connection string 'Gmail_TestContextConnection' not found.");
 
-builder.Services.AddDbContext<Gmail_TestContext>(options => options.UseSqlServer(connectionString));
+builder.Services.AddDbContext<MentalHealthContext>(options => options.UseSqlServer(connectionString));
 
-builder.Services.AddDefaultIdentity<Gmail_TestUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<Gmail_TestContext>();
+builder.Services.AddDefaultIdentity<CustomUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<MentalHealthContext>();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();

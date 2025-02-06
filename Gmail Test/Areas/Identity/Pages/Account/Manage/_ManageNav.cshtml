@@ -1,4 +1,4 @@
-﻿@inject SignInManager<Gmail_TestUser> SignInManager
+﻿@inject SignInManager<CustomUser> SignInManager
 @{
     var hasExternalLogins = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Any();
 }

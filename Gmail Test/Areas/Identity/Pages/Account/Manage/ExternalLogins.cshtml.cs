@@ -17,14 +17,14 @@ namespace Gmail_Test.Areas.Identity.Pages.Account.Manage
 {
     public class ExternalLoginsModel : PageModel
     {
-        private readonly UserManager<Gmail_TestUser> _userManager;
-        private readonly SignInManager<Gmail_TestUser> _signInManager;
-        private readonly IUserStore<Gmail_TestUser> _userStore;
+        private readonly UserManager<CustomUser> _userManager;
+        private readonly SignInManager<CustomUser> _signInManager;
+        private readonly IUserStore<CustomUser> _userStore;
 
         public ExternalLoginsModel(
-            UserManager<Gmail_TestUser> userManager,
-            SignInManager<Gmail_TestUser> signInManager,
-            IUserStore<Gmail_TestUser> userStore)
+            UserManager<CustomUser> userManager,
+            SignInManager<CustomUser> signInManager,
+            IUserStore<CustomUser> userStore)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -70,7 +70,7 @@ namespace Gmail_Test.Areas.Identity.Pages.Account.Manage
                 .ToList();
 
             string passwordHash = null;
-            if (_userStore is IUserPasswordStore<Gmail_TestUser> userPasswordStore)
+            if (_userStore is IUserPasswordStore<CustomUser> userPasswordStore)
             {
                 passwordHash = await userPasswordStore.GetPasswordHashAsync(user, HttpContext.RequestAborted);
             }

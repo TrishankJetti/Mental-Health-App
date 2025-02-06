@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Gmail_Test.Migrations
 {
-    [DbContext(typeof(Gmail_TestContext))]
+    [DbContext(typeof(MentalHealthContext))]
     [Migration("20241224083349_NullableFields")]
     partial class NullableFields
     {

@@ -15,13 +15,13 @@ namespace Gmail_Test.Areas.Identity.Pages.Account
 {
     public class LoginWithRecoveryCodeModel : PageModel
     {
-        private readonly SignInManager<Gmail_TestUser> _signInManager;
-        private readonly UserManager<Gmail_TestUser> _userManager;
+        private readonly SignInManager<CustomUser> _signInManager;
+        private readonly UserManager<CustomUser> _userManager;
         private readonly ILogger<LoginWithRecoveryCodeModel> _logger;
 
         public LoginWithRecoveryCodeModel(
-            SignInManager<Gmail_TestUser> signInManager,
-            UserManager<Gmail_TestUser> userManager,
+            SignInManager<CustomUser> signInManager,
+            UserManager<CustomUser> userManager,
             ILogger<LoginWithRecoveryCodeModel> logger)
         {
             _signInManager = signInManager;

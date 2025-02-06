@@ -17,9 +17,9 @@ namespace Gmail_Test.Areas.Identity.Pages.Account
 {
     public class ConfirmEmailModel : PageModel
     {
-        private readonly UserManager<Gmail_TestUser> _userManager;
+        private readonly UserManager<CustomUser> _userManager;
 
-        public ConfirmEmailModel(UserManager<Gmail_TestUser> userManager)
+        public ConfirmEmailModel(UserManager<CustomUser> userManager)
         {
             _userManager = userManager;
         }

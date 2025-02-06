@@ -16,10 +16,10 @@ namespace Gmail_Test.Areas.Identity.Pages.Account
 {
     public class ConfirmEmailChangeModel : PageModel
     {
-        private readonly UserManager<Gmail_TestUser> _userManager;
-        private readonly SignInManager<Gmail_TestUser> _signInManager;
+        private readonly UserManager<CustomUser> _userManager;
+        private readonly SignInManager<CustomUser> _signInManager;
 
-        public ConfirmEmailChangeModel(UserManager<Gmail_TestUser> userManager, SignInManager<Gmail_TestUser> signInManager)
+        public ConfirmEmailChangeModel(UserManager<CustomUser> userManager, SignInManager<CustomUser> signInManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;

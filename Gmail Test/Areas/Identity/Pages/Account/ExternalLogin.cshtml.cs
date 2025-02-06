@@ -24,17 +24,17 @@ namespace Gmail_Test.Areas.Identity.Pages.Account
     [AllowAnonymous]
     public class ExternalLoginModel : PageModel
     {
-        private readonly SignInManager<Gmail_TestUser> _signInManager;
-        private readonly UserManager<Gmail_TestUser> _userManager;
-        private readonly IUserStore<Gmail_TestUser> _userStore;
-        private readonly IUserEmailStore<Gmail_TestUser> _emailStore;
+        private readonly SignInManager<CustomUser> _signInManager;
+        private readonly UserManager<CustomUser> _userManager;
+        private readonly IUserStore<CustomUser> _userStore;
+        private readonly IUserEmailStore<CustomUser> _emailStore;
         private readonly IEmailSender _emailSender;
         private readonly ILogger<ExternalLoginModel> _logger;
 
         public ExternalLoginModel(
-            SignInManager<Gmail_TestUser> signInManager,
-            UserManager<Gmail_TestUser> userManager,
-            IUserStore<Gmail_TestUser> userStore,
+            SignInManager<CustomUser> signInManager,
+            UserManager<CustomUser> userManager,
+            IUserStore<CustomUser> userStore,
             ILogger<ExternalLoginModel> logger,
             IEmailSender emailSender)
         {
@@ -198,27 +198,27 @@ namespace Gmail_Test.Areas.Identity.Pages.Account
             return Page();
         }
 
-        private Gmail_TestUser CreateUser()
+        private CustomUser CreateUser()
         {
             try
             {
-                return Activator.CreateInstance<Gmail_TestUser>();
+                return Activator.CreateInstance<CustomUser>();
             }
             catch
             {
-                throw new InvalidOperationException($"Can't create an instance of '{nameof(Gmail_TestUser)}'. " +
-                    $"Ensure that '{nameof(Gmail_TestUser)}' is not an abstract class and has a parameterless constructor, or alternatively " +
+                throw new InvalidOperationException($"Can't create an instance of '{nameof(CustomUser)}'. " +
+                    $"Ensure that '{nameof(CustomUser)}' is not an abstract class and has a parameterless constructor, or alternatively " +
                     $"override the external login page in /Areas/Identity/Pages/Account/ExternalLogin.cshtml");
             }
         }
 
-        private IUserEmailStore<Gmail_TestUser> GetEmailStore()
+        private IUserEmailStore<CustomUser> GetEmailStore()
         {
             if (!_userManager.SupportsUserEmail)
             {
                 throw new NotSupportedException("The default UI requires a user store with email support.");
             }
-            return (IUserEmailStore<Gmail_TestUser>)_userStore;
+            return (IUserEmailStore<CustomUser>)_userStore;
         }
     }
 }

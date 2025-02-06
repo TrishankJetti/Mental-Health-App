@@ -17,13 +17,13 @@ namespace Gmail_Test.Areas.Identity.Pages.Account
 {
     public class LoginWith2faModel : PageModel
     {
-        private readonly SignInManager<Gmail_TestUser> _signInManager;
-        private readonly UserManager<Gmail_TestUser> _userManager;
+        private readonly SignInManager<CustomUser> _signInManager;
+        private readonly UserManager<CustomUser> _userManager;
         private readonly ILogger<LoginWith2faModel> _logger;
 
         public LoginWith2faModel(
-            SignInManager<Gmail_TestUser> signInManager,
-            UserManager<Gmail_TestUser> userManager,
+            SignInManager<CustomUser> signInManager,
+            UserManager<CustomUser> userManager,
             ILogger<LoginWith2faModel> logger)
         {
             _signInManager = signInManager;
