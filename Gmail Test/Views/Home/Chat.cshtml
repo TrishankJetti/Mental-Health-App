@@ -1,0 +1,30 @@
+﻿@{
+}
+
+<div class="alert alert-danger text-center">Please Be Respectful When Chatting!</div>
+
+
+<!-- chat.cshtml page in home folder-->
+
+
+        <div class="col-1">User</div>
+        <div class="col-5"><input type="text" id="userInput" /></div>
+  
+  
+        <div class="col-1">Message</div>
+        <div class="col-5"><input type="text" class="w-100" id="messageInput" placeholder="Type Something :)"/></div> <!-- Text-box where you enter text.-->
+        <br/>
+        <input type="button" style="border-radius:6px; background-color:#6b44b3;border:none; font-size:45px; color:white;" id="sendButton" value="Send" />
+    
+
+            <hr />
+    
+    
+      
+            <ul id="messagesList"></ul> <!-- The messages get printed out in lists hence this lsit symbolizes that.-->
+ 
+
+
+
+<script src="~/lib/microsoft/signalr/dist/browser/signalr.js"></script> <!--Javascript link for SignalR Library.-->
+<script src="~/js/chat.js"></script> <!-- link to the JS that makes the buttons communicate with server of SIGNALR and give them functioanlity.-->

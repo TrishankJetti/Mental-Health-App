@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Gmail_Test.Data;
 using Gmail_Test.Areas.Identity.Data;
+using MentalHealthApp.Hubs;
 using System.Configuration;
 using Stripe;
 var builder = WebApplication.CreateBuilder(args);
@@ -10,6 +11,11 @@ var connectionString = builder.Configuration.GetConnectionString("Gmail_TestCont
 builder.Services.AddDbContext<MentalHealthContext>(options => options.UseSqlServer(connectionString));
 
 builder.Services.AddDefaultIdentity<CustomUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<MentalHealthContext>();
+
+
+builder.Services.AddSignalR();
+
+
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -42,6 +48,8 @@ app.UseRouting();
 StripeConfiguration.ApiKey = builder.Configuration.GetSection("Stripe:SecretKey").Get<string>();
 
 app.UseAuthorization();
+
+app.MapHub<ChatHub>("/chathub");
 
 app.MapRazorPages();
 
