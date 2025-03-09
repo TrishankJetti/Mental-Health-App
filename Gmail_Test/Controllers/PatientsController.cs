@@ -12,22 +12,23 @@ using Microsoft.AspNetCore.Authorization;
 namespace MentalHealthApp.Controllers
 {
     [Authorize]
-    public class MoodTypesController : Controller
+    public class PatientsController : Controller
     {
         private readonly MentalHealthContext _context;
 
-        public MoodTypesController(MentalHealthContext context)
+        public PatientsController(MentalHealthContext context)
         {
             _context = context;
         }
 
-        // GET: MoodTypes
+        // GET: Patients
         public async Task<IActionResult> Index()
         {
-            return View(await _context.MoodTypes.ToListAsync());
+            var mentalHealthContext = _context.Patients.Include(p => p.User);
+            return View(await mentalHealthContext.ToListAsync());
         }
 
-        // GET: MoodTypes/Details/5
+        // GET: Patients/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -35,39 +36,42 @@ namespace MentalHealthApp.Controllers
                 return NotFound();
             }
 
-            var moodType = await _context.MoodTypes
-                .FirstOrDefaultAsync(m => m.MoodTypeId == id);
-            if (moodType == null)
+            var patient = await _context.Patients
+                .Include(p => p.User)
+                .FirstOrDefaultAsync(m => m.PatientId == id);
+            if (patient == null)
             {
                 return NotFound();
             }
 
-            return View(moodType);
+            return View(patient);
         }
 
-        // GET: MoodTypes/Create
+        // GET: Patients/Create
         public IActionResult Create()
         {
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id");
             return View();
         }
 
-        // POST: MoodTypes/Create
+        // POST: Patients/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name")] MoodType moodType)
+        public async Task<IActionResult> Create([Bind("PatientId,FirstName,LastName,UserId")] Patient patient)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                _context.Add(moodType);
+                _context.Add(patient);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(moodType);
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", patient.UserId);
+            return View(patient);
         }
 
-        // GET: MoodTypes/Edit/5
+        // GET: Patients/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -75,22 +79,23 @@ namespace MentalHealthApp.Controllers
                 return NotFound();
             }
 
-            var moodType = await _context.MoodTypes.FindAsync(id);
-            if (moodType == null)
+            var patient = await _context.Patients.FindAsync(id);
+            if (patient == null)
             {
                 return NotFound();
             }
-            return View(moodType);
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", patient.UserId);
+            return View(patient);
         }
 
-        // POST: MoodTypes/Edit/5
+        // POST: Patients/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name")] MoodType moodType)
+        public async Task<IActionResult> Edit(int id, [Bind("PatientId,FirstName,LastName,UserId")] Patient patient)
         {
-            if (id != moodType.MoodTypeId)
+            if (id != patient.PatientId)
             {
                 return NotFound();
             }
@@ -99,12 +104,12 @@ namespace MentalHealthApp.Controllers
             {
                 try
                 {
-                    _context.Update(moodType);
+                    _context.Update(patient);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!MoodTypeExists(moodType.MoodTypeId))
+                    if (!PatientExists(patient.PatientId))
                     {
                         return NotFound();
                     }
@@ -115,10 +120,11 @@ namespace MentalHealthApp.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(moodType);
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", patient.UserId);
+            return View(patient);
         }
 
-        // GET: MoodTypes/Delete/5
+        // GET: Patients/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -126,34 +132,35 @@ namespace MentalHealthApp.Controllers
                 return NotFound();
             }
 
-            var moodType = await _context.MoodTypes
-                .FirstOrDefaultAsync(m => m.MoodTypeId == id);
-            if (moodType == null)
+            var patient = await _context.Patients
+                .Include(p => p.User)
+                .FirstOrDefaultAsync(m => m.PatientId == id);
+            if (patient == null)
             {
                 return NotFound();
             }
 
-            return View(moodType);
+            return View(patient);
         }
 
-        // POST: MoodTypes/Delete/5
+        // POST: Patients/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var moodType = await _context.MoodTypes.FindAsync(id);
-            if (moodType != null)
+            var patient = await _context.Patients.FindAsync(id);
+            if (patient != null)
             {
-                _context.MoodTypes.Remove(moodType);
+                _context.Patients.Remove(patient);
             }
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool MoodTypeExists(int id)
+        private bool PatientExists(int id)
         {
-            return _context.MoodTypes.Any(e => e.MoodTypeId == id);
+            return _context.Patients.Any(e => e.PatientId == id);
         }
     }
 }

@@ -5,14 +5,11 @@ namespace MentalHealthApp.Models
 {
     public class MoodType
     {
-        public int Id { get; set; }  // Primary Key
+        [Key]
+        public int MoodTypeId { get; set; }
 
         [Required]
-        public string Name { get; set; } // "Happy", "Sad", etc.
-
-        public string? MoodImage { get; set; } // Image file path
-
-        [NotMapped] // This prevents the file from being stored in the DB
-        public IFormFile? ImageFile { get; set; }
+        [StringLength(50, ErrorMessage = "Mood name cannot exceed 50 characters.")]
+        public string Name { get; set; }
     }
 }

@@ -24,15 +24,10 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
-              <h5 class="card-title">@Html.DisplayFor(modelItem => item.Name)</h5>
-                        @if (item.ImageFile != null)
-                        {
-                            <img src="~/images/@item.ImageFile" alt="@item.Name" class="img-thumbnail" style="max-width: 300px; height: 300px; border-radius: 10px;" />
-                        }
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.MoodTypeId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.MoodTypeId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.MoodTypeId">Delete</a>
             </td>
         </tr>
 }

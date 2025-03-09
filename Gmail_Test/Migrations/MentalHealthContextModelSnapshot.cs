@@ -30,11 +30,30 @@ namespace MentalHealthApp.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AppointmentId"));
 
+                    b.Property<DateTime>("AppointmentDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("DurationMinutes")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Notes")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("PatientId")
                         .HasColumnType("int");
 
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("TherapistId")
                         .HasColumnType("int");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("AppointmentId");
 
@@ -42,7 +61,45 @@ namespace MentalHealthApp.Migrations
 
                     b.HasIndex("TherapistId");
 
-                    b.ToTable("Appointment");
+                    b.ToTable("Appointments");
+
+                    b.HasData(
+                        new
+                        {
+                            AppointmentId = 1,
+                            AppointmentDate = new DateTime(2025, 3, 12, 19, 53, 35, 25, DateTimeKind.Local).AddTicks(3166),
+                            CreatedAt = new DateTime(2025, 3, 9, 9, 53, 35, 25, DateTimeKind.Local).AddTicks(3168),
+                            DurationMinutes = 60,
+                            Notes = "Initial consultation session",
+                            PatientId = 2,
+                            Status = "Scheduled",
+                            TherapistId = 1,
+                            UpdatedAt = new DateTime(2025, 3, 9, 9, 53, 35, 25, DateTimeKind.Local).AddTicks(3170)
+                        },
+                        new
+                        {
+                            AppointmentId = 2,
+                            AppointmentDate = new DateTime(2025, 3, 16, 23, 53, 35, 25, DateTimeKind.Local).AddTicks(3173),
+                            CreatedAt = new DateTime(2025, 3, 9, 9, 53, 35, 25, DateTimeKind.Local).AddTicks(3175),
+                            DurationMinutes = 45,
+                            Notes = "Follow-up session",
+                            PatientId = 3,
+                            Status = "Scheduled",
+                            TherapistId = 1,
+                            UpdatedAt = new DateTime(2025, 3, 9, 9, 53, 35, 25, DateTimeKind.Local).AddTicks(3176)
+                        },
+                        new
+                        {
+                            AppointmentId = 3,
+                            AppointmentDate = new DateTime(2025, 3, 4, 18, 53, 35, 25, DateTimeKind.Local).AddTicks(3179),
+                            CreatedAt = new DateTime(2025, 3, 3, 9, 53, 35, 25, DateTimeKind.Local).AddTicks(3181),
+                            DurationMinutes = 60,
+                            Notes = "Discussed progress and next steps",
+                            PatientId = 1,
+                            Status = "Completed",
+                            TherapistId = 1,
+                            UpdatedAt = new DateTime(2025, 3, 4, 9, 53, 35, 25, DateTimeKind.Local).AddTicks(3182)
+                        });
                 });
 
             modelBuilder.Entity("MentalHealthApp.Models.CustomUser", b =>
@@ -117,6 +174,62 @@ namespace MentalHealthApp.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "1",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "705136a1-8a5d-4aa7-b8bf-b886a9129d5e",
+                            Email = "admin@example.com",
+                            EmailConfirmed = true,
+                            FirstName = "System",
+                            LastName = "Admin",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "ADMIN@EXAMPLE.COM",
+                            NormalizedUserName = "ADMIN@EXAMPLE.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAEGV0J+kUY1jLwN0Ctkudp+Mx53i/rfCyUovc/jlu0VVAv/4wDYJJm/U8NoZvfKLYLQ==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "0d83ca11-6c64-45c2-96d7-21df7a85b555",
+                            TwoFactorEnabled = false,
+                            UserName = "admin@example.com"
+                        },
+                        new
+                        {
+                            Id = "2",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "5c2f89c5-23f6-4f02-a7a2-7d7a80f290b8",
+                            Email = "therapist1@example.com",
+                            EmailConfirmed = true,
+                            FirstName = "John",
+                            LastName = "Doe",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "THERAPIST1@EXAMPLE.COM",
+                            NormalizedUserName = "THERAPIST1@EXAMPLE.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAEO9P8wcx25jFu1TnhogQnYS+pb56G1FAvVEmQacimM2w8Y8zH/qJyLUXVWMPOARIyw==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "56cfa480-d2b2-47bc-a04b-70f04a86c672",
+                            TwoFactorEnabled = false,
+                            UserName = "therapist1@example.com"
+                        },
+                        new
+                        {
+                            Id = "3",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "3fd22eb4-1ada-48a4-930e-1cad7db3c753",
+                            Email = "patient1@example.com",
+                            EmailConfirmed = true,
+                            FirstName = "Alice",
+                            LastName = "Smith",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "PATIENT1@EXAMPLE.COM",
+                            NormalizedUserName = "PATIENT1@EXAMPLE.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAECWKmPJA5BZj+D0K93nWdAsd+M6EGgw6edfJ+o/ArNDnjsFylMSLt63CaaDegbNt/Q==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "7eab8996-13f4-478b-8022-a92f19669d68",
+                            TwoFactorEnabled = false,
+                            UserName = "patient1@example.com"
+                        });
                 });
 
             modelBuilder.Entity("MentalHealthApp.Models.MoodEntry", b =>
@@ -151,27 +264,130 @@ namespace MentalHealthApp.Migrations
 
                     b.HasIndex("PatientId");
 
-                    b.ToTable("MoodEntry", (string)null);
+                    b.ToTable("MoodEntries");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Date = new DateTime(2025, 3, 8, 9, 53, 35, 25, DateTimeKind.Local).AddTicks(3007),
+                            MoodId = 1,
+                            Notes = "Feeling great today!",
+                            PatientId = 1,
+                            UserId = "1"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Date = new DateTime(2025, 3, 8, 9, 53, 35, 25, DateTimeKind.Local).AddTicks(3013),
+                            MoodId = 3,
+                            Notes = "I have a test tommorow.",
+                            PatientId = 2,
+                            UserId = "2"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Date = new DateTime(2025, 3, 8, 9, 53, 35, 25, DateTimeKind.Local).AddTicks(3015),
+                            MoodId = 4,
+                            Notes = "I got fired from my job.",
+                            PatientId = 3,
+                            UserId = "3"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Date = new DateTime(2025, 3, 7, 9, 53, 35, 25, DateTimeKind.Local).AddTicks(3018),
+                            MoodId = 2,
+                            Notes = "Missed an important meeting.",
+                            PatientId = 1,
+                            UserId = "1"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Date = new DateTime(2025, 3, 6, 9, 53, 35, 25, DateTimeKind.Local).AddTicks(3021),
+                            MoodId = 1,
+                            Notes = "Had a great workout session!",
+                            PatientId = 2,
+                            UserId = "2"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Date = new DateTime(2025, 3, 5, 9, 53, 35, 25, DateTimeKind.Local).AddTicks(3024),
+                            MoodId = 3,
+                            Notes = "Feeling nervous about my interview.",
+                            PatientId = 3,
+                            UserId = "3"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Date = new DateTime(2025, 3, 9, 9, 53, 35, 25, DateTimeKind.Local).AddTicks(3026),
+                            MoodId = 4,
+                            Notes = "Traffic was terrible today.",
+                            PatientId = 1,
+                            UserId = "1"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Date = new DateTime(2025, 3, 4, 9, 53, 35, 25, DateTimeKind.Local).AddTicks(3029),
+                            MoodId = 1,
+                            Notes = "Finally finished my project!",
+                            PatientId = 2,
+                            UserId = "2"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Date = new DateTime(2025, 3, 3, 9, 53, 35, 25, DateTimeKind.Local).AddTicks(3031),
+                            MoodId = 2,
+                            Notes = "Had an argument with a friend.",
+                            PatientId = 3,
+                            UserId = "3"
+                        });
                 });
 
             modelBuilder.Entity("MentalHealthApp.Models.MoodType", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("MoodTypeId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("MoodImage")
-                        .HasColumnType("nvarchar(max)");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("MoodTypeId"));
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
-                    b.HasKey("Id");
+                    b.HasKey("MoodTypeId");
 
-                    b.ToTable("MoodTypes", (string)null);
+                    b.ToTable("MoodTypes");
+
+                    b.HasData(
+                        new
+                        {
+                            MoodTypeId = 1,
+                            Name = "Happy"
+                        },
+                        new
+                        {
+                            MoodTypeId = 2,
+                            Name = "Sad"
+                        },
+                        new
+                        {
+                            MoodTypeId = 3,
+                            Name = "Anxious"
+                        },
+                        new
+                        {
+                            MoodTypeId = 4,
+                            Name = "Angry"
+                        });
                 });
 
             modelBuilder.Entity("MentalHealthApp.Models.Patient", b =>
@@ -184,11 +400,13 @@ namespace MentalHealthApp.Migrations
 
                     b.Property<string>("FirstName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("LastName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("UserId")
                         .IsRequired()
@@ -198,7 +416,30 @@ namespace MentalHealthApp.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Patient");
+                    b.ToTable("Patients");
+
+                    b.HasData(
+                        new
+                        {
+                            PatientId = 1,
+                            FirstName = "Alice",
+                            LastName = "Smith",
+                            UserId = "1"
+                        },
+                        new
+                        {
+                            PatientId = 2,
+                            FirstName = "Jonathan",
+                            LastName = "Joestar",
+                            UserId = "2"
+                        },
+                        new
+                        {
+                            PatientId = 3,
+                            FirstName = "Yuno",
+                            LastName = "Kristopher",
+                            UserId = "3"
+                        });
                 });
 
             modelBuilder.Entity("MentalHealthApp.Models.Therapist", b =>
@@ -209,17 +450,24 @@ namespace MentalHealthApp.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TherapistId"));
 
+                    b.Property<string>("Bio")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("LastName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("PhoneNumber")
                         .IsRequired()
@@ -227,7 +475,8 @@ namespace MentalHealthApp.Migrations
 
                     b.Property<string>("Specialization")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("UserId")
                         .IsRequired()
@@ -235,7 +484,20 @@ namespace MentalHealthApp.Migrations
 
                     b.HasKey("TherapistId");
 
-                    b.ToTable("Therapist");
+                    b.ToTable("Therapists");
+
+                    b.HasData(
+                        new
+                        {
+                            TherapistId = 1,
+                            Bio = "Experienced CBT therapist.",
+                            Email = "therapist1@example.com",
+                            FirstName = "John",
+                            LastName = "Doe",
+                            PhoneNumber = "123-456-7890",
+                            Specialization = "Cognitive Behavioral Therapy",
+                            UserId = "2"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -338,12 +600,10 @@ namespace MentalHealthApp.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
                     b.Property<string>("LoginProvider")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ProviderKey")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ProviderDisplayName")
                         .HasColumnType("nvarchar(max)");
@@ -380,12 +640,10 @@ namespace MentalHealthApp.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("LoginProvider")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Name")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Value")
                         .HasColumnType("nvarchar(max)");

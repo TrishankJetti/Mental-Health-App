@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Mental Health App</title>
+    <title>@ViewData["Title"] - Shanti</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/MentalHealthApp.styles.css" asp-append-version="true" />
@@ -43,10 +43,19 @@
                             <a class="nav-link text-light" asp-area="" asp-controller="MoodEntries" asp-action="Index">Mood Tracker</a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link text-light" asp-area="" asp-controller="MoodTypes" asp-action="Index">Mood Types</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Chat">Chat</a>
+                        </li
+                        <li class="nav-item">
+                            <a class="nav-link text-light" asp-area="" asp-controller="Patients" asp-action="Index">Your Patients</a>
+                        </li
+                         <li class="nav-item">
+                            <a class="nav-link text-light" asp-area="" asp-controller="Appointments" asp-action="Index">Appointment Booking</a>
                         </li>
                     </ul>
-                    <partial name="_LoginPartial" />
+                    <partial name="_LoginPartial.cshtml" />
                 </div>
             </div>
         </nav>
@@ -79,6 +88,14 @@
   }
 }
 
+a{
+    text-decoration:none;
+  
+}
+
+html, body {
+    overflow: hidden;
+}
 
 
     </style>
@@ -87,5 +104,17 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
+
+    <hr/>
+    <footer class="footer text-center py-5" style="background-color: #5a3c9e">
+    <div class="container">
+        <p style="color:white">© @DateTime.Now.Year Shanti. All rights reserved.</p>
+        <p style="color:white">
+            <a asp-controller="Home" asp-action="Index" style="color:white">Home</a> |
+            <a asp-controller="Home" asp-action="Privacy"style="color:white">Privacy Policy</a>
+        </p>
+    </div>
+</footer>
+
 </body>
 </html>

@@ -19,7 +19,7 @@ namespace MentalHealthApp.Controllers
             return View();
         }
 
-        [Authorize(Roles = "Patient")]
+       
         public IActionResult Chat()
         {
 

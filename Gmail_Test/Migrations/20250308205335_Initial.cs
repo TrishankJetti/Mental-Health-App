@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace MentalHealthApp.Migrations
 {
     /// <inheritdoc />
-    public partial class Appointments : Migration
+    public partial class Initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -59,32 +59,32 @@ namespace MentalHealthApp.Migrations
                 name: "MoodTypes",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    MoodTypeId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    MoodImage = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_MoodTypes", x => x.Id);
+                    table.PrimaryKey("PK_MoodTypes", x => x.MoodTypeId);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Therapist",
+                name: "Therapists",
                 columns: table => new
                 {
                     TherapistId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserId = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Specialization = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    FirstName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    LastName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Specialization = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Bio = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Therapist", x => x.TherapistId);
+                    table.PrimaryKey("PK_Therapists", x => x.TherapistId);
                 });
 
             migrationBuilder.CreateTable(
@@ -133,8 +133,8 @@ namespace MentalHealthApp.Migrations
                 name: "AspNetUserLogins",
                 columns: table => new
                 {
-                    LoginProvider = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
-                    ProviderKey = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
+                    LoginProvider = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ProviderKey = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     ProviderDisplayName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
@@ -178,8 +178,8 @@ namespace MentalHealthApp.Migrations
                 columns: table => new
                 {
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    LoginProvider = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
+                    LoginProvider = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Value = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
@@ -194,20 +194,20 @@ namespace MentalHealthApp.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Patient",
+                name: "Patients",
                 columns: table => new
                 {
                     PatientId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    FirstName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    LastName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Patient", x => x.PatientId);
+                    table.PrimaryKey("PK_Patients", x => x.PatientId);
                     table.ForeignKey(
-                        name: "FK_Patient_AspNetUsers_UserId",
+                        name: "FK_Patients_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
@@ -215,33 +215,39 @@ namespace MentalHealthApp.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Appointment",
+                name: "Appointments",
                 columns: table => new
                 {
                     AppointmentId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     TherapistId = table.Column<int>(type: "int", nullable: false),
-                    PatientId = table.Column<int>(type: "int", nullable: false)
+                    PatientId = table.Column<int>(type: "int", nullable: false),
+                    AppointmentDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DurationMinutes = table.Column<int>(type: "int", nullable: false),
+                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Notes = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Appointment", x => x.AppointmentId);
+                    table.PrimaryKey("PK_Appointments", x => x.AppointmentId);
                     table.ForeignKey(
-                        name: "FK_Appointment_Patient_PatientId",
+                        name: "FK_Appointments_Patients_PatientId",
                         column: x => x.PatientId,
-                        principalTable: "Patient",
+                        principalTable: "Patients",
                         principalColumn: "PatientId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Appointment_Therapist_TherapistId",
+                        name: "FK_Appointments_Therapists_TherapistId",
                         column: x => x.TherapistId,
-                        principalTable: "Therapist",
+                        principalTable: "Therapists",
                         principalColumn: "TherapistId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "MoodEntry",
+                name: "MoodEntries",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -254,17 +260,17 @@ namespace MentalHealthApp.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_MoodEntry", x => x.Id);
+                    table.PrimaryKey("PK_MoodEntries", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_MoodEntry_MoodTypes_MoodId",
+                        name: "FK_MoodEntries_MoodTypes_MoodId",
                         column: x => x.MoodId,
                         principalTable: "MoodTypes",
-                        principalColumn: "Id",
+                        principalColumn: "MoodTypeId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_MoodEntry_Patient_PatientId",
+                        name: "FK_MoodEntries_Patients_PatientId",
                         column: x => x.PatientId,
-                        principalTable: "Patient",
+                        principalTable: "Patients",
                         principalColumn: "PatientId",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -279,14 +285,76 @@ namespace MentalHealthApp.Migrations
                     { "3", null, "Therapist", "THERAPIST" }
                 });
 
+            migrationBuilder.InsertData(
+                table: "AspNetUsers",
+                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "DateOfBirth", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
+                values: new object[,]
+                {
+                    { "1", 0, "705136a1-8a5d-4aa7-b8bf-b886a9129d5e", null, "admin@example.com", true, "System", "Admin", false, null, "ADMIN@EXAMPLE.COM", "ADMIN@EXAMPLE.COM", "AQAAAAIAAYagAAAAEGV0J+kUY1jLwN0Ctkudp+Mx53i/rfCyUovc/jlu0VVAv/4wDYJJm/U8NoZvfKLYLQ==", null, false, "0d83ca11-6c64-45c2-96d7-21df7a85b555", false, "admin@example.com" },
+                    { "2", 0, "5c2f89c5-23f6-4f02-a7a2-7d7a80f290b8", null, "therapist1@example.com", true, "John", "Doe", false, null, "THERAPIST1@EXAMPLE.COM", "THERAPIST1@EXAMPLE.COM", "AQAAAAIAAYagAAAAEO9P8wcx25jFu1TnhogQnYS+pb56G1FAvVEmQacimM2w8Y8zH/qJyLUXVWMPOARIyw==", null, false, "56cfa480-d2b2-47bc-a04b-70f04a86c672", false, "therapist1@example.com" },
+                    { "3", 0, "3fd22eb4-1ada-48a4-930e-1cad7db3c753", null, "patient1@example.com", true, "Alice", "Smith", false, null, "PATIENT1@EXAMPLE.COM", "PATIENT1@EXAMPLE.COM", "AQAAAAIAAYagAAAAECWKmPJA5BZj+D0K93nWdAsd+M6EGgw6edfJ+o/ArNDnjsFylMSLt63CaaDegbNt/Q==", null, false, "7eab8996-13f4-478b-8022-a92f19669d68", false, "patient1@example.com" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "MoodTypes",
+                columns: new[] { "MoodTypeId", "Name" },
+                values: new object[,]
+                {
+                    { 1, "Happy" },
+                    { 2, "Sad" },
+                    { 3, "Anxious" },
+                    { 4, "Angry" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Therapists",
+                columns: new[] { "TherapistId", "Bio", "Email", "FirstName", "LastName", "PhoneNumber", "Specialization", "UserId" },
+                values: new object[] { 1, "Experienced CBT therapist.", "therapist1@example.com", "John", "Doe", "123-456-7890", "Cognitive Behavioral Therapy", "2" });
+
+            migrationBuilder.InsertData(
+                table: "Patients",
+                columns: new[] { "PatientId", "FirstName", "LastName", "UserId" },
+                values: new object[,]
+                {
+                    { 1, "Alice", "Smith", "1" },
+                    { 2, "Jonathan", "Joestar", "2" },
+                    { 3, "Yuno", "Kristopher", "3" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Appointments",
+                columns: new[] { "AppointmentId", "AppointmentDate", "CreatedAt", "DurationMinutes", "Notes", "PatientId", "Status", "TherapistId", "UpdatedAt" },
+                values: new object[,]
+                {
+                    { 1, new DateTime(2025, 3, 12, 19, 53, 35, 25, DateTimeKind.Local).AddTicks(3166), new DateTime(2025, 3, 9, 9, 53, 35, 25, DateTimeKind.Local).AddTicks(3168), 60, "Initial consultation session", 2, "Scheduled", 1, new DateTime(2025, 3, 9, 9, 53, 35, 25, DateTimeKind.Local).AddTicks(3170) },
+                    { 2, new DateTime(2025, 3, 16, 23, 53, 35, 25, DateTimeKind.Local).AddTicks(3173), new DateTime(2025, 3, 9, 9, 53, 35, 25, DateTimeKind.Local).AddTicks(3175), 45, "Follow-up session", 3, "Scheduled", 1, new DateTime(2025, 3, 9, 9, 53, 35, 25, DateTimeKind.Local).AddTicks(3176) },
+                    { 3, new DateTime(2025, 3, 4, 18, 53, 35, 25, DateTimeKind.Local).AddTicks(3179), new DateTime(2025, 3, 3, 9, 53, 35, 25, DateTimeKind.Local).AddTicks(3181), 60, "Discussed progress and next steps", 1, "Completed", 1, new DateTime(2025, 3, 4, 9, 53, 35, 25, DateTimeKind.Local).AddTicks(3182) }
+                });
+
+            migrationBuilder.InsertData(
+                table: "MoodEntries",
+                columns: new[] { "Id", "Date", "MoodId", "Notes", "PatientId", "UserId" },
+                values: new object[,]
+                {
+                    { 1, new DateTime(2025, 3, 8, 9, 53, 35, 25, DateTimeKind.Local).AddTicks(3007), 1, "Feeling great today!", 1, "1" },
+                    { 2, new DateTime(2025, 3, 8, 9, 53, 35, 25, DateTimeKind.Local).AddTicks(3013), 3, "I have a test tommorow.", 2, "2" },
+                    { 3, new DateTime(2025, 3, 8, 9, 53, 35, 25, DateTimeKind.Local).AddTicks(3015), 4, "I got fired from my job.", 3, "3" },
+                    { 4, new DateTime(2025, 3, 7, 9, 53, 35, 25, DateTimeKind.Local).AddTicks(3018), 2, "Missed an important meeting.", 1, "1" },
+                    { 5, new DateTime(2025, 3, 6, 9, 53, 35, 25, DateTimeKind.Local).AddTicks(3021), 1, "Had a great workout session!", 2, "2" },
+                    { 6, new DateTime(2025, 3, 5, 9, 53, 35, 25, DateTimeKind.Local).AddTicks(3024), 3, "Feeling nervous about my interview.", 3, "3" },
+                    { 7, new DateTime(2025, 3, 9, 9, 53, 35, 25, DateTimeKind.Local).AddTicks(3026), 4, "Traffic was terrible today.", 1, "1" },
+                    { 8, new DateTime(2025, 3, 4, 9, 53, 35, 25, DateTimeKind.Local).AddTicks(3029), 1, "Finally finished my project!", 2, "2" },
+                    { 9, new DateTime(2025, 3, 3, 9, 53, 35, 25, DateTimeKind.Local).AddTicks(3031), 2, "Had an argument with a friend.", 3, "3" }
+                });
+
             migrationBuilder.CreateIndex(
-                name: "IX_Appointment_PatientId",
-                table: "Appointment",
+                name: "IX_Appointments_PatientId",
+                table: "Appointments",
                 column: "PatientId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Appointment_TherapistId",
-                table: "Appointment",
+                name: "IX_Appointments_TherapistId",
+                table: "Appointments",
                 column: "TherapistId");
 
             migrationBuilder.CreateIndex(
@@ -329,18 +397,18 @@ namespace MentalHealthApp.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_MoodEntry_MoodId",
-                table: "MoodEntry",
+                name: "IX_MoodEntries_MoodId",
+                table: "MoodEntries",
                 column: "MoodId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_MoodEntry_PatientId",
-                table: "MoodEntry",
+                name: "IX_MoodEntries_PatientId",
+                table: "MoodEntries",
                 column: "PatientId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Patient_UserId",
-                table: "Patient",
+                name: "IX_Patients_UserId",
+                table: "Patients",
                 column: "UserId");
         }
 
@@ -348,7 +416,7 @@ namespace MentalHealthApp.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Appointment");
+                name: "Appointments");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
@@ -366,10 +434,10 @@ namespace MentalHealthApp.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "MoodEntry");
+                name: "MoodEntries");
 
             migrationBuilder.DropTable(
-                name: "Therapist");
+                name: "Therapists");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
@@ -378,7 +446,7 @@ namespace MentalHealthApp.Migrations
                 name: "MoodTypes");
 
             migrationBuilder.DropTable(
-                name: "Patient");
+                name: "Patients");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
