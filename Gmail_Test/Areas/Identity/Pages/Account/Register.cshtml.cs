@@ -135,21 +135,9 @@ namespace MentalHealthApp.Areas.Identity.Pages.Account
             {
                 var user = CreateUser();
 
-                // Ensure the "Patient" role exists, if not create it
-                var roleExist = await _roleManager.RoleExistsAsync("Patient");
-                if (!roleExist)
-                {
-                    var roleResult = await _roleManager.CreateAsync(new IdentityRole("Patient"));
-                    if (!roleResult.Succeeded)
-                    {
-                        foreach (var error in roleResult.Errors)
-                        {
-                            ModelState.AddModelError(string.Empty, error.Description);
-                        }
-                        return Page();
-                    }
-                }
-
+              
+               await _roleManager.RoleExistsAsync("Patient");
+               
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
 
@@ -163,7 +151,6 @@ namespace MentalHealthApp.Areas.Identity.Pages.Account
                 {
                     _logger.LogInformation("User created a new account with password.");
 
-                    // Add the "Patient" role to the user
                     await _userManager.AddToRoleAsync(user, "Patient");
 
                     var userId = await _userManager.GetUserIdAsync(user);

@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using MentalHealthApp.Data;
 using MentalHealthApp.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
 
 namespace MentalHealthApp.Controllers
 {
@@ -15,18 +17,32 @@ namespace MentalHealthApp.Controllers
     public class PatientsController : Controller
     {
         private readonly MentalHealthContext _context;
+       private readonly UserManager<CustomUser> _userManager;
 
-        public PatientsController(MentalHealthContext context)
+        public PatientsController(MentalHealthContext context, UserManager<CustomUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: Patients
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchString)
         {
-            var mentalHealthContext = _context.Patients.Include(p => p.User);
-            return View(await mentalHealthContext.ToListAsync());
+            ViewData["CurrentFilter"] = searchString;
+
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var patients = _context.Patients
+                                   .Include(p => p.User)
+                                   .Where(m => m.UserId == userId);
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                patients = patients.Where(p => p.FirstName.Contains(searchString) || p.LastName.Contains(searchString));
+            }
+
+            return View(await patients.ToListAsync());
         }
+
 
         // GET: Patients/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -61,6 +77,14 @@ namespace MentalHealthApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("PatientId,FirstName,LastName,UserId")] Patient patient)
         {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (userId == null)
+            {
+                return Unauthorized();
+            }
+
+          patient.UserId = userId; // Set the UserId automatically
+
             if (!ModelState.IsValid)
             {
                 _context.Add(patient);

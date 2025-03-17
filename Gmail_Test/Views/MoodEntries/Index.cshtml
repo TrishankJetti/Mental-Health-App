@@ -7,7 +7,13 @@
 
 
 <h1 style="text-align: center; color:#6b44b3" class="tracking-in-expand">Your Mood Entries</h1>
-
+<form method="get">
+    <label for="patientFilter">Filter by Patient:</label>
+    <select name="patientId" id="patientFilter" asp-items="ViewBag.Patients">
+        <option value="">-- All Patients --</option>
+    </select>
+    <button type="submit">Filter</button>
+</form>
 <div class="container">
     <!--Creation button-->
     <a asp-controller="MoodEntries" asp-action="Create"

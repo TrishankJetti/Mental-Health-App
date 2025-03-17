@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace MentalHealthApp.Controllers
 {
-    [Authorize]
+    [Authorize(Roles ="Patient")]
     public class AppointmentsController : Controller
     {
         private readonly MentalHealthContext _context;

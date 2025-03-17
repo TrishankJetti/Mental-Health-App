@@ -81,7 +81,27 @@ namespace MentalHealthApp.Data
                     FirstName = "Alice",
                     LastName = "Smith",
                     PasswordHash = hasher.HashPassword(null, "PatientPassword123"),
+                },
+                new CustomUser
+                {
+                    Id = "4",
+                    UserName = "admin2@example.com",
+                    NormalizedUserName = "ADMIN2@EXAMPLE.COM",
+                    Email = "admin2@example.com",
+                    NormalizedEmail = "ADMIN2@EXAMPLE.COM",
+                    EmailConfirmed = true,
+                    FirstName = "Second",
+                    LastName = "Admin",
+                    PasswordHash = hasher.HashPassword(null, "AdminPassword456"),
                 }
+            );
+
+            // Seed User Roles
+            builder.Entity<IdentityUserRole<string>>().HasData(
+                new IdentityUserRole<string> { UserId = "1", RoleId = "1" }, // Admin
+                new IdentityUserRole<string> { UserId = "2", RoleId = "3" }, // Therapist
+                new IdentityUserRole<string> { UserId = "3", RoleId = "2" }, // Patient
+                new IdentityUserRole<string> { UserId = "4", RoleId = "1" }  // Admin
             );
 
             // Seed Therapists
@@ -106,20 +126,6 @@ namespace MentalHealthApp.Data
                     PatientId = 1,
                     FirstName = "Alice",
                     LastName = "Smith",
-                    UserId = "1"
-                },
-                new Patient
-                {
-                    PatientId = 2,
-                    FirstName = "Jonathan",
-                    LastName = "Joestar",
-                    UserId = "2"
-                },
-                new Patient
-                {
-                    PatientId = 3,
-                    FirstName = "Yuno",
-                    LastName = "Kristopher",
                     UserId = "3"
                 }
             );
@@ -129,123 +135,27 @@ namespace MentalHealthApp.Data
                 new MoodEntry
                 {
                     Id = 1,
-                    UserId = "1",
-                    MoodId = 1, // Happy
+                    UserId = "3",
+                    MoodId = 1,
                     Date = DateTime.Now.AddDays(-1),
                     Notes = "Feeling great today!",
                     PatientId = 1
-                },
-                   new MoodEntry
-                   {
-                       Id = 2,
-                       UserId = "2",
-                       MoodId = 3, // Happy
-                       Date = DateTime.Now.AddDays(-1),
-                       Notes = "I have a test tommorow.",
-                       PatientId = 2
-                   },
-                   new MoodEntry
-                   {
-                       Id = 3,
-                       UserId = "3",
-                       MoodId = 4, // Happy
-                       Date = DateTime.Now.AddDays(-1),
-                       Notes = "I got fired from my job.",
-                       PatientId = 3
-                   },
-                   new MoodEntry
-                   {
-                       Id = 4,
-                       UserId = "1",
-                       MoodId = 2, // Sad
-                       Date = DateTime.Now.AddDays(-2),
-                       Notes = "Missed an important meeting.",
-                       PatientId = 1
-                   },
-                    new MoodEntry
-                    {
-                        Id = 5,
-                        UserId = "2",
-                        MoodId = 1, // Happy
-                        Date = DateTime.Now.AddDays(-3),
-                        Notes = "Had a great workout session!",
-                        PatientId = 2
-                    },
-                    new MoodEntry
-                    {
-                        Id = 6,
-                        UserId = "3",
-                        MoodId = 3, // Anxious
-                        Date = DateTime.Now.AddDays(-4),
-                        Notes = "Feeling nervous about my interview.",
-                        PatientId = 3
-                    },
-                    new MoodEntry
-                    {
-                        Id = 7,
-                        UserId = "1",
-                        MoodId = 4, // Angry
-                        Date = DateTime.Now,
-                        Notes = "Traffic was terrible today.",
-                        PatientId = 1
-                    },
-                    new MoodEntry
-                    {
-                        Id = 8,
-                        UserId = "2",
-                        MoodId = 1, // Happy
-                        Date = DateTime.Now.AddDays(-5),
-                        Notes = "Finally finished my project!",
-                        PatientId = 2
-                    },
-                    new MoodEntry
-                    {
-                        Id = 9,
-                        UserId = "3",
-                        MoodId = 2, // Sad
-                        Date = DateTime.Now.AddDays(-6),
-                        Notes = "Had an argument with a friend.",
-                        PatientId = 3
-                    }
-                            );
+                }
+            );
 
-            // Seed Appointments with Enum
+            // Seed Appointments
             builder.Entity<Appointment>().HasData(
                 new Appointment
                 {
                     AppointmentId = 1,
                     TherapistId = 1,
-                    PatientId = 2,
-                    AppointmentDate = DateTime.Now.AddDays(3).AddHours(10), // 3 days from now at 10 AM
+                    PatientId = 1,
+                    AppointmentDate = DateTime.Now.AddDays(3).AddHours(10),
                     DurationMinutes = 60,
-                    Status = AppointmentStatus.Scheduled, // Enum used here
+                    Status = AppointmentStatus.Scheduled,
                     Notes = "Initial consultation session",
                     CreatedAt = DateTime.Now,
                     UpdatedAt = DateTime.Now
-                },
-                new Appointment
-                {
-                    AppointmentId = 2,
-                    TherapistId = 1,
-                    PatientId = 3,
-                    AppointmentDate = DateTime.Now.AddDays(7).AddHours(14), // 7 days from now at 2 PM
-                    DurationMinutes = 45,
-                    Status = AppointmentStatus.Scheduled, // Enum used here
-                    Notes = "Follow-up session",
-                    CreatedAt = DateTime.Now,
-                    UpdatedAt = DateTime.Now
-                },
-                new Appointment
-                {
-                    AppointmentId = 3,
-                    TherapistId = 1,
-                    PatientId = 1,
-                    AppointmentDate = DateTime.Now.AddDays(-5).AddHours(9), // 5 days ago at 9 AM
-                    DurationMinutes = 60,
-                    Status = AppointmentStatus.Completed, // Enum used here
-                    Notes = "Discussed progress and next steps",
-                    CreatedAt = DateTime.Now.AddDays(-6),
-                    UpdatedAt = DateTime.Now.AddDays(-5)
                 }
             );
         }

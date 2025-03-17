@@ -18,8 +18,11 @@ namespace MentalHealthApp.Controllers
         {
             return View();
         }
+        public IActionResult RoleManagement()
+        {
+            return View();
+        }
 
-       
         public IActionResult Chat()
         {
 

@@ -70,6 +70,31 @@ app.MapRazorPages();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+    var userManager = services.GetRequiredService<UserManager<CustomUser>>();
+
+    string[] roleNames = { "Admin", "User", "Therapist" }; // Add your roles here
+    foreach (var roleName in roleNames)
+    {
+        var roleExists = await roleManager.RoleExistsAsync(roleName);
+        if (!roleExists)
+        {
+            await roleManager.CreateAsync(new IdentityRole(roleName));
+        }
+    }
+
+    // Assign Admin Role to a Default User (Optional)
+    string adminEmail = "admin@example.com"; // Change this to your admin's email
+    var adminUser = await userManager.FindByEmailAsync(adminEmail);
+    if (adminUser != null && !(await userManager.IsInRoleAsync(adminUser, "Admin")))
+    {
+        await userManager.AddToRoleAsync(adminUser, "Admin");
+    }
+}
+
 
 // Run the Application
 app.Run();

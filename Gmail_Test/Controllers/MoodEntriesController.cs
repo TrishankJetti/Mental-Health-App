@@ -26,17 +26,32 @@ namespace MentalHealthApp.Controllers
         }
 
         // GET: MoodEntries
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? patientId)
         {
-            
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var userMoodEntries = _context.MoodEntries
+            var query = _context.MoodEntries
                 .Where(m => m.UserId == userId)
                 .Include(m => m.Mood)
-                .Include(m => m.Patient);
+                .Include(m => m.Patient)
+                .AsQueryable();
 
-            return View(await userMoodEntries.ToListAsync());
+
+            // All PAtients from context and they need to have moodentries with corresponding userID inorder to show up in the dropdown as a list.
+            // This then intializes the patients variable.
+            var patients = await _context.Patients
+                .Where(p => _context.MoodEntries.Any(m => m.PatientId == p.PatientId && m.UserId == userId))
+                .ToListAsync();
+
+            if (patientId.HasValue)
+            {
+                query = query.Where(m => m.PatientId == patientId);
+            }
+
+            ViewData["Patients"] = new SelectList(patients, "PatientId", "FirstName");
+
+            return View(await query.ToListAsync());
         }
+
 
         // GET: MoodEntries/Create
         public IActionResult Create()
