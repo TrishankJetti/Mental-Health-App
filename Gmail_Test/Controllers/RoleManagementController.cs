@@ -25,7 +25,7 @@ public class RoleManagement : Controller
     }
 
     [HttpPost]
-    public async Task<IActionResult> ManageRole(string userId, bool isAdmin, bool isTherapist) // Task to manage user roles
+    public async Task<IActionResult> ManageRole(string userId, bool isAdmin, bool isTherapist , bool isPatient) // Task to manage user roles
     {
         // Find the user by their ID
         var user = await _userManager.FindByIdAsync(userId);
@@ -52,6 +52,15 @@ public class RoleManagement : Controller
         {
             await _userManager.RemoveFromRoleAsync(user, "Therapist");
         }
+        if (isPatient)
+        {
+            await _userManager.AddToRoleAsync(user, "Patient");
+        }
+        else
+        {
+            await _userManager.RemoveFromRoleAsync(user, "Patient");
+        }
+
 
         // Redirect back to the index page after updating roles
         return RedirectToAction(nameof(Index));

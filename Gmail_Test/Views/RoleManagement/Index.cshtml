@@ -28,10 +28,13 @@
                     <form asp-action="ManageRole" method="post">
                         <input type="hidden" name="userId" value="@user.Id" />
                         <button type="submit" name="isAdmin" value="@(await UserManager.IsInRoleAsync(user, "Admin") ? "False" : "True")">
-                            @(await UserManager.IsInRoleAsync(user, "Admin") ? "Remove Admin Role" : "Make Admin")
+                            @(await UserManager.IsInRoleAsync(user, "Admin") ? "Remove Admin Role" : "Give Admin Access")
                         </button>
                         <button type="submit" name="isTherapist" value="@(await UserManager.IsInRoleAsync(user, "Therapist") ? "False" : "True")">
-                            @(await UserManager.IsInRoleAsync(user, "Therapist") ? "Remove Therapist Role" : "Make Therapist")
+                            @(await UserManager.IsInRoleAsync(user, "Therapist") ? "Remove Therapist Role" : "Give Therapist Role")
+                        </button>
+                        <button type="submit" name="isTherapist" value="@(await UserManager.IsInRoleAsync(user, "Patient") ? "False" : "True")">
+                            @(await UserManager.IsInRoleAsync(user, "Patient") ? "Remove Patient Role" : "Give Patient Role")
                         </button>
                     </form>
                 </td>
