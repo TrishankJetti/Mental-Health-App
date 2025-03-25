@@ -1,12 +1,10 @@
 ﻿@model IEnumerable<MentalHealthApp.Models.CustomUser>
-@inject UserManager<MentalHealthApp.Models.CustomUser> UserManager
-@using Microsoft.AspNetCore.Identity
 
-<table class="table table-hover table-danger">
+<h2>User List</h2>
+<table class="table">
     <thead>
         <tr>
             <th>Email</th>
-            <th>Roles</th> <!-- Changed from "Admin Role" to "Roles" -->
             <th>Actions</th>
         </tr>
     </thead>
@@ -16,27 +14,7 @@
             <tr>
                 <td>@user.Email</td>
                 <td>
-                    @{
-                        // Retrieve all roles for the user
-                        var roles = await UserManager.GetRolesAsync(user);
-                        // Join the roles into a comma-separated string for display
-                        var rolesDisplay = string.Join(", ", roles);
-                    }
-                    @rolesDisplay
-                </td>
-                <td>
-                    <form asp-action="ManageRole" method="post">
-                        <input type="hidden" name="userId" value="@user.Id" />
-                        <button type="submit" name="isAdmin" value="@(await UserManager.IsInRoleAsync(user, "Admin") ? "False" : "True")">
-                            @(await UserManager.IsInRoleAsync(user, "Admin") ? "Remove Admin Role" : "Give Admin Access")
-                        </button>
-                        <button type="submit" name="isTherapist" value="@(await UserManager.IsInRoleAsync(user, "Therapist") ? "False" : "True")">
-                            @(await UserManager.IsInRoleAsync(user, "Therapist") ? "Remove Therapist Role" : "Give Therapist Role")
-                        </button>
-                        <button type="submit" name="isTherapist" value="@(await UserManager.IsInRoleAsync(user, "Patient") ? "False" : "True")">
-                            @(await UserManager.IsInRoleAsync(user, "Patient") ? "Remove Patient Role" : "Give Patient Role")
-                        </button>
-                    </form>
+                    <a asp-action="ManageRole" asp-route-userId="@user.Id">Manage Roles</a>
                 </td>
             </tr>
         }
