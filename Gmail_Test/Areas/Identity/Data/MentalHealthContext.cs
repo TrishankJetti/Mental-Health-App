@@ -159,5 +159,6 @@ namespace MentalHealthApp.Data
                 }
             );
         }
+        public DbSet<MentalHealthApp.Models.ProductEntity> ProductEntity { get; set; } = default!;
     }
 }

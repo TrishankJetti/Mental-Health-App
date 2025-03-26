@@ -1,27 +1,32 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Text.RegularExpressions;
 
 namespace MentalHealthApp.Models
 {
     public class Patient
     {
         [Key]
-        public int PatientId { get; set; }
+        public int PatientId { get; set; }  // Primary Key
 
-        [Required]
+        [Required(ErrorMessage = "First name is required.")]
         [StringLength(50, ErrorMessage = "First name cannot exceed 50 characters.")]
-        public string FirstName { get; set; }
+        [RegularExpression("^[A-Za-z]+$", ErrorMessage = "First name can only contain letters.")]
+        public string FirstName { get; set; }  // Patient's first name
 
-        [Required]
+        [Required(ErrorMessage = "Last name is required.")]
         [StringLength(50, ErrorMessage = "Last name cannot exceed 50 characters.")]
-        public string LastName { get; set; }
+        [RegularExpression("^[A-Za-z]+$", ErrorMessage = "Last name can only contain letters.")]
+        public string LastName { get; set; }  // Patient's last name
+
+        [Required(ErrorMessage = "User ID is required.")]
+        public string UserId { get; set; }  // Foreign Key to User
 
         [Required]
-        public string UserId { get; set; }
-        public CustomUser User { get; set; }
+        public CustomUser User { get; set; }  // Navigation property for User
 
-        public List<MoodEntry> MoodEntries { get; set; } = new();
+        public List<MoodEntry> MoodEntries { get; set; } = new();  // Mood entries associated with this patient
 
-        public ICollection<Appointment> Appointments { get; set; }
+        public ICollection<Appointment> Appointments { get; set; } = new HashSet<Appointment>();  // Patient's Appointments
     }
 }

@@ -9,27 +9,37 @@ namespace MentalHealthApp.Models
         [Key]
         public int AppointmentId { get; set; }
 
-        [Required]
+        // Foreign key for Therapist
+        [Required(ErrorMessage = "Therapist is required.")]
         public int TherapistId { get; set; }
         [ForeignKey(nameof(TherapistId))]
         public Therapist Therapist { get; set; }
 
-        [Required]
+        // Foreign key for Patient
+        [Required(ErrorMessage = "Patient is required.")]
         public int PatientId { get; set; }
         [ForeignKey(nameof(PatientId))]
         public Patient Patient { get; set; }
 
-        [Required]
-        public DateTime AppointmentDate { get; set; } // Date and time of appointment
+        // Appointment date and time, must be in the future
+        [Required(ErrorMessage = "Appointment date is required.")]
+        [DataType(DataType.DateTime)]
+        public DateTime AppointmentDate { get; set; }
 
-        [Required]
-        public int DurationMinutes { get; set; } // Duration in minutes
+        // Duration of the appointment in minutes, must be between 15 and 240 minutes
+        [Required(ErrorMessage = "Duration is required.")]
+        [Range(15, 240, ErrorMessage = "Duration must be between 15 and 240 minutes.")]
+        public int DurationMinutes { get; set; }
 
-        [Required]
+        // Status of the appointment (Scheduled, Completed, Canceled, Rescheduled)
+        [Required(ErrorMessage = "Appointment status is required.")]
         public AppointmentStatus Status { get; set; } = AppointmentStatus.Scheduled;
 
-        public string? Notes { get; set; } // Optional notes
+        // Optional notes with a max length of 500 characters
+        [MaxLength(500, ErrorMessage = "Notes cannot exceed 500 characters.")]
+        public string? Notes { get; set; }
 
+        // Automatically set timestamps
         public DateTime CreatedAt { get; set; } = DateTime.Now;
         public DateTime UpdatedAt { get; set; } = DateTime.Now;
     }
@@ -43,3 +53,5 @@ namespace MentalHealthApp.Models
     }
 
 }
+
+   
