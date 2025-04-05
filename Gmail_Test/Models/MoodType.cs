@@ -11,5 +11,9 @@ namespace MentalHealthApp.Models
         [Required] //Name field for Mood, can only be 50 strings long.
         [StringLength(50, ErrorMessage = "Mood name cannot exceed 50 characters.")]
         public string Name { get; set; }
+
+        public ICollection<MoodEntry> MoodEntries { get; set; } = new List<MoodEntry>(); //Parent side neccesary for the one to many relationship between the MoodType and MoodEntry
+
     }
+
 }

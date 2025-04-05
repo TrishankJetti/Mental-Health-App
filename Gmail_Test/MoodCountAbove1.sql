@@ -1,4 +1,4 @@
 ﻿SELECT MoodId, COUNT(*) AS MoodCount
 FROM MoodEntries
 GROUP BY MoodId
-HAVING COUNT(*) > 2;
+HAVING COUNT(*) > 1;
