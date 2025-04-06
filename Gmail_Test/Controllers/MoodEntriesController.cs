@@ -56,8 +56,19 @@ namespace MentalHealthApp.Controllers
         // GET: MoodEntries/Create
         public IActionResult Create()
         {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            // Filter the patients based on the current user's ID
+            var patients = _context.Patients
+                .Where(p => p.UserId == userId)
+                .ToList();
+
+          
+            //Selects all the MoodType and Patients for the dropdowns. Thep atient variable is initialized above to use only PAtients where the UserId is equalled to the CUrrent Loggedin USers ID.
+            ViewData["PatientId"] = new SelectList(patients, "PatientId", "FirstName");
+
             ViewData["MoodId"] = new SelectList(_context.MoodTypes, "MoodTypeId", "Name");
-            ViewData["PatientId"] = new SelectList(_context.Patients, "PatientId", "FirstName");
+
             return View();
         }
 
@@ -66,25 +77,36 @@ namespace MentalHealthApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("MoodId,Date,Notes,PatientId")] MoodEntry moodEntry)
         {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier); // Grabs UserID from IDentity.
+
             if (userId == null)
             {
                 return Unauthorized();
             }
 
-            moodEntry.UserId = userId; // Set the UserId automatically
+            moodEntry.UserId = userId; 
 
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-                _context.Add(moodEntry);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+          
+                var patients = _context.Patients // SAme as Create method above the patients variable is intitialized to grabs all patients that have the same userid as the loggedi n user.
+                    .Where(p => p.UserId == userId)
+                    .ToList();
+
+
+                //Popoulate dropdwons 
+
+                ViewData["PatientId"] = new SelectList(patients, "PatientId", "FirstName", moodEntry.PatientId);
+                ViewData["MoodId"] = new SelectList(_context.MoodTypes, "MoodTypeId", "Name", moodEntry.MoodId);
+
+                return View(moodEntry);
             }
 
-            ViewData["MoodId"] = new SelectList(_context.MoodTypes, "MoodTypeId", "Name", moodEntry.MoodId);
-            ViewData["PatientId"] = new SelectList(_context.Patients, "PatientId", "FirstName", moodEntry.PatientId);
-            return View(moodEntry);
+            _context.Add(moodEntry);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
         }
+
 
         // GET: MoodEntries/Edit/5
         public async Task<IActionResult> Edit(int? id)
@@ -99,6 +121,14 @@ namespace MentalHealthApp.Controllers
             {
                 return NotFound();
             }
+
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            // Filter the patients based on the current user's ID
+            var patients = _context.Patients
+                .Where(p => p.UserId == userId)
+                .ToList();
+
 
             ViewData["MoodId"] = new SelectList(_context.MoodTypes, "MoodTypeId", "Name", moodEntry.MoodId);
             ViewData["PatientId"] = new SelectList(_context.Patients, "PatientId", "FirstName", moodEntry.PatientId);
@@ -143,6 +173,14 @@ namespace MentalHealthApp.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            // Filter the patients based on the current user's ID
+            var patients = _context.Patients
+                .Where(p => p.UserId == userId)
+                .ToList();
+
 
             ViewData["MoodId"] = new SelectList(_context.MoodTypes, "MoodTypeId", "Name", moodEntry.MoodId);
             ViewData["PatientId"] = new SelectList(_context.Patients, "PatientId", "FirstName", moodEntry.PatientId);

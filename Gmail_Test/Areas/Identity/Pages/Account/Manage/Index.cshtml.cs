@@ -83,9 +83,7 @@ namespace MentalHealthApp.Areas.Identity.Pages.Account.Manage
                 PhoneNumber = phoneNumber,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
-                DateOfBirth = user.DateOfBirth.HasValue
-                    ? user.DateOfBirth.Value.ToDateTime(TimeOnly.MinValue) // Convert DateOnly to DateTime
-                    : DateTime.Now // Use a default DateTime if null
+              
             };
         }
 
@@ -117,7 +115,7 @@ namespace MentalHealthApp.Areas.Identity.Pages.Account.Manage
             // Update custom fields
             user.FirstName = Input.FirstName;
             user.LastName = Input.LastName;
-            user.DateOfBirth = DateOnly.FromDateTime(Input.DateOfBirth); // Convert DateTime to DateOnly
+           
 
             var updateResult = await _userManager.UpdateAsync(user);
             if (!updateResult.Succeeded)

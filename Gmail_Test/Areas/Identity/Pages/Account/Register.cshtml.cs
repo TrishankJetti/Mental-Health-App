@@ -78,10 +78,7 @@ namespace MentalHealthApp.Areas.Identity.Pages.Account
         /// </summary>
         public class InputModel
         {
-            
-            [DataType(DataType.Date)]
-            
-            public DateOnly? DateOfBirth { get; set; }
+      
             // Add FirstName and LastName fields
             [Required]
             [Display(Name = "First Name")]

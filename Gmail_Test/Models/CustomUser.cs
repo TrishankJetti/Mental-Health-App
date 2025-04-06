@@ -15,7 +15,7 @@ public class CustomUser : IdentityUser
     //Hence we use front end validaiton to validate these fields.
     public string? FirstName { get; set; }
     public string? LastName { get; set; }
-    public DateOnly? DateOfBirth { get; set; }
+
 
     public List<Patient> Patients { get; set; } = new();
 }
