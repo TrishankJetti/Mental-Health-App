@@ -20,6 +20,7 @@ namespace MentalHealthApp.Data
         public DbSet<MoodEntry> MoodEntries { get; set; }
         public DbSet<MoodType> MoodTypes { get; set; } = default!;
 
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);

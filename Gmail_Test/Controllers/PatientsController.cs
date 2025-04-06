@@ -10,6 +10,7 @@ using MentalHealthApp.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
+using Microsoft.Data.SqlClient;
 
 namespace MentalHealthApp.Controllers
 {
@@ -26,11 +27,12 @@ namespace MentalHealthApp.Controllers
         }
 
         // GET: Patients
-        public async Task<IActionResult> Index(string searchString)
+        public async Task<IActionResult> Index(string searchString , string sortOrder)
         {
             ViewData["CurrentFilter"] = searchString;
+            ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
 
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                    var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var patients = _context.Patients
                                    .Include(p => p.User)
                                    .Where(m => m.UserId == userId);
@@ -39,6 +41,19 @@ namespace MentalHealthApp.Controllers
             {
                 patients = patients.Where(p => p.FirstName.Contains(searchString) || p.LastName.Contains(searchString));
             }
+
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    patients = patients.OrderByDescending(s => s.FirstName);
+                    break;
+             
+                default:
+                    patients = patients.OrderBy(s => s.FirstName);
+                    break;
+            }
+
+
 
             return View(await patients.ToListAsync());
         }
