@@ -8,17 +8,20 @@ using Microsoft.EntityFrameworkCore;
 using MentalHealthApp.Data;
 using MentalHealthApp.Models;
 using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Identity;
 
 namespace MentalHealthApp.Controllers
 {
-    [Authorize]
+   
     public class TherapistsController : Controller
     {
         private readonly MentalHealthContext _context;
-
-        public TherapistsController(MentalHealthContext context)
+        private readonly UserManager<CustomUser> _userManager;
+        public TherapistsController(MentalHealthContext context, UserManager<CustomUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: Therapists
@@ -45,6 +48,7 @@ namespace MentalHealthApp.Controllers
             return View(therapist);
         }
 
+        [Authorize(Roles = "Admin")]
         // GET: Therapists/Create
         public IActionResult Create()
         {
@@ -56,8 +60,17 @@ namespace MentalHealthApp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Create([Bind("TherapistId,UserId,FirstName,LastName,Specialization,Email,PhoneNumber")] Therapist therapist)
         {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier); // Grabs UserID from IDentity.
+
+            if (userId == null)
+            {
+                return Unauthorized();
+            }
+
+           therapist.UserId = userId;
             if (ModelState.IsValid)
             {
                 _context.Add(therapist);
@@ -68,6 +81,7 @@ namespace MentalHealthApp.Controllers
         }
 
         // GET: Therapists/Edit/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -88,6 +102,7 @@ namespace MentalHealthApp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int id, [Bind("TherapistId,UserId,FirstName,LastName,Specialization,Email,PhoneNumber")] Therapist therapist)
         {
             if (id != therapist.TherapistId)
@@ -119,6 +134,7 @@ namespace MentalHealthApp.Controllers
         }
 
         // GET: Therapists/Delete/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -138,6 +154,7 @@ namespace MentalHealthApp.Controllers
 
         // POST: Therapists/Delete/5
         [HttpPost, ActionName("Delete")]
+        [Authorize(Roles = "Admin")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {

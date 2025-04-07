@@ -4,30 +4,26 @@
     ViewData["Title"] = "Index";
 }
 
-
-
 <h1 style="text-align: center; color:#6b44b3" class="tracking-in-expand">Your Mood Entries</h1>
 <form method="get">
     <label for="patientFilter">Filter by Patient:</label>
     <select name="patientId" id="patientFilter" asp-items="ViewBag.Patients">
         <option value="">-- All Patients --</option>
     </select>
-    <button type="submit">Filter</button>
+    <button type="submit" class="btn btn-primary">Filter</button>
 </form>
-<div class="container">
+<div class="container mt-4">
     <!--Creation button-->
     <a asp-controller="MoodEntries" asp-action="Create"
-       class="btn-success"
-       style="border-radius: 100%; background-color: #6b44b3; font-size: 90px;
-           display: flex; justify-content: center; align-items: center;
-           width: 120px; height: 120px; border: none; text-decoration: none; color: white;">
+       class="btn btn-success"
+       style="border-radius: 100%; font-size: 90px; width: 120px; height: 120px; display: flex; justify-content: center; align-items: center; text-decoration: none; color: white;">
         +
     </a>
 </div>
 <hr />
 
-<table class="table table-hover">
-    <thead>
+<table class="table table-bordered table-hover table-striped">
+    <thead class="table accordion-header">
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.Mood)
@@ -58,39 +54,33 @@
                     @Html.DisplayFor(modelItem => item.Notes)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Patient.FirstName) <!-- Changed from PatientId -->
+                    @Html.DisplayFor(modelItem => item.Patient.FirstName)
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">Scrap Note</a>
+            
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning btn-sm">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info btn-sm">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger btn-sm">Scrap Note</a>
                 </td>
             </tr>
         }
     </tbody>
 </table>
 
-
-
 <style>
-
     .tracking-in-expand {
         -webkit-animation: tracking-in-expand 0.7s cubic-bezier(0.215, 0.610, 0.355, 1.000) both;
         animation: tracking-in-expand 0.7s 2s cubic-bezier(0.215, 0.610, 0.355, 1.000) both;
     }
-
-
 
     @@-webkit-keyframes tracking-in-expand {
         0% {
             letter-spacing: -0.5em;
             opacity: 0;
         }
-
         40% {
             opacity: 0.6;
         }
-
         100% {
             opacity: 1;
         }
@@ -101,14 +91,11 @@
             letter-spacing: -0.5em;
             opacity: 0;
         }
-
         40% {
             opacity: 0.6;
         }
-
         100% {
             opacity: 1;
         }
     }
-
 </style>

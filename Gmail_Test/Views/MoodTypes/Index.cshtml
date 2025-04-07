@@ -9,13 +9,15 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-<table class="table">
-    <thead>
+
+<table class="table table-bordered table-hover table-striped">
+    <thead class="table accordion-header">
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.Name)
             </th>
-            <th></th>
+            <th>Actions</th>
+         
         </tr>
     </thead>
     <tbody>
@@ -24,11 +26,12 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.MoodTypeId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.MoodTypeId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.MoodTypeId">Delete</a>
-            </td>
+                <td>
+
+                    <a asp-action="Edit" asp-route-id="@item.MoodTypeId" class="btn btn-warning btn-sm">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.MoodTypeId" class="btn btn-info btn-sm">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.MoodTypeId" class="btn btn-danger btn-sm">Scrap Note</a>
+                </td>
         </tr>
 }
     </tbody>

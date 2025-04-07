@@ -7,11 +7,9 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MentalHealthApp.Data;
 using MentalHealthApp.Models;
-using Microsoft.AspNetCore.Authorization;
 
 namespace MentalHealthApp.Controllers
 {
-    [Authorize]
     public class MoodTypesController : Controller
     {
         private readonly MentalHealthContext _context;
@@ -21,13 +19,13 @@ namespace MentalHealthApp.Controllers
             _context = context;
         }
 
-        // GET: MoodTypes
+        // GET: MoodTypes1
         public async Task<IActionResult> Index()
         {
             return View(await _context.MoodTypes.ToListAsync());
         }
 
-        // GET: MoodTypes/Details/5
+        // GET: MoodTypes1/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -45,18 +43,18 @@ namespace MentalHealthApp.Controllers
             return View(moodType);
         }
 
-        // GET: MoodTypes/Create
+        // GET: MoodTypes1/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: MoodTypes/Create
+        // POST: MoodTypes1/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name")] MoodType moodType)
+        public async Task<IActionResult> Create([Bind("MoodTypeId,Name")] MoodType moodType)
         {
             if (ModelState.IsValid)
             {
@@ -67,7 +65,7 @@ namespace MentalHealthApp.Controllers
             return View(moodType);
         }
 
-        // GET: MoodTypes/Edit/5
+        // GET: MoodTypes1/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -83,12 +81,12 @@ namespace MentalHealthApp.Controllers
             return View(moodType);
         }
 
-        // POST: MoodTypes/Edit/5
+        // POST: MoodTypes1/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name")] MoodType moodType)
+        public async Task<IActionResult> Edit(int id, [Bind("MoodTypeId,Name")] MoodType moodType)
         {
             if (id != moodType.MoodTypeId)
             {
@@ -118,7 +116,7 @@ namespace MentalHealthApp.Controllers
             return View(moodType);
         }
 
-        // GET: MoodTypes/Delete/5
+        // GET: MoodTypes1/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -136,7 +134,7 @@ namespace MentalHealthApp.Controllers
             return View(moodType);
         }
 
-        // POST: MoodTypes/Delete/5
+        // POST: MoodTypes1/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

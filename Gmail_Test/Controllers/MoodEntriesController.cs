@@ -131,7 +131,7 @@ namespace MentalHealthApp.Controllers
 
 
             ViewData["MoodId"] = new SelectList(_context.MoodTypes, "MoodTypeId", "Name", moodEntry.MoodId);
-            ViewData["PatientId"] = new SelectList(_context.Patients, "PatientId", "FirstName", moodEntry.PatientId);
+            ViewData["PatientId"] = new SelectList(patients, "PatientId", "FirstName", moodEntry.PatientId);
             return View(moodEntry);
         }
 
@@ -153,7 +153,7 @@ namespace MentalHealthApp.Controllers
 
             moodEntry.UserId = existingEntry.UserId; // Preserve the original UserId
 
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 try
                 {

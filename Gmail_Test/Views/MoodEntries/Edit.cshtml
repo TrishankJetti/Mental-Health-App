@@ -14,19 +14,9 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
-                <label asp-for="UserId" class="control-label"></label>
-                <input asp-for="UserId" class="form-control" />
-                <span asp-validation-for="UserId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="MoodId" class="control-label"></label>
+                <label asp-for="MoodId" class="control-label">Mood </label>
                 <select asp-for="MoodId" class="form-control" asp-items="ViewBag.MoodId"></select>
                 <span asp-validation-for="MoodId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Date" class="control-label"></label>
-                <input asp-for="Date" class="form-control" />
-                <span asp-validation-for="Date" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Notes" class="control-label"></label>
