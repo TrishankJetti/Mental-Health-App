@@ -68,242 +68,242 @@ namespace MentalHealthApp.Migrations
                         new
                         {
                             AppointmentId = 1,
-                            AppointmentDate = new DateTime(2025, 4, 7, 10, 0, 0, 0, DateTimeKind.Local),
-                            CreatedAt = new DateTime(2025, 3, 30, 0, 0, 0, 0, DateTimeKind.Local),
+                            AppointmentDate = new DateTime(2025, 5, 9, 10, 0, 0, 0, DateTimeKind.Local),
+                            CreatedAt = new DateTime(2025, 5, 1, 0, 0, 0, 0, DateTimeKind.Local),
                             DurationMinutes = 60,
                             Notes = "Initial consultation",
                             PatientId = 1,
                             Status = "Scheduled",
                             TherapistId = 1,
-                            UpdatedAt = new DateTime(2025, 4, 3, 0, 0, 0, 0, DateTimeKind.Local)
+                            UpdatedAt = new DateTime(2025, 5, 5, 0, 0, 0, 0, DateTimeKind.Local)
                         },
                         new
                         {
                             AppointmentId = 2,
-                            AppointmentDate = new DateTime(2025, 4, 8, 11, 0, 0, 0, DateTimeKind.Local),
-                            CreatedAt = new DateTime(2025, 4, 1, 0, 0, 0, 0, DateTimeKind.Local),
+                            AppointmentDate = new DateTime(2025, 5, 10, 11, 0, 0, 0, DateTimeKind.Local),
+                            CreatedAt = new DateTime(2025, 5, 3, 0, 0, 0, 0, DateTimeKind.Local),
                             DurationMinutes = 45,
                             Notes = "Follow-up session",
                             PatientId = 2,
                             Status = "Scheduled",
                             TherapistId = 1,
-                            UpdatedAt = new DateTime(2025, 4, 4, 0, 0, 0, 0, DateTimeKind.Local)
+                            UpdatedAt = new DateTime(2025, 5, 6, 0, 0, 0, 0, DateTimeKind.Local)
                         },
                         new
                         {
                             AppointmentId = 3,
-                            AppointmentDate = new DateTime(2025, 4, 7, 14, 0, 0, 0, DateTimeKind.Local),
-                            CreatedAt = new DateTime(2025, 4, 2, 0, 0, 0, 0, DateTimeKind.Local),
+                            AppointmentDate = new DateTime(2025, 5, 9, 14, 0, 0, 0, DateTimeKind.Local),
+                            CreatedAt = new DateTime(2025, 5, 4, 0, 0, 0, 0, DateTimeKind.Local),
                             DurationMinutes = 60,
                             Notes = "Family therapy",
                             PatientId = 3,
                             Status = "Scheduled",
                             TherapistId = 2,
-                            UpdatedAt = new DateTime(2025, 4, 5, 0, 0, 0, 0, DateTimeKind.Local)
+                            UpdatedAt = new DateTime(2025, 5, 7, 0, 0, 0, 0, DateTimeKind.Local)
                         },
                         new
                         {
                             AppointmentId = 4,
-                            AppointmentDate = new DateTime(2025, 4, 9, 15, 0, 0, 0, DateTimeKind.Local),
-                            CreatedAt = new DateTime(2025, 4, 3, 0, 0, 0, 0, DateTimeKind.Local),
+                            AppointmentDate = new DateTime(2025, 5, 11, 15, 0, 0, 0, DateTimeKind.Local),
+                            CreatedAt = new DateTime(2025, 5, 5, 0, 0, 0, 0, DateTimeKind.Local),
                             DurationMinutes = 90,
                             Notes = "Couples counseling",
                             PatientId = 4,
                             Status = "Canceled",
                             TherapistId = 2,
-                            UpdatedAt = new DateTime(2025, 4, 6, 0, 0, 0, 0, DateTimeKind.Local)
+                            UpdatedAt = new DateTime(2025, 5, 8, 0, 0, 0, 0, DateTimeKind.Local)
                         },
                         new
                         {
                             AppointmentId = 5,
-                            AppointmentDate = new DateTime(2025, 4, 8, 9, 0, 0, 0, DateTimeKind.Local),
-                            CreatedAt = new DateTime(2025, 3, 31, 0, 0, 0, 0, DateTimeKind.Local),
+                            AppointmentDate = new DateTime(2025, 5, 10, 9, 0, 0, 0, DateTimeKind.Local),
+                            CreatedAt = new DateTime(2025, 5, 2, 0, 0, 0, 0, DateTimeKind.Local),
                             DurationMinutes = 60,
                             Notes = "Trauma session",
                             PatientId = 5,
                             Status = "Completed",
                             TherapistId = 3,
-                            UpdatedAt = new DateTime(2025, 4, 5, 0, 0, 0, 0, DateTimeKind.Local)
+                            UpdatedAt = new DateTime(2025, 5, 7, 0, 0, 0, 0, DateTimeKind.Local)
                         },
                         new
                         {
                             AppointmentId = 6,
-                            AppointmentDate = new DateTime(2025, 4, 10, 10, 0, 0, 0, DateTimeKind.Local),
-                            CreatedAt = new DateTime(2025, 4, 1, 0, 0, 0, 0, DateTimeKind.Local),
+                            AppointmentDate = new DateTime(2025, 5, 12, 10, 0, 0, 0, DateTimeKind.Local),
+                            CreatedAt = new DateTime(2025, 5, 3, 0, 0, 0, 0, DateTimeKind.Local),
                             DurationMinutes = 60,
                             Notes = "PTSD follow-up",
                             PatientId = 6,
                             Status = "Scheduled",
                             TherapistId = 3,
-                            UpdatedAt = new DateTime(2025, 4, 4, 0, 0, 0, 0, DateTimeKind.Local)
+                            UpdatedAt = new DateTime(2025, 5, 6, 0, 0, 0, 0, DateTimeKind.Local)
                         },
                         new
                         {
                             AppointmentId = 7,
-                            AppointmentDate = new DateTime(2025, 4, 7, 13, 0, 0, 0, DateTimeKind.Local),
-                            CreatedAt = new DateTime(2025, 4, 1, 0, 0, 0, 0, DateTimeKind.Local),
+                            AppointmentDate = new DateTime(2025, 5, 9, 13, 0, 0, 0, DateTimeKind.Local),
+                            CreatedAt = new DateTime(2025, 5, 3, 0, 0, 0, 0, DateTimeKind.Local),
                             DurationMinutes = 45,
                             Notes = "Child therapy evaluation",
                             PatientId = 7,
                             Status = "Scheduled",
                             TherapistId = 4,
-                            UpdatedAt = new DateTime(2025, 4, 5, 0, 0, 0, 0, DateTimeKind.Local)
+                            UpdatedAt = new DateTime(2025, 5, 7, 0, 0, 0, 0, DateTimeKind.Local)
                         },
                         new
                         {
                             AppointmentId = 8,
-                            AppointmentDate = new DateTime(2025, 4, 11, 14, 0, 0, 0, DateTimeKind.Local),
-                            CreatedAt = new DateTime(2025, 4, 2, 0, 0, 0, 0, DateTimeKind.Local),
+                            AppointmentDate = new DateTime(2025, 5, 13, 14, 0, 0, 0, DateTimeKind.Local),
+                            CreatedAt = new DateTime(2025, 5, 4, 0, 0, 0, 0, DateTimeKind.Local),
                             DurationMinutes = 60,
                             Notes = "Adolescent counseling",
                             PatientId = 1,
                             Status = "Scheduled",
                             TherapistId = 4,
-                            UpdatedAt = new DateTime(2025, 4, 6, 0, 0, 0, 0, DateTimeKind.Local)
+                            UpdatedAt = new DateTime(2025, 5, 8, 0, 0, 0, 0, DateTimeKind.Local)
                         },
                         new
                         {
                             AppointmentId = 9,
-                            AppointmentDate = new DateTime(2025, 4, 9, 16, 0, 0, 0, DateTimeKind.Local),
-                            CreatedAt = new DateTime(2025, 4, 2, 0, 0, 0, 0, DateTimeKind.Local),
+                            AppointmentDate = new DateTime(2025, 5, 11, 16, 0, 0, 0, DateTimeKind.Local),
+                            CreatedAt = new DateTime(2025, 5, 4, 0, 0, 0, 0, DateTimeKind.Local),
                             DurationMinutes = 90,
                             Notes = "Addiction counseling",
                             PatientId = 2,
                             Status = "Scheduled",
                             TherapistId = 5,
-                            UpdatedAt = new DateTime(2025, 4, 6, 0, 0, 0, 0, DateTimeKind.Local)
+                            UpdatedAt = new DateTime(2025, 5, 8, 0, 0, 0, 0, DateTimeKind.Local)
                         },
                         new
                         {
                             AppointmentId = 10,
-                            AppointmentDate = new DateTime(2025, 4, 12, 11, 0, 0, 0, DateTimeKind.Local),
-                            CreatedAt = new DateTime(2025, 3, 30, 0, 0, 0, 0, DateTimeKind.Local),
+                            AppointmentDate = new DateTime(2025, 5, 14, 11, 0, 0, 0, DateTimeKind.Local),
+                            CreatedAt = new DateTime(2025, 5, 1, 0, 0, 0, 0, DateTimeKind.Local),
                             DurationMinutes = 60,
                             Notes = "Substance abuse follow-up",
                             PatientId = 3,
                             Status = "Rescheduled",
                             TherapistId = 5,
-                            UpdatedAt = new DateTime(2025, 4, 5, 0, 0, 0, 0, DateTimeKind.Local)
+                            UpdatedAt = new DateTime(2025, 5, 7, 0, 0, 0, 0, DateTimeKind.Local)
                         },
                         new
                         {
                             AppointmentId = 11,
-                            AppointmentDate = new DateTime(2025, 4, 8, 15, 0, 0, 0, DateTimeKind.Local),
-                            CreatedAt = new DateTime(2025, 4, 3, 0, 0, 0, 0, DateTimeKind.Local),
+                            AppointmentDate = new DateTime(2025, 5, 10, 15, 0, 0, 0, DateTimeKind.Local),
+                            CreatedAt = new DateTime(2025, 5, 5, 0, 0, 0, 0, DateTimeKind.Local),
                             DurationMinutes = 60,
                             Notes = "Eating disorder support",
                             PatientId = 4,
                             Status = "Scheduled",
                             TherapistId = 6,
-                            UpdatedAt = new DateTime(2025, 4, 6, 0, 0, 0, 0, DateTimeKind.Local)
+                            UpdatedAt = new DateTime(2025, 5, 8, 0, 0, 0, 0, DateTimeKind.Local)
                         },
                         new
                         {
                             AppointmentId = 12,
-                            AppointmentDate = new DateTime(2025, 4, 13, 10, 0, 0, 0, DateTimeKind.Local),
-                            CreatedAt = new DateTime(2025, 4, 4, 0, 0, 0, 0, DateTimeKind.Local),
+                            AppointmentDate = new DateTime(2025, 5, 15, 10, 0, 0, 0, DateTimeKind.Local),
+                            CreatedAt = new DateTime(2025, 5, 6, 0, 0, 0, 0, DateTimeKind.Local),
                             DurationMinutes = 90,
                             Notes = "Body image therapy",
                             PatientId = 5,
                             Status = "Rescheduled",
                             TherapistId = 6,
-                            UpdatedAt = new DateTime(2025, 4, 6, 0, 0, 0, 0, DateTimeKind.Local)
+                            UpdatedAt = new DateTime(2025, 5, 8, 0, 0, 0, 0, DateTimeKind.Local)
                         },
                         new
                         {
                             AppointmentId = 13,
-                            AppointmentDate = new DateTime(2025, 4, 10, 13, 0, 0, 0, DateTimeKind.Local),
-                            CreatedAt = new DateTime(2025, 4, 4, 0, 0, 0, 0, DateTimeKind.Local),
+                            AppointmentDate = new DateTime(2025, 5, 12, 13, 0, 0, 0, DateTimeKind.Local),
+                            CreatedAt = new DateTime(2025, 5, 6, 0, 0, 0, 0, DateTimeKind.Local),
                             DurationMinutes = 60,
                             Notes = "Couples therapy session",
                             PatientId = 6,
                             Status = "Scheduled",
                             TherapistId = 7,
-                            UpdatedAt = new DateTime(2025, 4, 6, 0, 0, 0, 0, DateTimeKind.Local)
+                            UpdatedAt = new DateTime(2025, 5, 8, 0, 0, 0, 0, DateTimeKind.Local)
                         },
                         new
                         {
                             AppointmentId = 14,
-                            AppointmentDate = new DateTime(2025, 4, 14, 14, 0, 0, 0, DateTimeKind.Local),
-                            CreatedAt = new DateTime(2025, 3, 30, 0, 0, 0, 0, DateTimeKind.Local),
+                            AppointmentDate = new DateTime(2025, 5, 16, 14, 0, 0, 0, DateTimeKind.Local),
+                            CreatedAt = new DateTime(2025, 5, 1, 0, 0, 0, 0, DateTimeKind.Local),
                             DurationMinutes = 60,
                             Notes = "Relationship counseling",
                             PatientId = 7,
                             Status = "Completed",
                             TherapistId = 7,
-                            UpdatedAt = new DateTime(2025, 4, 5, 0, 0, 0, 0, DateTimeKind.Local)
+                            UpdatedAt = new DateTime(2025, 5, 7, 0, 0, 0, 0, DateTimeKind.Local)
                         },
                         new
                         {
                             AppointmentId = 15,
-                            AppointmentDate = new DateTime(2025, 4, 9, 9, 0, 0, 0, DateTimeKind.Local),
-                            CreatedAt = new DateTime(2025, 4, 1, 0, 0, 0, 0, DateTimeKind.Local),
+                            AppointmentDate = new DateTime(2025, 5, 11, 9, 0, 0, 0, DateTimeKind.Local),
+                            CreatedAt = new DateTime(2025, 5, 3, 0, 0, 0, 0, DateTimeKind.Local),
                             DurationMinutes = 60,
                             Notes = "Art therapy introduction",
                             PatientId = 1,
                             Status = "Scheduled",
                             TherapistId = 8,
-                            UpdatedAt = new DateTime(2025, 4, 4, 0, 0, 0, 0, DateTimeKind.Local)
+                            UpdatedAt = new DateTime(2025, 5, 6, 0, 0, 0, 0, DateTimeKind.Local)
                         },
                         new
                         {
                             AppointmentId = 16,
-                            AppointmentDate = new DateTime(2025, 4, 15, 11, 0, 0, 0, DateTimeKind.Local),
-                            CreatedAt = new DateTime(2025, 4, 2, 0, 0, 0, 0, DateTimeKind.Local),
+                            AppointmentDate = new DateTime(2025, 5, 17, 11, 0, 0, 0, DateTimeKind.Local),
+                            CreatedAt = new DateTime(2025, 5, 4, 0, 0, 0, 0, DateTimeKind.Local),
                             DurationMinutes = 90,
                             Notes = "Creative expression session",
                             PatientId = 2,
                             Status = "Completed",
                             TherapistId = 8,
-                            UpdatedAt = new DateTime(2025, 4, 6, 0, 0, 0, 0, DateTimeKind.Local)
+                            UpdatedAt = new DateTime(2025, 5, 8, 0, 0, 0, 0, DateTimeKind.Local)
                         },
                         new
                         {
                             AppointmentId = 17,
-                            AppointmentDate = new DateTime(2025, 4, 11, 10, 0, 0, 0, DateTimeKind.Local),
-                            CreatedAt = new DateTime(2025, 4, 3, 0, 0, 0, 0, DateTimeKind.Local),
+                            AppointmentDate = new DateTime(2025, 5, 13, 10, 0, 0, 0, DateTimeKind.Local),
+                            CreatedAt = new DateTime(2025, 5, 5, 0, 0, 0, 0, DateTimeKind.Local),
                             DurationMinutes = 60,
                             Notes = "Sports performance anxiety",
                             PatientId = 3,
                             Status = "Scheduled",
                             TherapistId = 9,
-                            UpdatedAt = new DateTime(2025, 4, 6, 0, 0, 0, 0, DateTimeKind.Local)
+                            UpdatedAt = new DateTime(2025, 5, 8, 0, 0, 0, 0, DateTimeKind.Local)
                         },
                         new
                         {
                             AppointmentId = 18,
-                            AppointmentDate = new DateTime(2025, 4, 16, 15, 0, 0, 0, DateTimeKind.Local),
-                            CreatedAt = new DateTime(2025, 3, 31, 0, 0, 0, 0, DateTimeKind.Local),
+                            AppointmentDate = new DateTime(2025, 5, 18, 15, 0, 0, 0, DateTimeKind.Local),
+                            CreatedAt = new DateTime(2025, 5, 2, 0, 0, 0, 0, DateTimeKind.Local),
                             DurationMinutes = 60,
                             Notes = "Competition stress management",
                             PatientId = 4,
                             Status = "Completed",
                             TherapistId = 9,
-                            UpdatedAt = new DateTime(2025, 4, 5, 0, 0, 0, 0, DateTimeKind.Local)
+                            UpdatedAt = new DateTime(2025, 5, 7, 0, 0, 0, 0, DateTimeKind.Local)
                         },
                         new
                         {
                             AppointmentId = 19,
-                            AppointmentDate = new DateTime(2025, 4, 12, 14, 0, 0, 0, DateTimeKind.Local),
-                            CreatedAt = new DateTime(2025, 4, 2, 0, 0, 0, 0, DateTimeKind.Local),
+                            AppointmentDate = new DateTime(2025, 5, 14, 14, 0, 0, 0, DateTimeKind.Local),
+                            CreatedAt = new DateTime(2025, 5, 4, 0, 0, 0, 0, DateTimeKind.Local),
                             DurationMinutes = 90,
                             Notes = "Grief counseling",
                             PatientId = 5,
                             Status = "Scheduled",
                             TherapistId = 10,
-                            UpdatedAt = new DateTime(2025, 4, 6, 0, 0, 0, 0, DateTimeKind.Local)
+                            UpdatedAt = new DateTime(2025, 5, 8, 0, 0, 0, 0, DateTimeKind.Local)
                         },
                         new
                         {
                             AppointmentId = 20,
-                            AppointmentDate = new DateTime(2025, 4, 17, 16, 0, 0, 0, DateTimeKind.Local),
-                            CreatedAt = new DateTime(2025, 4, 1, 0, 0, 0, 0, DateTimeKind.Local),
+                            AppointmentDate = new DateTime(2025, 5, 19, 16, 0, 0, 0, DateTimeKind.Local),
+                            CreatedAt = new DateTime(2025, 5, 3, 0, 0, 0, 0, DateTimeKind.Local),
                             DurationMinutes = 60,
                             Notes = "Bereavement support",
                             PatientId = 6,
                             Status = "Rescheduled",
                             TherapistId = 10,
-                            UpdatedAt = new DateTime(2025, 4, 4, 0, 0, 0, 0, DateTimeKind.Local)
+                            UpdatedAt = new DateTime(2025, 5, 6, 0, 0, 0, 0, DateTimeKind.Local)
                         });
                 });
 
@@ -313,6 +313,9 @@ namespace MentalHealthApp.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("AccessFailedCount")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("Age")
                         .HasColumnType("int");
 
                     b.Property<string>("ConcurrencyStamp")
@@ -382,7 +385,7 @@ namespace MentalHealthApp.Migrations
                         {
                             Id = "1",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "58b17f2c-1111-42e9-b9cd-da6600bbd8a7",
+                            ConcurrencyStamp = "b5c4e7a4-a86d-48f2-98b9-853e1716b7b2",
                             Email = "admin@example.com",
                             EmailConfirmed = true,
                             FirstName = "System",
@@ -390,9 +393,9 @@ namespace MentalHealthApp.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@EXAMPLE.COM",
                             NormalizedUserName = "ADMIN@EXAMPLE.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEIr3VUgp/B6nYrIbTfs5au3Do1YmhmxQgzl+xODRFjsU4IYgCzZNM+RHvaQjIuftfQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEJLCfg6JjAeBCzjua118fVIWqUmXCGP/tb1+fjFH0bAPqhEzwTtpALV01KA23MMSIQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "5e30e107-db2b-4148-9fb9-a7fee6361481",
+                            SecurityStamp = "a706b839-7cea-4601-9cc6-24f9f4060221",
                             TwoFactorEnabled = false,
                             UserName = "admin@example.com"
                         },
@@ -400,7 +403,7 @@ namespace MentalHealthApp.Migrations
                         {
                             Id = "2",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "9d104fd7-9faf-4efe-9966-265c1cd56797",
+                            ConcurrencyStamp = "2399f1a0-fa95-4c61-ae52-c79e95022b90",
                             Email = "admin2@example.com",
                             EmailConfirmed = true,
                             FirstName = "Second",
@@ -408,9 +411,9 @@ namespace MentalHealthApp.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN2@EXAMPLE.COM",
                             NormalizedUserName = "ADMIN2@EXAMPLE.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEDdLCghoKJ0lp4he1oHan0R59cxx2xYKBFfk/ja5HVnzxW71bCnvnYrZyOUHE9NTTg==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEIfgBC6Vsv/iXa073h2HHM2mCj1U/23rjfoOw7EnrKEeg00/syDtpkxYwMd1txadTA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "f081ba96-f9d2-4c65-a18b-65b29465c3f7",
+                            SecurityStamp = "49fc208e-fa90-452b-9396-e41bd0f43e52",
                             TwoFactorEnabled = false,
                             UserName = "admin2@example.com"
                         },
@@ -418,7 +421,7 @@ namespace MentalHealthApp.Migrations
                         {
                             Id = "3",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "9155fb5d-ec9f-46f9-9eb0-d0768e936b11",
+                            ConcurrencyStamp = "e1ec3dad-21d0-4dad-a832-d857855e81e7",
                             Email = "admin3@example.com",
                             EmailConfirmed = true,
                             FirstName = "Third",
@@ -426,9 +429,9 @@ namespace MentalHealthApp.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN3@EXAMPLE.COM",
                             NormalizedUserName = "ADMIN3@EXAMPLE.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEG4qfvSNQoaACtb5r524fW9jDFrRuj6WzxbA7YX8g7L/IS/0+XoEPwavPQLZhhz21Q==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEOrZ91J7LAonjUvhSIqFApfKp0lhws3N1rfb5CYl8RDupkPHFtamrH2hLXgQyt/hMw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "462304ab-4d08-4bbc-a542-33ae71e9d58d",
+                            SecurityStamp = "77e054bf-582e-491f-a8ed-29412edf5d52",
                             TwoFactorEnabled = false,
                             UserName = "admin3@example.com"
                         },
@@ -436,7 +439,7 @@ namespace MentalHealthApp.Migrations
                         {
                             Id = "4",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "a9620fab-15d1-48d2-a0cd-09f329875ecc",
+                            ConcurrencyStamp = "4a1ed1ea-d9fe-49f4-b9f7-61b897014ef9",
                             Email = "therapist1@example.com",
                             EmailConfirmed = true,
                             FirstName = "John",
@@ -444,9 +447,9 @@ namespace MentalHealthApp.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "THERAPIST1@EXAMPLE.COM",
                             NormalizedUserName = "THERAPIST1@EXAMPLE.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEGbWbumNMEAnf2FTjabgvkSf5ulw55tERU0ULLUYZn6ADdfdUZ54+24s5IJnQkK8OA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEBasAilszJit5F50DUk9J5x47gURKmixvUOmHL3QiOpGdBVaUZzEyVRQJ4mD4YANSg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "ed97d094-60be-45d0-87db-de54954a6795",
+                            SecurityStamp = "35058ccf-78ef-458a-ba53-5e913abb3053",
                             TwoFactorEnabled = false,
                             UserName = "therapist1@example.com"
                         },
@@ -454,7 +457,7 @@ namespace MentalHealthApp.Migrations
                         {
                             Id = "5",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "021ca50a-6321-4e63-85d3-271d92d6f117",
+                            ConcurrencyStamp = "544f4991-1829-4682-b78d-6b4858405882",
                             Email = "therapist2@example.com",
                             EmailConfirmed = true,
                             FirstName = "Sarah",
@@ -462,9 +465,9 @@ namespace MentalHealthApp.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "THERAPIST2@EXAMPLE.COM",
                             NormalizedUserName = "THERAPIST2@EXAMPLE.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEB4LrXa6QPGsWoI4h13feaMcXt633RYJc1GytbEYOY9ub+xsAHtBqfd4pg9rsKSisA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAELIZL6/DkNchkiRllpL4X45bYNSDJb5zQiZl43laIAtSPfwrjeLznbrV3U3WSdpzvA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "6bf6b87a-6c87-412a-846c-d791fe9bda36",
+                            SecurityStamp = "e9740859-ae3a-4d1d-86d7-81ed33381f61",
                             TwoFactorEnabled = false,
                             UserName = "therapist2@example.com"
                         },
@@ -472,7 +475,7 @@ namespace MentalHealthApp.Migrations
                         {
                             Id = "6",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "498d552b-8dce-4f31-94d6-3149b3af6019",
+                            ConcurrencyStamp = "fc61b04b-6e3d-42d5-aff6-4110e19fc0dc",
                             Email = "therapist3@example.com",
                             EmailConfirmed = true,
                             FirstName = "Michael",
@@ -480,9 +483,9 @@ namespace MentalHealthApp.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "THERAPIST3@EXAMPLE.COM",
                             NormalizedUserName = "THERAPIST3@EXAMPLE.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAENhpHJrBtQ9hr+L8aI/yA9fXatmuTvZULvKGkXoQcXVrwEgpz6/hEQNU7XFtTq1kZQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEImkFfW5dhW2wqiKxRcNOqHgVTAetX5ZcT9h0NTtTUke4YIenqAXX03qRI1rT8S/xw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "4c1c58ad-ebe0-43c3-8219-8cd3e1071a5f",
+                            SecurityStamp = "9f5d3195-9d33-4358-ae76-900eabb419e2",
                             TwoFactorEnabled = false,
                             UserName = "therapist3@example.com"
                         },
@@ -490,7 +493,7 @@ namespace MentalHealthApp.Migrations
                         {
                             Id = "7",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "4a37d0ba-c044-4344-8fe2-b13bd84a1952",
+                            ConcurrencyStamp = "f927d19b-b74e-46f0-9efb-1bdd184d9998",
                             Email = "therapist4@example.com",
                             EmailConfirmed = true,
                             FirstName = "Jennifer",
@@ -498,9 +501,9 @@ namespace MentalHealthApp.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "THERAPIST4@EXAMPLE.COM",
                             NormalizedUserName = "THERAPIST4@EXAMPLE.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEGxEn6TXYSJ6JIFopvkGpnj/b8a92cw1zMMI7kaz7vPZ2A2IoiQhy5TK461siue4YQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEF1pTKKqs8PZdQmonkgNV2gBVLUg1rGkVbHi0ykzX1oVBQDc0+HDmbt182JFYp/yIA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "4eebf72f-b25f-451b-b85b-d057b0928b34",
+                            SecurityStamp = "cb131fc1-ee9f-4acb-8e9b-0fdded0c354f",
                             TwoFactorEnabled = false,
                             UserName = "therapist4@example.com"
                         },
@@ -508,7 +511,7 @@ namespace MentalHealthApp.Migrations
                         {
                             Id = "8",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "5cb3cc12-9bdc-4f8c-aeee-920822c38633",
+                            ConcurrencyStamp = "754538fc-ca83-46e9-9ca9-22e570632848",
                             Email = "therapist5@example.com",
                             EmailConfirmed = true,
                             FirstName = "Robert",
@@ -516,9 +519,9 @@ namespace MentalHealthApp.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "THERAPIST5@EXAMPLE.COM",
                             NormalizedUserName = "THERAPIST5@EXAMPLE.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEDKiiH2skk/UE4T1Wb/R9KsU+3k7ydvvDBWhAOBl8YAKGMKuk063kyWldH4cE96vgw==",
+                            PasswordHash = "AQAAAAIAAYagAAAAECo/70L+k3EiE/IPtLE2tSDcI29xgRY9w64j3H8wRBEGxucgME3hm3F9dUeeTVNBlw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "cd308f66-6584-494f-8387-9a5919f95651",
+                            SecurityStamp = "9e35172f-653f-40df-a0f6-64e854c14e66",
                             TwoFactorEnabled = false,
                             UserName = "therapist5@example.com"
                         },
@@ -526,7 +529,7 @@ namespace MentalHealthApp.Migrations
                         {
                             Id = "9",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "ca616afd-5292-4bf2-bcfc-f353a0e7a64f",
+                            ConcurrencyStamp = "0a8da8b3-4058-414c-88d3-d6681f67e0b9",
                             Email = "therapist6@example.com",
                             EmailConfirmed = true,
                             FirstName = "Lisa",
@@ -534,9 +537,9 @@ namespace MentalHealthApp.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "THERAPIST6@EXAMPLE.COM",
                             NormalizedUserName = "THERAPIST6@EXAMPLE.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEITGI7CV1qZNkAT0f5ttPnDbi6d+Mip+S0RLoqavb48Ivgla1MKZ5fIbBbLr8vKjOQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEMG5ZSAxLUQfCbgQFrpZJX6MZ9451kQfPZ1Af4DtTBk6ZyeYWFo3VR70LNHqzLIriQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "3236a053-b626-44a7-9d1a-a08e3c8cde37",
+                            SecurityStamp = "b933fff3-0b11-4509-8a94-606d43816f93",
                             TwoFactorEnabled = false,
                             UserName = "therapist6@example.com"
                         },
@@ -544,7 +547,7 @@ namespace MentalHealthApp.Migrations
                         {
                             Id = "10",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "f3610be5-9bbb-4eac-b897-351436be3bca",
+                            ConcurrencyStamp = "9a036680-c88b-4de4-ad6c-a4d915fc4cce",
                             Email = "therapist7@example.com",
                             EmailConfirmed = true,
                             FirstName = "Thomas",
@@ -552,9 +555,9 @@ namespace MentalHealthApp.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "THERAPIST7@EXAMPLE.COM",
                             NormalizedUserName = "THERAPIST7@EXAMPLE.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEIkFyKeHY5y0fcJJU2okEgltw4+JzFaSnrlU9JZ7Cc5liFox01Ou+mlck4X3a+Nwcg==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEB94ufc2/NSQK57bOou9OwDMn+YXYgyfys1ZNGb7fj1zy0cs3d+nBMKCrOchZ9Gtow==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "1aa3f30a-37c5-4785-a12a-2e0c9c221aad",
+                            SecurityStamp = "8eb419ae-408f-40cf-a66e-e37a84feec5d",
                             TwoFactorEnabled = false,
                             UserName = "therapist7@example.com"
                         },
@@ -562,7 +565,7 @@ namespace MentalHealthApp.Migrations
                         {
                             Id = "11",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "6c1d2b97-3150-4edb-bce9-68c67dcdf103",
+                            ConcurrencyStamp = "3aa295dc-67a5-4620-a8c2-84709402821b",
                             Email = "therapist8@example.com",
                             EmailConfirmed = true,
                             FirstName = "Nancy",
@@ -570,9 +573,9 @@ namespace MentalHealthApp.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "THERAPIST8@EXAMPLE.COM",
                             NormalizedUserName = "THERAPIST8@EXAMPLE.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEOM4yBKytr53Gnc5XjON4U37rebQFc4LiXF+dSVazEPSvARKx2FzZST+xOFnzXwYQQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEI8soMDl2ZzBI/rIC3JDUOcYdcJiwAMV2kv/twqIipmAFQGqrovu57oTVDg2VxrCUQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "8e9457df-107a-402a-9b40-06457ee50d9d",
+                            SecurityStamp = "224d4769-547a-4767-8157-de8bdbe01826",
                             TwoFactorEnabled = false,
                             UserName = "therapist8@example.com"
                         },
@@ -580,7 +583,7 @@ namespace MentalHealthApp.Migrations
                         {
                             Id = "12",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "225192e0-d865-43e4-8556-e6b5da80701c",
+                            ConcurrencyStamp = "d23460ea-cef9-45b5-b5b0-4a66d74b2b6a",
                             Email = "therapist9@example.com",
                             EmailConfirmed = true,
                             FirstName = "Kevin",
@@ -588,9 +591,9 @@ namespace MentalHealthApp.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "THERAPIST9@EXAMPLE.COM",
                             NormalizedUserName = "THERAPIST9@EXAMPLE.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEMgUIvImVgf6C39M/x9RJRBYOsfqEUAt7lL0eScgUs1vyDAJxPYSzL8VoJ1aXH4EGA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEHVduO7ZfSYmi3ELsueUjNuCaWU7NZCFnz4WHs3fDi3HpLEL2cyASlBMTrP/jsQ79A==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "665566a1-3068-4eba-812f-879055536f4f",
+                            SecurityStamp = "0bc024f5-17e2-43d7-b87f-ceebb1ef0f93",
                             TwoFactorEnabled = false,
                             UserName = "therapist9@example.com"
                         },
@@ -598,7 +601,7 @@ namespace MentalHealthApp.Migrations
                         {
                             Id = "13",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "3c1acc1c-00e1-4a7b-82ae-dc4b0be58140",
+                            ConcurrencyStamp = "51f50eda-5c57-4b81-8aae-386f60bd860f",
                             Email = "therapist10@example.com",
                             EmailConfirmed = true,
                             FirstName = "Emma",
@@ -606,9 +609,9 @@ namespace MentalHealthApp.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "THERAPIST10@EXAMPLE.COM",
                             NormalizedUserName = "THERAPIST10@EXAMPLE.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEBaSGfHlzN/XGPJtievi4+6pnM1wDJM7RSXetgrkMOSLTCnuqrK5745WFkNXmlc+Ag==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEFqElQNsWRD9jDsBMkQYzuXu2jKZ1kN/7cTFrg9BfKJDdJ4YycxrqE/StjWuUwOuRw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "f2af916b-a04f-4bf0-91d1-932b6ccbc027",
+                            SecurityStamp = "9b8f7977-625a-40fc-93c6-37f4fc271999",
                             TwoFactorEnabled = false,
                             UserName = "therapist10@example.com"
                         },
@@ -616,7 +619,7 @@ namespace MentalHealthApp.Migrations
                         {
                             Id = "14",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "6872e6c1-dd34-44a4-ad16-34aa9764e848",
+                            ConcurrencyStamp = "a7e90eb9-0255-48d8-917c-97252873744d",
                             Email = "patient1@example.com",
                             EmailConfirmed = true,
                             FirstName = "Alice",
@@ -624,9 +627,9 @@ namespace MentalHealthApp.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "PATIENT1@EXAMPLE.COM",
                             NormalizedUserName = "PATIENT1@EXAMPLE.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEPuT4e4jJBHOeSu8K6O8HIb5/OLarkMPiZL6SgsIWkQlCJ0b8h3QJn3DmJ4b4XN1Sw==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEAXP/6cK+IB2akrPTyJe+yV1ii7OfSxSWJ6koUxzoZBHKnW9APKL7ux/4qLKd1Vk/A==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "45161591-2591-48fe-9ae0-e37e60ce6ce8",
+                            SecurityStamp = "65b50dbb-e03e-4e9f-a8ba-9a1e47edeb29",
                             TwoFactorEnabled = false,
                             UserName = "patient1@example.com"
                         },
@@ -634,7 +637,7 @@ namespace MentalHealthApp.Migrations
                         {
                             Id = "15",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "edfd4f62-15c2-44a8-8720-fdb7bbfcc16c",
+                            ConcurrencyStamp = "2c0b13d5-7e4b-443e-9915-5c696abea97d",
                             Email = "patient2@example.com",
                             EmailConfirmed = true,
                             FirstName = "Mike",
@@ -642,9 +645,9 @@ namespace MentalHealthApp.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "PATIENT2@EXAMPLE.COM",
                             NormalizedUserName = "PATIENT2@EXAMPLE.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEBYx3CEp2I7qm1tqME+w0FLzBIOgntbw/FTGCQtiIDDyt11Wrlz3h0Gyk3WkXDT7/g==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEJQh+tYHjTXwJl9YhYueYhDfqUstkDAJ/jzhs98Ud8s2dQwHuswPodjE8ZkragYljw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "0dd11f81-f1ab-4441-9a0f-1282c4d35d12",
+                            SecurityStamp = "083d64f5-a12b-4df8-8bfd-0bac2ba0a9b6",
                             TwoFactorEnabled = false,
                             UserName = "patient2@example.com"
                         },
@@ -652,7 +655,7 @@ namespace MentalHealthApp.Migrations
                         {
                             Id = "16",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "f1125a80-7b84-40d2-a636-12a21f3067a8",
+                            ConcurrencyStamp = "79b10876-1ae8-47d8-a314-d8f4e86e6296",
                             Email = "patient3@example.com",
                             EmailConfirmed = true,
                             FirstName = "Emily",
@@ -660,9 +663,9 @@ namespace MentalHealthApp.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "PATIENT3@EXAMPLE.COM",
                             NormalizedUserName = "PATIENT3@EXAMPLE.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEBBRFslw8PCGd8pc98qRc9Eb8pJDbuqJFNFQJFKvRmwJFvGzoxu2CvMw3mv1VAFeHg==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEJxw2i0baoUhdALkycjrUQRA3fx87rlhQMIQHdE26FoTe1gCgNr9EZcUXlLq9rLsPQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "0f22169b-7ebc-4feb-a5ec-cf3f454eb3dd",
+                            SecurityStamp = "280b2495-8226-4e21-bd7e-1cafd60ec214",
                             TwoFactorEnabled = false,
                             UserName = "patient3@example.com"
                         },
@@ -670,7 +673,7 @@ namespace MentalHealthApp.Migrations
                         {
                             Id = "17",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "acef0e9b-5f4f-40e4-adb1-30ba90c371cf",
+                            ConcurrencyStamp = "7f9e2b95-685c-40e8-9a85-dd7b889669e2",
                             Email = "patient4@example.com",
                             EmailConfirmed = true,
                             FirstName = "David",
@@ -678,9 +681,9 @@ namespace MentalHealthApp.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "PATIENT4@EXAMPLE.COM",
                             NormalizedUserName = "PATIENT4@EXAMPLE.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEA8kr18GaC7iajBigkqg9At+K+uUxMcTqzVn8kcpSqykLIG/HBBUK5xneBYWYOLinQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEJhQXrRba3t0Oi29xfXnC2oigyBwz9UDVA1KGsTtf9JdqgILV2C/cTqFDRLTL6q9Pg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "60c84d5c-5cc3-4e09-8264-c3543ce1e109",
+                            SecurityStamp = "7406776c-1ddc-46d7-b4e7-23c15bfd48bc",
                             TwoFactorEnabled = false,
                             UserName = "patient4@example.com"
                         },
@@ -688,7 +691,7 @@ namespace MentalHealthApp.Migrations
                         {
                             Id = "18",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "45157072-f385-48a5-b760-ead048052e66",
+                            ConcurrencyStamp = "c0ee1fba-a3e4-450c-a234-1a8b9388edc1",
                             Email = "patient5@example.com",
                             EmailConfirmed = true,
                             FirstName = "Sophia",
@@ -696,9 +699,9 @@ namespace MentalHealthApp.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "PATIENT5@EXAMPLE.COM",
                             NormalizedUserName = "PATIENT5@EXAMPLE.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAENhopE3a+uJVq68yDgFPL2AW1HoKdDqmOHQaSyBldtAKDiOXp5PS05kOFB6or0m3+Q==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEIgUtUlW36+XUxOl54zzk+18ffuZK4hhLqVrYwStt9I6KSUYM8f4QSlAEvgYiKEE2g==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "06001a1a-87b9-4dbc-a961-df5e67c69f30",
+                            SecurityStamp = "fef67cb5-dcee-4d75-8f7f-645eca177781",
                             TwoFactorEnabled = false,
                             UserName = "patient5@example.com"
                         },
@@ -706,7 +709,7 @@ namespace MentalHealthApp.Migrations
                         {
                             Id = "19",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "2881b2b5-cff4-44bf-bb27-58eaca69cad7",
+                            ConcurrencyStamp = "82379a55-cd80-43ad-8277-17413b201e41",
                             Email = "patient6@example.com",
                             EmailConfirmed = true,
                             FirstName = "James",
@@ -714,9 +717,9 @@ namespace MentalHealthApp.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "PATIENT6@EXAMPLE.COM",
                             NormalizedUserName = "PATIENT6@EXAMPLE.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEBQqftXQT1ywRU8/KAXZPiSpzIOlQoFO3Y967oS1K3n/XQorkUnBTCDQIuNiyzrFzA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAECh06/V4SWojtPTX3GdaYvBzEJaQDqp5QmNWlh3CbOlrcU1Zt0B2MWnmxbDAYDfR2g==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "65000b28-b7bb-4abd-b630-de30913d44a6",
+                            SecurityStamp = "77465b80-8980-49e8-9cca-045d04054101",
                             TwoFactorEnabled = false,
                             UserName = "patient6@example.com"
                         },
@@ -724,7 +727,7 @@ namespace MentalHealthApp.Migrations
                         {
                             Id = "20",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "afe7e68d-e56e-4694-a846-de51eb9ccb26",
+                            ConcurrencyStamp = "090321bf-f05f-4056-a730-d260398b111b",
                             Email = "patient7@example.com",
                             EmailConfirmed = true,
                             FirstName = "Olivia",
@@ -732,9 +735,9 @@ namespace MentalHealthApp.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "PATIENT7@EXAMPLE.COM",
                             NormalizedUserName = "PATIENT7@EXAMPLE.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEE1I+uaSut/uO78Byub2F08e873J3zAWs16/0LjJNBuKs144/LK1GdpGPVWTaQboXw==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEL5v632eJ/7ky5wO5wo/qtzDk5cHs632MylqD4FkHuo7P9ECHmcgG8WJCVMFdn7Rew==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "feccb9ff-0885-4001-884a-f7ef30f515c2",
+                            SecurityStamp = "597ca571-b42a-4bcc-b0d6-b94a15791310",
                             TwoFactorEnabled = false,
                             UserName = "patient7@example.com"
                         });
@@ -778,7 +781,7 @@ namespace MentalHealthApp.Migrations
                         new
                         {
                             Id = 1,
-                            Date = new DateTime(2025, 4, 1, 0, 0, 0, 0, DateTimeKind.Local),
+                            Date = new DateTime(2025, 5, 3, 0, 0, 0, 0, DateTimeKind.Local),
                             MoodId = 1,
                             Notes = "Had a great day with friends",
                             PatientId = 1,
@@ -787,7 +790,7 @@ namespace MentalHealthApp.Migrations
                         new
                         {
                             Id = 2,
-                            Date = new DateTime(2025, 4, 3, 0, 0, 0, 0, DateTimeKind.Local),
+                            Date = new DateTime(2025, 5, 5, 0, 0, 0, 0, DateTimeKind.Local),
                             MoodId = 3,
                             Notes = "Work stress is getting to me",
                             PatientId = 1,
@@ -796,7 +799,7 @@ namespace MentalHealthApp.Migrations
                         new
                         {
                             Id = 3,
-                            Date = new DateTime(2025, 4, 5, 0, 0, 0, 0, DateTimeKind.Local),
+                            Date = new DateTime(2025, 5, 7, 0, 0, 0, 0, DateTimeKind.Local),
                             MoodId = 6,
                             Notes = "Feeling calm after meditation",
                             PatientId = 1,
@@ -805,7 +808,7 @@ namespace MentalHealthApp.Migrations
                         new
                         {
                             Id = 4,
-                            Date = new DateTime(2025, 3, 31, 0, 0, 0, 0, DateTimeKind.Local),
+                            Date = new DateTime(2025, 5, 2, 0, 0, 0, 0, DateTimeKind.Local),
                             MoodId = 2,
                             Notes = "Feeling down today",
                             PatientId = 2,
@@ -814,7 +817,7 @@ namespace MentalHealthApp.Migrations
                         new
                         {
                             Id = 5,
-                            Date = new DateTime(2025, 4, 4, 0, 0, 0, 0, DateTimeKind.Local),
+                            Date = new DateTime(2025, 5, 6, 0, 0, 0, 0, DateTimeKind.Local),
                             MoodId = 5,
                             Notes = "Excited for upcoming trip",
                             PatientId = 2,
@@ -823,7 +826,7 @@ namespace MentalHealthApp.Migrations
                         new
                         {
                             Id = 6,
-                            Date = new DateTime(2025, 4, 5, 0, 0, 0, 0, DateTimeKind.Local),
+                            Date = new DateTime(2025, 5, 7, 0, 0, 0, 0, DateTimeKind.Local),
                             MoodId = 8,
                             Notes = "Stressed about work deadline",
                             PatientId = 2,
@@ -832,7 +835,7 @@ namespace MentalHealthApp.Migrations
                         new
                         {
                             Id = 7,
-                            Date = new DateTime(2025, 3, 30, 0, 0, 0, 0, DateTimeKind.Local),
+                            Date = new DateTime(2025, 5, 1, 0, 0, 0, 0, DateTimeKind.Local),
                             MoodId = 4,
                             Notes = "Angry about argument with friend",
                             PatientId = 3,
@@ -841,7 +844,7 @@ namespace MentalHealthApp.Migrations
                         new
                         {
                             Id = 8,
-                            Date = new DateTime(2025, 4, 2, 0, 0, 0, 0, DateTimeKind.Local),
+                            Date = new DateTime(2025, 5, 4, 0, 0, 0, 0, DateTimeKind.Local),
                             MoodId = 7,
                             Notes = "Exhausted from lack of sleep",
                             PatientId = 3,
@@ -850,7 +853,7 @@ namespace MentalHealthApp.Migrations
                         new
                         {
                             Id = 9,
-                            Date = new DateTime(2025, 4, 4, 0, 0, 0, 0, DateTimeKind.Local),
+                            Date = new DateTime(2025, 5, 6, 0, 0, 0, 0, DateTimeKind.Local),
                             MoodId = 9,
                             Notes = "Content with how things are going",
                             PatientId = 3,
@@ -859,7 +862,7 @@ namespace MentalHealthApp.Migrations
                         new
                         {
                             Id = 10,
-                            Date = new DateTime(2025, 4, 1, 0, 0, 0, 0, DateTimeKind.Local),
+                            Date = new DateTime(2025, 5, 3, 0, 0, 0, 0, DateTimeKind.Local),
                             MoodId = 10,
                             Notes = "Feeling lonely this weekend",
                             PatientId = 4,
@@ -868,7 +871,7 @@ namespace MentalHealthApp.Migrations
                         new
                         {
                             Id = 11,
-                            Date = new DateTime(2025, 4, 3, 0, 0, 0, 0, DateTimeKind.Local),
+                            Date = new DateTime(2025, 5, 5, 0, 0, 0, 0, DateTimeKind.Local),
                             MoodId = 12,
                             Notes = "Hopeful about therapy progress",
                             PatientId = 4,
@@ -877,7 +880,7 @@ namespace MentalHealthApp.Migrations
                         new
                         {
                             Id = 12,
-                            Date = new DateTime(2025, 4, 5, 0, 0, 0, 0, DateTimeKind.Local),
+                            Date = new DateTime(2025, 5, 7, 0, 0, 0, 0, DateTimeKind.Local),
                             MoodId = 11,
                             Notes = "Confused about my feelings",
                             PatientId = 4,
@@ -886,7 +889,7 @@ namespace MentalHealthApp.Migrations
                         new
                         {
                             Id = 13,
-                            Date = new DateTime(2025, 4, 2, 0, 0, 0, 0, DateTimeKind.Local),
+                            Date = new DateTime(2025, 5, 4, 0, 0, 0, 0, DateTimeKind.Local),
                             MoodId = 1,
                             Notes = "Happy about good news",
                             PatientId = 5,
@@ -895,7 +898,7 @@ namespace MentalHealthApp.Migrations
                         new
                         {
                             Id = 14,
-                            Date = new DateTime(2025, 4, 4, 0, 0, 0, 0, DateTimeKind.Local),
+                            Date = new DateTime(2025, 5, 6, 0, 0, 0, 0, DateTimeKind.Local),
                             MoodId = 3,
                             Notes = "Anxious about upcoming test",
                             PatientId = 5,
@@ -904,7 +907,7 @@ namespace MentalHealthApp.Migrations
                         new
                         {
                             Id = 15,
-                            Date = new DateTime(2025, 3, 31, 0, 0, 0, 0, DateTimeKind.Local),
+                            Date = new DateTime(2025, 5, 2, 0, 0, 0, 0, DateTimeKind.Local),
                             MoodId = 5,
                             Notes = "Excited to see family",
                             PatientId = 6,
@@ -913,7 +916,7 @@ namespace MentalHealthApp.Migrations
                         new
                         {
                             Id = 16,
-                            Date = new DateTime(2025, 4, 3, 0, 0, 0, 0, DateTimeKind.Local),
+                            Date = new DateTime(2025, 5, 5, 0, 0, 0, 0, DateTimeKind.Local),
                             MoodId = 6,
                             Notes = "Calm after yoga session",
                             PatientId = 6,
@@ -922,7 +925,7 @@ namespace MentalHealthApp.Migrations
                         new
                         {
                             Id = 17,
-                            Date = new DateTime(2025, 4, 5, 0, 0, 0, 0, DateTimeKind.Local),
+                            Date = new DateTime(2025, 5, 7, 0, 0, 0, 0, DateTimeKind.Local),
                             MoodId = 2,
                             Notes = "Sad about pet being sick",
                             PatientId = 6,
@@ -931,7 +934,7 @@ namespace MentalHealthApp.Migrations
                         new
                         {
                             Id = 18,
-                            Date = new DateTime(2025, 4, 1, 0, 0, 0, 0, DateTimeKind.Local),
+                            Date = new DateTime(2025, 5, 3, 0, 0, 0, 0, DateTimeKind.Local),
                             MoodId = 7,
                             Notes = "Tired from work week",
                             PatientId = 7,
@@ -940,7 +943,7 @@ namespace MentalHealthApp.Migrations
                         new
                         {
                             Id = 19,
-                            Date = new DateTime(2025, 4, 4, 0, 0, 0, 0, DateTimeKind.Local),
+                            Date = new DateTime(2025, 5, 6, 0, 0, 0, 0, DateTimeKind.Local),
                             MoodId = 9,
                             Notes = "Content with life right now",
                             PatientId = 7,
@@ -949,7 +952,7 @@ namespace MentalHealthApp.Migrations
                         new
                         {
                             Id = 20,
-                            Date = new DateTime(2025, 4, 5, 0, 0, 0, 0, DateTimeKind.Local),
+                            Date = new DateTime(2025, 5, 7, 0, 0, 0, 0, DateTimeKind.Local),
                             MoodId = 12,
                             Notes = "Hopeful about new treatment",
                             PatientId = 7,
@@ -1144,7 +1147,7 @@ namespace MentalHealthApp.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ProductEntity");
+                    b.ToTable("ProductEntities");
                 });
 
             modelBuilder.Entity("MentalHealthApp.Models.Therapist", b =>

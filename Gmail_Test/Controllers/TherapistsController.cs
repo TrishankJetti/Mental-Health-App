@@ -13,7 +13,8 @@ using Microsoft.AspNetCore.Identity;
 
 namespace MentalHealthApp.Controllers
 {
-   
+
+    [Authorize(Roles ="Admin")]
     public class TherapistsController : Controller
     {
         private readonly MentalHealthContext _context;

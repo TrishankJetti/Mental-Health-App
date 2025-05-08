@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace MentalHealthApp.Migrations
 {
     /// <inheritdoc />
-    public partial class AddNewData : Migration
+    public partial class @new : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -34,7 +34,7 @@ namespace MentalHealthApp.Migrations
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     FirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    DateOfBirth = table.Column<DateOnly>(type: "date", nullable: true),
+                    Age = table.Column<int>(type: "int", nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -304,29 +304,29 @@ namespace MentalHealthApp.Migrations
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
-                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "DateOfBirth", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
+                columns: new[] { "Id", "AccessFailedCount", "Age", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "1", 0, "1e5719ca-6f76-4720-a1c7-143d8f5c6d56", null, "admin@example.com", true, "System", "Admin", false, null, "ADMIN@EXAMPLE.COM", "ADMIN@EXAMPLE.COM", "AQAAAAIAAYagAAAAEP4C6uGoBOkWc41dUT3nn80SPbKm/GBX00CR0J0JZin6xDlYauZqSdEVFUs5W/g7hQ==", null, false, "e7b45051-3fd7-4586-8856-f3b45fdb5bf1", false, "admin@example.com" },
-                    { "10", 0, "60d437a3-1e8e-45ec-9ee4-51cc6ba2d7d8", null, "therapist7@example.com", true, "Thomas", "Moore", false, null, "THERAPIST7@EXAMPLE.COM", "THERAPIST7@EXAMPLE.COM", "AQAAAAIAAYagAAAAEJmVazYXmeqkjxd9Jil43qff0nXBXrANE66E6fTBNbJDzSGN2WerfXBz19LMRHd7jQ==", null, false, "87fd5109-2cc0-4327-970c-319b9d59da5c", false, "therapist7@example.com" },
-                    { "11", 0, "53196660-1b59-46bd-bec4-2a46bfdefd1f", null, "therapist8@example.com", true, "Nancy", "Taylor", false, null, "THERAPIST8@EXAMPLE.COM", "THERAPIST8@EXAMPLE.COM", "AQAAAAIAAYagAAAAEEuvZQHb+T4NRU1PQpSz4n5hwyrBfrMQozO4QBCfRzO6wgaZ8ipxWQh/zzD0nEP5Tg==", null, false, "be298827-398b-4585-a3c4-910734e2ec65", false, "therapist8@example.com" },
-                    { "12", 0, "e685f157-1f02-47e9-a632-65d5ec0dd535", null, "therapist9@example.com", true, "Kevin", "Anderson", false, null, "THERAPIST9@EXAMPLE.COM", "THERAPIST9@EXAMPLE.COM", "AQAAAAIAAYagAAAAEMa60Is/BicXBB2oREkRtkMmszK1y7fpxnoGcwFcPZtK8bz4INiKWR3SBL4mINOUKA==", null, false, "fa340277-53f9-4d95-baf4-51516cde6203", false, "therapist9@example.com" },
-                    { "13", 0, "cba7358f-fde2-44d2-9fcf-566a25cac348", null, "therapist10@example.com", true, "Emma", "Thomas", false, null, "THERAPIST10@EXAMPLE.COM", "THERAPIST10@EXAMPLE.COM", "AQAAAAIAAYagAAAAEPBJSfD6sJkvn1ng6q/YzF7n0ZrARdXS0lac+XYSFN24btmTqCPQfkBmbU2NecanBw==", null, false, "d15b42c9-86d1-4c7a-b127-683412925545", false, "therapist10@example.com" },
-                    { "14", 0, "189940e0-c344-499e-8548-0bc3fc65616d", null, "patient1@example.com", true, "Alice", "Smith", false, null, "PATIENT1@EXAMPLE.COM", "PATIENT1@EXAMPLE.COM", "AQAAAAIAAYagAAAAEANxsFcNuSrpnkwGWOKzrjbZ25oDfDDl2Y0WIkiMoAXvLMonLoBXU6jQ2wzDoA3kSQ==", null, false, "95335ac7-6ebc-4b01-93d8-80fe37f4643e", false, "patient1@example.com" },
-                    { "15", 0, "65ceead3-99d0-49c5-8627-df554839a6bb", null, "patient2@example.com", true, "Mike", "Johnson", false, null, "PATIENT2@EXAMPLE.COM", "PATIENT2@EXAMPLE.COM", "AQAAAAIAAYagAAAAEGNi3MovsI1pyIDUfaOenCc+AGCYFxSpRSGvYsjot+foFuOEFLRgIGGNOWN0ZCEdKQ==", null, false, "a98daa73-78f8-4a69-8473-a79efcc8c5cc", false, "patient2@example.com" },
-                    { "16", 0, "cdd36fc2-efe7-4706-afd0-4f43f7ec4dd1", null, "patient3@example.com", true, "Emily", "Williams", false, null, "PATIENT3@EXAMPLE.COM", "PATIENT3@EXAMPLE.COM", "AQAAAAIAAYagAAAAEKa6r7lz4h7gxroS8rE0cOoav/xtbYPZyfPDH7EAtIvfO4GV/NuxSED7Pp600WkaEg==", null, false, "0c6a3f97-0db6-4214-a36c-4f2a6813d21e", false, "patient3@example.com" },
-                    { "17", 0, "eade8162-cae3-4d20-a259-875b070cd121", null, "patient4@example.com", true, "David", "Lee", false, null, "PATIENT4@EXAMPLE.COM", "PATIENT4@EXAMPLE.COM", "AQAAAAIAAYagAAAAEOjgCinpxHJoDrtu9AYrJ7EoPyCtibp5OYw4SXuUDSmncASa5CNaXdSw5eGKkaxn7A==", null, false, "38948475-f8e2-45c4-aacc-492a784ac789", false, "patient4@example.com" },
-                    { "18", 0, "90412526-1342-4453-872e-8bc1b8fa5043", null, "patient5@example.com", true, "Sophia", "Garcia", false, null, "PATIENT5@EXAMPLE.COM", "PATIENT5@EXAMPLE.COM", "AQAAAAIAAYagAAAAEE7FXHEa9rVKoiexo1uXSE0/x2yaSfBUGXTwmtDsZ3UlcPJx3Il3UBZmT+uid0HLwg==", null, false, "b3c4fd81-e001-482d-a664-fe4b2a26f92d", false, "patient5@example.com" },
-                    { "19", 0, "82998f1e-68fc-4aee-895b-cb979a830774", null, "patient6@example.com", true, "James", "Wilson", false, null, "PATIENT6@EXAMPLE.COM", "PATIENT6@EXAMPLE.COM", "AQAAAAIAAYagAAAAED288QGz6lXXTJpsK9+k7jHUQU1U0JUqSG+pB61pyMYIRnHOBMla3LS7O3zk5T/PSg==", null, false, "e991eefd-8ee6-4aa5-93b0-9f8fe85d1c90", false, "patient6@example.com" },
-                    { "2", 0, "f8751e0e-5ff2-4337-bbe5-3c55f8358ff0", null, "admin2@example.com", true, "Second", "Admin", false, null, "ADMIN2@EXAMPLE.COM", "ADMIN2@EXAMPLE.COM", "AQAAAAIAAYagAAAAEDDgQbtn2ZGnXHJqnmfDdmD302O2y8Qo7XzECEGNf8ZC3FC5EnBvyHAPjz3sTCpVng==", null, false, "319d6081-083d-42d9-b53c-0caeb80239d2", false, "admin2@example.com" },
-                    { "20", 0, "a3f76e1d-e3ee-4806-b69a-9e01cbc3732e", null, "patient7@example.com", true, "Olivia", "Martinez", false, null, "PATIENT7@EXAMPLE.COM", "PATIENT7@EXAMPLE.COM", "AQAAAAIAAYagAAAAEO2cYCoicEEeyI7eEa/WdOmUe087MWPiohyjB2zvpPY2bmwnXQ1xpAyUEOjhzJBhiQ==", null, false, "4cf4ab2f-b952-4031-a351-86cc2c41179c", false, "patient7@example.com" },
-                    { "3", 0, "a7031f7d-c615-4447-b859-4c5eb679eb21", null, "admin3@example.com", true, "Third", "Admin", false, null, "ADMIN3@EXAMPLE.COM", "ADMIN3@EXAMPLE.COM", "AQAAAAIAAYagAAAAEAIV+opWINubiIJpWDunPYI1Kw6WT3lamYkxnF//SCZuXMnSnKEO/wGw4Sd1wmMoAQ==", null, false, "60f0dcf4-e7b0-480e-b224-9e6e414af5a7", false, "admin3@example.com" },
-                    { "4", 0, "a3176414-86ea-4b99-b6bf-b39a9c5bbec5", null, "therapist1@example.com", true, "John", "Doe", false, null, "THERAPIST1@EXAMPLE.COM", "THERAPIST1@EXAMPLE.COM", "AQAAAAIAAYagAAAAECe8OxoMYQUHfXbXjFZSzU+tVS9yu7wP8mNUPoIW9oVThyuh7jaih9/6rOWsfAIopQ==", null, false, "d85d7f31-3723-4b1b-86e3-8b0ccdba4b94", false, "therapist1@example.com" },
-                    { "5", 0, "f46edfd0-4278-49e1-8dce-125932edb130", null, "therapist2@example.com", true, "Sarah", "Johnson", false, null, "THERAPIST2@EXAMPLE.COM", "THERAPIST2@EXAMPLE.COM", "AQAAAAIAAYagAAAAEAldvBrgWjwaxYJ+tn7kOGkE1YqGyo3QSb905M2GGALlXK/Ptddz1PxTnSB2PJIUnA==", null, false, "c79701b3-0d95-433e-92fc-02f687b55ec5", false, "therapist2@example.com" },
-                    { "6", 0, "4e5801ce-e442-4e17-a773-ad7d51d911c6", null, "therapist3@example.com", true, "Michael", "Brown", false, null, "THERAPIST3@EXAMPLE.COM", "THERAPIST3@EXAMPLE.COM", "AQAAAAIAAYagAAAAECouu/ko/7Kew+ZSXjRHl4Cs6PGvB7yToTIwFRw4Ef7zOlsDRXaZ/3JX9rKceA66Nw==", null, false, "9aad5c88-d761-4f72-a8f9-6cbe5eb282b0", false, "therapist3@example.com" },
-                    { "7", 0, "f9578c4c-024a-42e7-b2a0-ca69257bb06d", null, "therapist4@example.com", true, "Jennifer", "Davis", false, null, "THERAPIST4@EXAMPLE.COM", "THERAPIST4@EXAMPLE.COM", "AQAAAAIAAYagAAAAEL750AgUQrbuuHimc39hy8Xatrc0f9jafH7uUDYOv96TZ4CwYLsybcGVZXhNxLRzOQ==", null, false, "766f604a-49e7-427d-b9a5-cabac23f0830", false, "therapist4@example.com" },
-                    { "8", 0, "addece5d-bb52-496a-bc35-7a7f0ab0e8b0", null, "therapist5@example.com", true, "Robert", "Miller", false, null, "THERAPIST5@EXAMPLE.COM", "THERAPIST5@EXAMPLE.COM", "AQAAAAIAAYagAAAAEO7b59yEkbxOYe8fBNnjhWGBhhoBaB07+c1HqcyB+cc66hDbXtoF67QVnEgi1VbVPw==", null, false, "c5839ebb-cd42-44fa-888b-682d96412a77", false, "therapist5@example.com" },
-                    { "9", 0, "fd4e4b2e-ff68-4577-843e-e9569b976d81", null, "therapist6@example.com", true, "Lisa", "Wilson", false, null, "THERAPIST6@EXAMPLE.COM", "THERAPIST6@EXAMPLE.COM", "AQAAAAIAAYagAAAAEOKutn2hJMNtNyc+ehEp8KEEQYUSASYAPCQkcTiqzbGXDRFYqOcVfU58uoYoTYKpDA==", null, false, "7b79dc44-e1d6-4063-9cdc-afcce3dea243", false, "therapist6@example.com" }
+                    { "1", 0, null, "b5c4e7a4-a86d-48f2-98b9-853e1716b7b2", "admin@example.com", true, "System", "Admin", false, null, "ADMIN@EXAMPLE.COM", "ADMIN@EXAMPLE.COM", "AQAAAAIAAYagAAAAEJLCfg6JjAeBCzjua118fVIWqUmXCGP/tb1+fjFH0bAPqhEzwTtpALV01KA23MMSIQ==", null, false, "a706b839-7cea-4601-9cc6-24f9f4060221", false, "admin@example.com" },
+                    { "10", 0, null, "9a036680-c88b-4de4-ad6c-a4d915fc4cce", "therapist7@example.com", true, "Thomas", "Moore", false, null, "THERAPIST7@EXAMPLE.COM", "THERAPIST7@EXAMPLE.COM", "AQAAAAIAAYagAAAAEB94ufc2/NSQK57bOou9OwDMn+YXYgyfys1ZNGb7fj1zy0cs3d+nBMKCrOchZ9Gtow==", null, false, "8eb419ae-408f-40cf-a66e-e37a84feec5d", false, "therapist7@example.com" },
+                    { "11", 0, null, "3aa295dc-67a5-4620-a8c2-84709402821b", "therapist8@example.com", true, "Nancy", "Taylor", false, null, "THERAPIST8@EXAMPLE.COM", "THERAPIST8@EXAMPLE.COM", "AQAAAAIAAYagAAAAEI8soMDl2ZzBI/rIC3JDUOcYdcJiwAMV2kv/twqIipmAFQGqrovu57oTVDg2VxrCUQ==", null, false, "224d4769-547a-4767-8157-de8bdbe01826", false, "therapist8@example.com" },
+                    { "12", 0, null, "d23460ea-cef9-45b5-b5b0-4a66d74b2b6a", "therapist9@example.com", true, "Kevin", "Anderson", false, null, "THERAPIST9@EXAMPLE.COM", "THERAPIST9@EXAMPLE.COM", "AQAAAAIAAYagAAAAEHVduO7ZfSYmi3ELsueUjNuCaWU7NZCFnz4WHs3fDi3HpLEL2cyASlBMTrP/jsQ79A==", null, false, "0bc024f5-17e2-43d7-b87f-ceebb1ef0f93", false, "therapist9@example.com" },
+                    { "13", 0, null, "51f50eda-5c57-4b81-8aae-386f60bd860f", "therapist10@example.com", true, "Emma", "Thomas", false, null, "THERAPIST10@EXAMPLE.COM", "THERAPIST10@EXAMPLE.COM", "AQAAAAIAAYagAAAAEFqElQNsWRD9jDsBMkQYzuXu2jKZ1kN/7cTFrg9BfKJDdJ4YycxrqE/StjWuUwOuRw==", null, false, "9b8f7977-625a-40fc-93c6-37f4fc271999", false, "therapist10@example.com" },
+                    { "14", 0, null, "a7e90eb9-0255-48d8-917c-97252873744d", "patient1@example.com", true, "Alice", "Smith", false, null, "PATIENT1@EXAMPLE.COM", "PATIENT1@EXAMPLE.COM", "AQAAAAIAAYagAAAAEAXP/6cK+IB2akrPTyJe+yV1ii7OfSxSWJ6koUxzoZBHKnW9APKL7ux/4qLKd1Vk/A==", null, false, "65b50dbb-e03e-4e9f-a8ba-9a1e47edeb29", false, "patient1@example.com" },
+                    { "15", 0, null, "2c0b13d5-7e4b-443e-9915-5c696abea97d", "patient2@example.com", true, "Mike", "Johnson", false, null, "PATIENT2@EXAMPLE.COM", "PATIENT2@EXAMPLE.COM", "AQAAAAIAAYagAAAAEJQh+tYHjTXwJl9YhYueYhDfqUstkDAJ/jzhs98Ud8s2dQwHuswPodjE8ZkragYljw==", null, false, "083d64f5-a12b-4df8-8bfd-0bac2ba0a9b6", false, "patient2@example.com" },
+                    { "16", 0, null, "79b10876-1ae8-47d8-a314-d8f4e86e6296", "patient3@example.com", true, "Emily", "Williams", false, null, "PATIENT3@EXAMPLE.COM", "PATIENT3@EXAMPLE.COM", "AQAAAAIAAYagAAAAEJxw2i0baoUhdALkycjrUQRA3fx87rlhQMIQHdE26FoTe1gCgNr9EZcUXlLq9rLsPQ==", null, false, "280b2495-8226-4e21-bd7e-1cafd60ec214", false, "patient3@example.com" },
+                    { "17", 0, null, "7f9e2b95-685c-40e8-9a85-dd7b889669e2", "patient4@example.com", true, "David", "Lee", false, null, "PATIENT4@EXAMPLE.COM", "PATIENT4@EXAMPLE.COM", "AQAAAAIAAYagAAAAEJhQXrRba3t0Oi29xfXnC2oigyBwz9UDVA1KGsTtf9JdqgILV2C/cTqFDRLTL6q9Pg==", null, false, "7406776c-1ddc-46d7-b4e7-23c15bfd48bc", false, "patient4@example.com" },
+                    { "18", 0, null, "c0ee1fba-a3e4-450c-a234-1a8b9388edc1", "patient5@example.com", true, "Sophia", "Garcia", false, null, "PATIENT5@EXAMPLE.COM", "PATIENT5@EXAMPLE.COM", "AQAAAAIAAYagAAAAEIgUtUlW36+XUxOl54zzk+18ffuZK4hhLqVrYwStt9I6KSUYM8f4QSlAEvgYiKEE2g==", null, false, "fef67cb5-dcee-4d75-8f7f-645eca177781", false, "patient5@example.com" },
+                    { "19", 0, null, "82379a55-cd80-43ad-8277-17413b201e41", "patient6@example.com", true, "James", "Wilson", false, null, "PATIENT6@EXAMPLE.COM", "PATIENT6@EXAMPLE.COM", "AQAAAAIAAYagAAAAECh06/V4SWojtPTX3GdaYvBzEJaQDqp5QmNWlh3CbOlrcU1Zt0B2MWnmxbDAYDfR2g==", null, false, "77465b80-8980-49e8-9cca-045d04054101", false, "patient6@example.com" },
+                    { "2", 0, null, "2399f1a0-fa95-4c61-ae52-c79e95022b90", "admin2@example.com", true, "Second", "Admin", false, null, "ADMIN2@EXAMPLE.COM", "ADMIN2@EXAMPLE.COM", "AQAAAAIAAYagAAAAEIfgBC6Vsv/iXa073h2HHM2mCj1U/23rjfoOw7EnrKEeg00/syDtpkxYwMd1txadTA==", null, false, "49fc208e-fa90-452b-9396-e41bd0f43e52", false, "admin2@example.com" },
+                    { "20", 0, null, "090321bf-f05f-4056-a730-d260398b111b", "patient7@example.com", true, "Olivia", "Martinez", false, null, "PATIENT7@EXAMPLE.COM", "PATIENT7@EXAMPLE.COM", "AQAAAAIAAYagAAAAEL5v632eJ/7ky5wO5wo/qtzDk5cHs632MylqD4FkHuo7P9ECHmcgG8WJCVMFdn7Rew==", null, false, "597ca571-b42a-4bcc-b0d6-b94a15791310", false, "patient7@example.com" },
+                    { "3", 0, null, "e1ec3dad-21d0-4dad-a832-d857855e81e7", "admin3@example.com", true, "Third", "Admin", false, null, "ADMIN3@EXAMPLE.COM", "ADMIN3@EXAMPLE.COM", "AQAAAAIAAYagAAAAEOrZ91J7LAonjUvhSIqFApfKp0lhws3N1rfb5CYl8RDupkPHFtamrH2hLXgQyt/hMw==", null, false, "77e054bf-582e-491f-a8ed-29412edf5d52", false, "admin3@example.com" },
+                    { "4", 0, null, "4a1ed1ea-d9fe-49f4-b9f7-61b897014ef9", "therapist1@example.com", true, "John", "Doe", false, null, "THERAPIST1@EXAMPLE.COM", "THERAPIST1@EXAMPLE.COM", "AQAAAAIAAYagAAAAEBasAilszJit5F50DUk9J5x47gURKmixvUOmHL3QiOpGdBVaUZzEyVRQJ4mD4YANSg==", null, false, "35058ccf-78ef-458a-ba53-5e913abb3053", false, "therapist1@example.com" },
+                    { "5", 0, null, "544f4991-1829-4682-b78d-6b4858405882", "therapist2@example.com", true, "Sarah", "Johnson", false, null, "THERAPIST2@EXAMPLE.COM", "THERAPIST2@EXAMPLE.COM", "AQAAAAIAAYagAAAAELIZL6/DkNchkiRllpL4X45bYNSDJb5zQiZl43laIAtSPfwrjeLznbrV3U3WSdpzvA==", null, false, "e9740859-ae3a-4d1d-86d7-81ed33381f61", false, "therapist2@example.com" },
+                    { "6", 0, null, "fc61b04b-6e3d-42d5-aff6-4110e19fc0dc", "therapist3@example.com", true, "Michael", "Brown", false, null, "THERAPIST3@EXAMPLE.COM", "THERAPIST3@EXAMPLE.COM", "AQAAAAIAAYagAAAAEImkFfW5dhW2wqiKxRcNOqHgVTAetX5ZcT9h0NTtTUke4YIenqAXX03qRI1rT8S/xw==", null, false, "9f5d3195-9d33-4358-ae76-900eabb419e2", false, "therapist3@example.com" },
+                    { "7", 0, null, "f927d19b-b74e-46f0-9efb-1bdd184d9998", "therapist4@example.com", true, "Jennifer", "Davis", false, null, "THERAPIST4@EXAMPLE.COM", "THERAPIST4@EXAMPLE.COM", "AQAAAAIAAYagAAAAEF1pTKKqs8PZdQmonkgNV2gBVLUg1rGkVbHi0ykzX1oVBQDc0+HDmbt182JFYp/yIA==", null, false, "cb131fc1-ee9f-4acb-8e9b-0fdded0c354f", false, "therapist4@example.com" },
+                    { "8", 0, null, "754538fc-ca83-46e9-9ca9-22e570632848", "therapist5@example.com", true, "Robert", "Miller", false, null, "THERAPIST5@EXAMPLE.COM", "THERAPIST5@EXAMPLE.COM", "AQAAAAIAAYagAAAAECo/70L+k3EiE/IPtLE2tSDcI29xgRY9w64j3H8wRBEGxucgME3hm3F9dUeeTVNBlw==", null, false, "9e35172f-653f-40df-a0f6-64e854c14e66", false, "therapist5@example.com" },
+                    { "9", 0, null, "0a8da8b3-4058-414c-88d3-d6681f67e0b9", "therapist6@example.com", true, "Lisa", "Wilson", false, null, "THERAPIST6@EXAMPLE.COM", "THERAPIST6@EXAMPLE.COM", "AQAAAAIAAYagAAAAEMG5ZSAxLUQfCbgQFrpZJX6MZ9451kQfPZ1Af4DtTBk6ZyeYWFo3VR70LNHqzLIriQ==", null, false, "b933fff3-0b11-4509-8a94-606d43816f93", false, "therapist6@example.com" }
                 });
 
             migrationBuilder.InsertData(
@@ -411,26 +411,26 @@ namespace MentalHealthApp.Migrations
                 columns: new[] { "AppointmentId", "AppointmentDate", "CreatedAt", "DurationMinutes", "Notes", "PatientId", "Status", "TherapistId", "UpdatedAt" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2025, 4, 4, 10, 0, 0, 0, DateTimeKind.Local), new DateTime(2025, 3, 27, 0, 0, 0, 0, DateTimeKind.Local), 60, "Initial consultation", 1, "Scheduled", 1, new DateTime(2025, 3, 31, 0, 0, 0, 0, DateTimeKind.Local) },
-                    { 2, new DateTime(2025, 4, 5, 11, 0, 0, 0, DateTimeKind.Local), new DateTime(2025, 3, 29, 0, 0, 0, 0, DateTimeKind.Local), 45, "Follow-up session", 2, "Scheduled", 1, new DateTime(2025, 4, 1, 0, 0, 0, 0, DateTimeKind.Local) },
-                    { 3, new DateTime(2025, 4, 4, 14, 0, 0, 0, DateTimeKind.Local), new DateTime(2025, 3, 30, 0, 0, 0, 0, DateTimeKind.Local), 60, "Family therapy", 3, "Scheduled", 2, new DateTime(2025, 4, 2, 0, 0, 0, 0, DateTimeKind.Local) },
-                    { 4, new DateTime(2025, 4, 6, 15, 0, 0, 0, DateTimeKind.Local), new DateTime(2025, 3, 31, 0, 0, 0, 0, DateTimeKind.Local), 90, "Couples counseling", 4, "Canceled", 2, new DateTime(2025, 4, 3, 0, 0, 0, 0, DateTimeKind.Local) },
-                    { 5, new DateTime(2025, 4, 5, 9, 0, 0, 0, DateTimeKind.Local), new DateTime(2025, 3, 28, 0, 0, 0, 0, DateTimeKind.Local), 60, "Trauma session", 5, "Completed", 3, new DateTime(2025, 4, 2, 0, 0, 0, 0, DateTimeKind.Local) },
-                    { 6, new DateTime(2025, 4, 7, 10, 0, 0, 0, DateTimeKind.Local), new DateTime(2025, 3, 29, 0, 0, 0, 0, DateTimeKind.Local), 60, "PTSD follow-up", 6, "Scheduled", 3, new DateTime(2025, 4, 1, 0, 0, 0, 0, DateTimeKind.Local) },
-                    { 7, new DateTime(2025, 4, 4, 13, 0, 0, 0, DateTimeKind.Local), new DateTime(2025, 3, 29, 0, 0, 0, 0, DateTimeKind.Local), 45, "Child therapy evaluation", 7, "Scheduled", 4, new DateTime(2025, 4, 2, 0, 0, 0, 0, DateTimeKind.Local) },
-                    { 8, new DateTime(2025, 4, 8, 14, 0, 0, 0, DateTimeKind.Local), new DateTime(2025, 3, 30, 0, 0, 0, 0, DateTimeKind.Local), 60, "Adolescent counseling", 1, "Scheduled", 4, new DateTime(2025, 4, 3, 0, 0, 0, 0, DateTimeKind.Local) },
-                    { 9, new DateTime(2025, 4, 6, 16, 0, 0, 0, DateTimeKind.Local), new DateTime(2025, 3, 30, 0, 0, 0, 0, DateTimeKind.Local), 90, "Addiction counseling", 2, "Scheduled", 5, new DateTime(2025, 4, 3, 0, 0, 0, 0, DateTimeKind.Local) },
-                    { 10, new DateTime(2025, 4, 9, 11, 0, 0, 0, DateTimeKind.Local), new DateTime(2025, 3, 27, 0, 0, 0, 0, DateTimeKind.Local), 60, "Substance abuse follow-up", 3, "Rescheduled", 5, new DateTime(2025, 4, 2, 0, 0, 0, 0, DateTimeKind.Local) },
-                    { 11, new DateTime(2025, 4, 5, 15, 0, 0, 0, DateTimeKind.Local), new DateTime(2025, 3, 31, 0, 0, 0, 0, DateTimeKind.Local), 60, "Eating disorder support", 4, "Scheduled", 6, new DateTime(2025, 4, 3, 0, 0, 0, 0, DateTimeKind.Local) },
-                    { 12, new DateTime(2025, 4, 10, 10, 0, 0, 0, DateTimeKind.Local), new DateTime(2025, 4, 1, 0, 0, 0, 0, DateTimeKind.Local), 90, "Body image therapy", 5, "Rescheduled", 6, new DateTime(2025, 4, 3, 0, 0, 0, 0, DateTimeKind.Local) },
-                    { 13, new DateTime(2025, 4, 7, 13, 0, 0, 0, DateTimeKind.Local), new DateTime(2025, 4, 1, 0, 0, 0, 0, DateTimeKind.Local), 60, "Couples therapy session", 6, "Scheduled", 7, new DateTime(2025, 4, 3, 0, 0, 0, 0, DateTimeKind.Local) },
-                    { 14, new DateTime(2025, 4, 11, 14, 0, 0, 0, DateTimeKind.Local), new DateTime(2025, 3, 27, 0, 0, 0, 0, DateTimeKind.Local), 60, "Relationship counseling", 7, "Completed", 7, new DateTime(2025, 4, 2, 0, 0, 0, 0, DateTimeKind.Local) },
-                    { 15, new DateTime(2025, 4, 6, 9, 0, 0, 0, DateTimeKind.Local), new DateTime(2025, 3, 29, 0, 0, 0, 0, DateTimeKind.Local), 60, "Art therapy introduction", 1, "Scheduled", 8, new DateTime(2025, 4, 1, 0, 0, 0, 0, DateTimeKind.Local) },
-                    { 16, new DateTime(2025, 4, 12, 11, 0, 0, 0, DateTimeKind.Local), new DateTime(2025, 3, 30, 0, 0, 0, 0, DateTimeKind.Local), 90, "Creative expression session", 2, "Completed", 8, new DateTime(2025, 4, 3, 0, 0, 0, 0, DateTimeKind.Local) },
-                    { 17, new DateTime(2025, 4, 8, 10, 0, 0, 0, DateTimeKind.Local), new DateTime(2025, 3, 31, 0, 0, 0, 0, DateTimeKind.Local), 60, "Sports performance anxiety", 3, "Scheduled", 9, new DateTime(2025, 4, 3, 0, 0, 0, 0, DateTimeKind.Local) },
-                    { 18, new DateTime(2025, 4, 13, 15, 0, 0, 0, DateTimeKind.Local), new DateTime(2025, 3, 28, 0, 0, 0, 0, DateTimeKind.Local), 60, "Competition stress management", 4, "Completed", 9, new DateTime(2025, 4, 2, 0, 0, 0, 0, DateTimeKind.Local) },
-                    { 19, new DateTime(2025, 4, 9, 14, 0, 0, 0, DateTimeKind.Local), new DateTime(2025, 3, 30, 0, 0, 0, 0, DateTimeKind.Local), 90, "Grief counseling", 5, "Scheduled", 10, new DateTime(2025, 4, 3, 0, 0, 0, 0, DateTimeKind.Local) },
-                    { 20, new DateTime(2025, 4, 14, 16, 0, 0, 0, DateTimeKind.Local), new DateTime(2025, 3, 29, 0, 0, 0, 0, DateTimeKind.Local), 60, "Bereavement support", 6, "Rescheduled", 10, new DateTime(2025, 4, 1, 0, 0, 0, 0, DateTimeKind.Local) }
+                    { 1, new DateTime(2025, 5, 9, 10, 0, 0, 0, DateTimeKind.Local), new DateTime(2025, 5, 1, 0, 0, 0, 0, DateTimeKind.Local), 60, "Initial consultation", 1, "Scheduled", 1, new DateTime(2025, 5, 5, 0, 0, 0, 0, DateTimeKind.Local) },
+                    { 2, new DateTime(2025, 5, 10, 11, 0, 0, 0, DateTimeKind.Local), new DateTime(2025, 5, 3, 0, 0, 0, 0, DateTimeKind.Local), 45, "Follow-up session", 2, "Scheduled", 1, new DateTime(2025, 5, 6, 0, 0, 0, 0, DateTimeKind.Local) },
+                    { 3, new DateTime(2025, 5, 9, 14, 0, 0, 0, DateTimeKind.Local), new DateTime(2025, 5, 4, 0, 0, 0, 0, DateTimeKind.Local), 60, "Family therapy", 3, "Scheduled", 2, new DateTime(2025, 5, 7, 0, 0, 0, 0, DateTimeKind.Local) },
+                    { 4, new DateTime(2025, 5, 11, 15, 0, 0, 0, DateTimeKind.Local), new DateTime(2025, 5, 5, 0, 0, 0, 0, DateTimeKind.Local), 90, "Couples counseling", 4, "Canceled", 2, new DateTime(2025, 5, 8, 0, 0, 0, 0, DateTimeKind.Local) },
+                    { 5, new DateTime(2025, 5, 10, 9, 0, 0, 0, DateTimeKind.Local), new DateTime(2025, 5, 2, 0, 0, 0, 0, DateTimeKind.Local), 60, "Trauma session", 5, "Completed", 3, new DateTime(2025, 5, 7, 0, 0, 0, 0, DateTimeKind.Local) },
+                    { 6, new DateTime(2025, 5, 12, 10, 0, 0, 0, DateTimeKind.Local), new DateTime(2025, 5, 3, 0, 0, 0, 0, DateTimeKind.Local), 60, "PTSD follow-up", 6, "Scheduled", 3, new DateTime(2025, 5, 6, 0, 0, 0, 0, DateTimeKind.Local) },
+                    { 7, new DateTime(2025, 5, 9, 13, 0, 0, 0, DateTimeKind.Local), new DateTime(2025, 5, 3, 0, 0, 0, 0, DateTimeKind.Local), 45, "Child therapy evaluation", 7, "Scheduled", 4, new DateTime(2025, 5, 7, 0, 0, 0, 0, DateTimeKind.Local) },
+                    { 8, new DateTime(2025, 5, 13, 14, 0, 0, 0, DateTimeKind.Local), new DateTime(2025, 5, 4, 0, 0, 0, 0, DateTimeKind.Local), 60, "Adolescent counseling", 1, "Scheduled", 4, new DateTime(2025, 5, 8, 0, 0, 0, 0, DateTimeKind.Local) },
+                    { 9, new DateTime(2025, 5, 11, 16, 0, 0, 0, DateTimeKind.Local), new DateTime(2025, 5, 4, 0, 0, 0, 0, DateTimeKind.Local), 90, "Addiction counseling", 2, "Scheduled", 5, new DateTime(2025, 5, 8, 0, 0, 0, 0, DateTimeKind.Local) },
+                    { 10, new DateTime(2025, 5, 14, 11, 0, 0, 0, DateTimeKind.Local), new DateTime(2025, 5, 1, 0, 0, 0, 0, DateTimeKind.Local), 60, "Substance abuse follow-up", 3, "Rescheduled", 5, new DateTime(2025, 5, 7, 0, 0, 0, 0, DateTimeKind.Local) },
+                    { 11, new DateTime(2025, 5, 10, 15, 0, 0, 0, DateTimeKind.Local), new DateTime(2025, 5, 5, 0, 0, 0, 0, DateTimeKind.Local), 60, "Eating disorder support", 4, "Scheduled", 6, new DateTime(2025, 5, 8, 0, 0, 0, 0, DateTimeKind.Local) },
+                    { 12, new DateTime(2025, 5, 15, 10, 0, 0, 0, DateTimeKind.Local), new DateTime(2025, 5, 6, 0, 0, 0, 0, DateTimeKind.Local), 90, "Body image therapy", 5, "Rescheduled", 6, new DateTime(2025, 5, 8, 0, 0, 0, 0, DateTimeKind.Local) },
+                    { 13, new DateTime(2025, 5, 12, 13, 0, 0, 0, DateTimeKind.Local), new DateTime(2025, 5, 6, 0, 0, 0, 0, DateTimeKind.Local), 60, "Couples therapy session", 6, "Scheduled", 7, new DateTime(2025, 5, 8, 0, 0, 0, 0, DateTimeKind.Local) },
+                    { 14, new DateTime(2025, 5, 16, 14, 0, 0, 0, DateTimeKind.Local), new DateTime(2025, 5, 1, 0, 0, 0, 0, DateTimeKind.Local), 60, "Relationship counseling", 7, "Completed", 7, new DateTime(2025, 5, 7, 0, 0, 0, 0, DateTimeKind.Local) },
+                    { 15, new DateTime(2025, 5, 11, 9, 0, 0, 0, DateTimeKind.Local), new DateTime(2025, 5, 3, 0, 0, 0, 0, DateTimeKind.Local), 60, "Art therapy introduction", 1, "Scheduled", 8, new DateTime(2025, 5, 6, 0, 0, 0, 0, DateTimeKind.Local) },
+                    { 16, new DateTime(2025, 5, 17, 11, 0, 0, 0, DateTimeKind.Local), new DateTime(2025, 5, 4, 0, 0, 0, 0, DateTimeKind.Local), 90, "Creative expression session", 2, "Completed", 8, new DateTime(2025, 5, 8, 0, 0, 0, 0, DateTimeKind.Local) },
+                    { 17, new DateTime(2025, 5, 13, 10, 0, 0, 0, DateTimeKind.Local), new DateTime(2025, 5, 5, 0, 0, 0, 0, DateTimeKind.Local), 60, "Sports performance anxiety", 3, "Scheduled", 9, new DateTime(2025, 5, 8, 0, 0, 0, 0, DateTimeKind.Local) },
+                    { 18, new DateTime(2025, 5, 18, 15, 0, 0, 0, DateTimeKind.Local), new DateTime(2025, 5, 2, 0, 0, 0, 0, DateTimeKind.Local), 60, "Competition stress management", 4, "Completed", 9, new DateTime(2025, 5, 7, 0, 0, 0, 0, DateTimeKind.Local) },
+                    { 19, new DateTime(2025, 5, 14, 14, 0, 0, 0, DateTimeKind.Local), new DateTime(2025, 5, 4, 0, 0, 0, 0, DateTimeKind.Local), 90, "Grief counseling", 5, "Scheduled", 10, new DateTime(2025, 5, 8, 0, 0, 0, 0, DateTimeKind.Local) },
+                    { 20, new DateTime(2025, 5, 19, 16, 0, 0, 0, DateTimeKind.Local), new DateTime(2025, 5, 3, 0, 0, 0, 0, DateTimeKind.Local), 60, "Bereavement support", 6, "Rescheduled", 10, new DateTime(2025, 5, 6, 0, 0, 0, 0, DateTimeKind.Local) }
                 });
 
             migrationBuilder.InsertData(
@@ -438,26 +438,26 @@ namespace MentalHealthApp.Migrations
                 columns: new[] { "Id", "Date", "MoodId", "Notes", "PatientId", "UserId" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2025, 3, 29, 0, 0, 0, 0, DateTimeKind.Local), 1, "Had a great day with friends", 1, "14" },
-                    { 2, new DateTime(2025, 3, 31, 0, 0, 0, 0, DateTimeKind.Local), 3, "Work stress is getting to me", 1, "14" },
-                    { 3, new DateTime(2025, 4, 2, 0, 0, 0, 0, DateTimeKind.Local), 6, "Feeling calm after meditation", 1, "14" },
-                    { 4, new DateTime(2025, 3, 28, 0, 0, 0, 0, DateTimeKind.Local), 2, "Feeling down today", 2, "15" },
-                    { 5, new DateTime(2025, 4, 1, 0, 0, 0, 0, DateTimeKind.Local), 5, "Excited for upcoming trip", 2, "15" },
-                    { 6, new DateTime(2025, 4, 2, 0, 0, 0, 0, DateTimeKind.Local), 8, "Stressed about work deadline", 2, "15" },
-                    { 7, new DateTime(2025, 3, 27, 0, 0, 0, 0, DateTimeKind.Local), 4, "Angry about argument with friend", 3, "16" },
-                    { 8, new DateTime(2025, 3, 30, 0, 0, 0, 0, DateTimeKind.Local), 7, "Exhausted from lack of sleep", 3, "16" },
-                    { 9, new DateTime(2025, 4, 1, 0, 0, 0, 0, DateTimeKind.Local), 9, "Content with how things are going", 3, "16" },
-                    { 10, new DateTime(2025, 3, 29, 0, 0, 0, 0, DateTimeKind.Local), 10, "Feeling lonely this weekend", 4, "17" },
-                    { 11, new DateTime(2025, 3, 31, 0, 0, 0, 0, DateTimeKind.Local), 12, "Hopeful about therapy progress", 4, "17" },
-                    { 12, new DateTime(2025, 4, 2, 0, 0, 0, 0, DateTimeKind.Local), 11, "Confused about my feelings", 4, "17" },
-                    { 13, new DateTime(2025, 3, 30, 0, 0, 0, 0, DateTimeKind.Local), 1, "Happy about good news", 5, "18" },
-                    { 14, new DateTime(2025, 4, 1, 0, 0, 0, 0, DateTimeKind.Local), 3, "Anxious about upcoming test", 5, "18" },
-                    { 15, new DateTime(2025, 3, 28, 0, 0, 0, 0, DateTimeKind.Local), 5, "Excited to see family", 6, "19" },
-                    { 16, new DateTime(2025, 3, 31, 0, 0, 0, 0, DateTimeKind.Local), 6, "Calm after yoga session", 6, "19" },
-                    { 17, new DateTime(2025, 4, 2, 0, 0, 0, 0, DateTimeKind.Local), 2, "Sad about pet being sick", 6, "19" },
-                    { 18, new DateTime(2025, 3, 29, 0, 0, 0, 0, DateTimeKind.Local), 7, "Tired from work week", 7, "20" },
-                    { 19, new DateTime(2025, 4, 1, 0, 0, 0, 0, DateTimeKind.Local), 9, "Content with life right now", 7, "20" },
-                    { 20, new DateTime(2025, 4, 2, 0, 0, 0, 0, DateTimeKind.Local), 12, "Hopeful about new treatment", 7, "20" }
+                    { 1, new DateTime(2025, 5, 3, 0, 0, 0, 0, DateTimeKind.Local), 1, "Had a great day with friends", 1, "14" },
+                    { 2, new DateTime(2025, 5, 5, 0, 0, 0, 0, DateTimeKind.Local), 3, "Work stress is getting to me", 1, "14" },
+                    { 3, new DateTime(2025, 5, 7, 0, 0, 0, 0, DateTimeKind.Local), 6, "Feeling calm after meditation", 1, "14" },
+                    { 4, new DateTime(2025, 5, 2, 0, 0, 0, 0, DateTimeKind.Local), 2, "Feeling down today", 2, "15" },
+                    { 5, new DateTime(2025, 5, 6, 0, 0, 0, 0, DateTimeKind.Local), 5, "Excited for upcoming trip", 2, "15" },
+                    { 6, new DateTime(2025, 5, 7, 0, 0, 0, 0, DateTimeKind.Local), 8, "Stressed about work deadline", 2, "15" },
+                    { 7, new DateTime(2025, 5, 1, 0, 0, 0, 0, DateTimeKind.Local), 4, "Angry about argument with friend", 3, "16" },
+                    { 8, new DateTime(2025, 5, 4, 0, 0, 0, 0, DateTimeKind.Local), 7, "Exhausted from lack of sleep", 3, "16" },
+                    { 9, new DateTime(2025, 5, 6, 0, 0, 0, 0, DateTimeKind.Local), 9, "Content with how things are going", 3, "16" },
+                    { 10, new DateTime(2025, 5, 3, 0, 0, 0, 0, DateTimeKind.Local), 10, "Feeling lonely this weekend", 4, "17" },
+                    { 11, new DateTime(2025, 5, 5, 0, 0, 0, 0, DateTimeKind.Local), 12, "Hopeful about therapy progress", 4, "17" },
+                    { 12, new DateTime(2025, 5, 7, 0, 0, 0, 0, DateTimeKind.Local), 11, "Confused about my feelings", 4, "17" },
+                    { 13, new DateTime(2025, 5, 4, 0, 0, 0, 0, DateTimeKind.Local), 1, "Happy about good news", 5, "18" },
+                    { 14, new DateTime(2025, 5, 6, 0, 0, 0, 0, DateTimeKind.Local), 3, "Anxious about upcoming test", 5, "18" },
+                    { 15, new DateTime(2025, 5, 2, 0, 0, 0, 0, DateTimeKind.Local), 5, "Excited to see family", 6, "19" },
+                    { 16, new DateTime(2025, 5, 5, 0, 0, 0, 0, DateTimeKind.Local), 6, "Calm after yoga session", 6, "19" },
+                    { 17, new DateTime(2025, 5, 7, 0, 0, 0, 0, DateTimeKind.Local), 2, "Sad about pet being sick", 6, "19" },
+                    { 18, new DateTime(2025, 5, 3, 0, 0, 0, 0, DateTimeKind.Local), 7, "Tired from work week", 7, "20" },
+                    { 19, new DateTime(2025, 5, 6, 0, 0, 0, 0, DateTimeKind.Local), 9, "Content with life right now", 7, "20" },
+                    { 20, new DateTime(2025, 5, 7, 0, 0, 0, 0, DateTimeKind.Local), 12, "Hopeful about new treatment", 7, "20" }
                 });
 
             migrationBuilder.CreateIndex(

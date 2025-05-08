@@ -19,6 +19,7 @@ namespace MentalHealthApp.Controllers
             _context = context;
         }
 
+
         // GET: MoodTypes1
         public async Task<IActionResult> Index()
         {
