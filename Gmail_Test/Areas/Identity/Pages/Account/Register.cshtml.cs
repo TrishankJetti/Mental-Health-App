@@ -94,6 +94,7 @@ namespace MentalHealthApp.Areas.Identity.Pages.Account
             [RegularExpression(@"^\d+$", ErrorMessage = "Age must be a whole number.")] // Makes sure that age has to be a whole number and nota decimal
             [Display(Name = "Age")]
             public int? Age { get; set; }
+
             /// <summary>
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
