@@ -1,68 +1,45 @@
 ﻿@model IEnumerable<MentalHealthApp.Models.Therapist>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Therapists";
 }
 
-<h1>Therapists</h1>
+<h2>Therapists</h2>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" class="btn btn-primary">Create New Therapist</a>
 </p>
 
-<table class="table table-bordered table-hover table-striped">
-    <thead class="table accordion-header">
+<table class="table table-striped">
+    <thead>
         <tr>
-
-            <th>
-                @Html.DisplayNameFor(model => model.FirstName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.LastName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Specialization)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Email)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PhoneNumber)
-            </th>
+            <th>Image</th>
+            <th>First Name</th>
+            <th>Last Name</th>dad
+            <th>Specialization</th>
+            <th>Email</th>
+            <th>Phone Number</th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model) {
+        @foreach (var therapist in Model)
+        {
             <tr>
-
                 <td>
-                    @Html.DisplayFor(modelItem => item.FirstName)
+                    <img src="~/img/@therapist.ImageFileName" alt="Therapist Image" style="height:50px;" />
                 </td>
+                <td>@therapist.FirstName</td>
+                <td>@therapist.LastName</td>
+                <td>@therapist.Specialization</td>
+                <td>@therapist.Email</td>
+                <td>@therapist.PhoneNumber</td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.LastName)
+                    <a asp-action="Details" asp-route-id="@therapist.TherapistId">Details</a> |
+                    <a asp-action="Edit" asp-route-id="@therapist.TherapistId">Edit</a> |
+                    <a asp-action="Delete" asp-route-id="@therapist.TherapistId">Delete</a>
                 </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Specialization)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Email)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.PhoneNumber)
-                </td>
-
-                @if (User.IsInRole("Admin"))
-                {
-                    <td>
-
-                        <a asp-action="Edit" asp-route-id="@item.TherapistId" class="btn btn-warning btn-sm">Edit</a> |
-                        <a asp-action="Details" asp-route-id="@item.TherapistId" class="btn btn-info btn-sm">Details</a> |
-                        <a asp-action="Delete" asp-route-id="@item.TherapistId" class="btn btn-danger btn-sm">Scrap Note</a>
-                    </td>
-
-                }
             </tr>
-}
+        }
     </tbody>
 </table>

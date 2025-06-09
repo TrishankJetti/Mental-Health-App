@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Net.NetworkInformation;
 
 namespace MentalHealthApp.Models
@@ -33,7 +34,10 @@ namespace MentalHealthApp.Models
         [StringLength(500, ErrorMessage = "Bio cannot exceed 500 characters.")]
         public string Bio { get; set; }
 
-        
+        public string? ImageFileName { get; set; }
+
+        [NotMapped]
+        public IFormFile? ImageFile { get; set; } // Image properties that control the images upload.
 
         // Email is required and must be a valid email address
         [Required(ErrorMessage = "Email is required.")]
