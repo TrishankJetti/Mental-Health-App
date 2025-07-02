@@ -18,6 +18,7 @@ public class CustomUser : IdentityUser
 
     public int? Age { get; set; }
 
+    public DateTime? LastMoodCheckIn { get; set; }
 
     public List<Patient> Patients { get; set; } = new();
 }

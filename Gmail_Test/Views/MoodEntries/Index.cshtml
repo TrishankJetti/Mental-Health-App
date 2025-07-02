@@ -4,68 +4,129 @@
     ViewData["Title"] = "Index";
 }
 
-<h1 style="text-align: center; color:#6b44b3" class="tracking-in-expand">Your Mood Entries</h1>
-<form method="get">
-    <label for="patientFilter">Filter by Patient:</label>
-    <select name="patientId" id="patientFilter" asp-items="ViewBag.Patients">
-        <option value="">-- All Patients --</option>
-    </select>
-    <button type="submit" class="btn btn-primary">Filter</button>
-</form>
-<div class="container mt-4">
-    <!--Creation button-->
-    <a asp-controller="MoodEntries" asp-action="Create"
-       class="btn btn-success"
-       style="border-radius: 100%; font-size: 90px; width: 120px; height: 120px; display: flex; justify-content: center; align-items: center; text-decoration: none; color: white;">
-        +
-    </a>
-</div>
-<hr />
+@if (ViewData["ShowCheckInReminder"] as bool? == true)
+{
+    <div class="alert alert-warning">You haven't checked in recently!</div>
+}
 
-<table class="table table-bordered table-hover table-striped">
-    <thead class="table accordion-header">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Mood)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Date)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Notes)
-            </th>
-            <th>
-                Patient Name
-            </th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
+<p>Last Check-in: @ViewBag.LastCheckIn?.ToString("dd MMM yyyy")</p>
+
+
+
+
+@if (Model.Any())
+{
+    <h1 style="text-align: center; color:#6b44b3" class="tracking-in-expand">Your Mood Entries</h1>
+    <form method="get">
+        <label for="patientFilter">Filter by Patient:</label>
+        <select name="patientId" id="patientFilter" asp-items="ViewBag.Patients">
+            <option value="">-- All Patients --</option>
+        </select>
+        <button type="submit" class="btn btn-primary">Filter</button>
+    </form>
+    <div class="container mt-4">
+        <!--Creation button-->
+        <a asp-controller="MoodEntries" asp-action="Create"
+           class="btn btn-success"
+           style="border-radius: 100%; font-size: 90px; width: 120px; height: 120px; display: flex; justify-content: center; align-items: center; text-decoration: none; color: white;">
+            +
+        </a>
+    </div>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    // Bootstrap javascript link used for the toast's animation
+
+    <hr />
+
+    @if (TempData["SuccessToast"] != null)
+    {
+        <div class="toast-container position-fixed bottom-0 end-0 p-3">
+            <div class="toast show text-white bg-success shadow" role="alert">
+                <div class="d-flex">
+                    <div class="toast-body">
+                        @TempData["SuccessToast"]
+                    </div>
+                    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+                </div>
+            </div>
+        </div>
+    }
+    @if (TempData["FailedToast"] != null)
+    {
+        <div class="toast-container position-fixed bottom-0 end-0 p-3">
+            <div class="toast show text-white bg-danger shadow" role="alert">
+                <div class="d-flex">
+                    <div class="toast-body">
+                        @TempData["FailedToast"]
+                    </div>
+                    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+                </div>
+            </div>
+        </div>
+    }
+    <table class="table table-bordered table-hover table-striped">
+        <thead class="table accordion-header">
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Mood.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Date)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Notes)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Patient.FirstName)
-                </td>
-                <td>
-            
-                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning btn-sm">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info btn-sm">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger btn-sm">Scrap Note</a>
-                </td>
+                <th>
+                    @Html.DisplayNameFor(model => model.Mood)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Date)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Notes)
+                </th>
+                <th>
+                    Patient Name
+                </th>
+                <th>Actions</th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Mood.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Date)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Notes)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Patient.FirstName)
+                    </td>
+                    <td>
+
+                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning btn-sm">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info btn-sm">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn ">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#6b44b3" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
+                                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293z" />
+                            </svg>
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+else
+{
+    <div class="text-center mt-5">
+        <img src="/img/undraw_blank-canvas_a6x5 1.png" class="img-fluid mb-4" style="max-width: 400px;" /> <!-- Centres the image and give it fludity to move with resizing of the window.-->
+
+        <h3 class="mb-4 text-muted">No mood entries yet</h3>
+
+        <a asp-controller="MoodEntries" asp-action="Create" class="btn btn-lg"
+           style="background-color: #6b44b3; color: white; padding: 15px 40px; font-size: 10px; border-radius: 12px;">
+            Get Started?
+        </a>
+    </div>
+}
+
 
 <style>
     .tracking-in-expand {
@@ -78,9 +139,11 @@
             letter-spacing: -0.5em;
             opacity: 0;
         }
+
         40% {
             opacity: 0.6;
         }
+
         100% {
             opacity: 1;
         }
@@ -91,9 +154,11 @@
             letter-spacing: -0.5em;
             opacity: 0;
         }
+
         40% {
             opacity: 0.6;
         }
+
         100% {
             opacity: 1;
         }

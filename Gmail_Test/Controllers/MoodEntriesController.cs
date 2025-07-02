@@ -35,9 +35,6 @@ namespace MentalHealthApp.Controllers
                 .Include(m => m.Patient)
                 .AsQueryable();
 
-
-            // All PAtients from context and they need to have moodentries with corresponding userID inorder to show up in the dropdown as a list.
-            // This then intializes the patients variable.
             var patients = await _context.Patients
                 .Where(p => _context.MoodEntries.Any(m => m.PatientId == p.PatientId && m.UserId == userId))
                 .ToListAsync();
@@ -49,24 +46,24 @@ namespace MentalHealthApp.Controllers
 
             ViewData["Patients"] = new SelectList(patients, "PatientId", "FirstName");
 
+            // Check-in reminder logic
+            var user = await _userManager.GetUserAsync(User);
+            var lastCheck = user?.LastMoodCheckIn?.Date ?? DateTime.MinValue;
+            ViewBag.LastCheckIn = user?.LastMoodCheckIn;
+            ViewData["ShowCheckInReminder"] = lastCheck.AddDays(2) < DateTime.UtcNow.Date;
+
             return View(await query.ToListAsync());
         }
-
 
         // GET: MoodEntries/Create
         public IActionResult Create()
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-
-            // Filter the patients based on the current user's ID
             var patients = _context.Patients
                 .Where(p => p.UserId == userId)
                 .ToList();
 
-          
-            //Selects all the MoodType and Patients for the dropdowns. Thep atient variable is initialized above to use only PAtients where the UserId is equalled to the CUrrent Loggedin USers ID.
             ViewData["PatientId"] = new SelectList(patients, "PatientId", "FirstName");
-
             ViewData["MoodId"] = new SelectList(_context.MoodTypes, "MoodTypeId", "Name");
 
             return View();
@@ -77,58 +74,44 @@ namespace MentalHealthApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("MoodId,Date,Notes,PatientId")] MoodEntry moodEntry)
         {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier); // Grabs UserID from IDentity.
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (userId == null) return Unauthorized();
 
-            if (userId == null)
-            {
-                return Unauthorized();
-            }
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user == null) return Unauthorized();
 
-            moodEntry.UserId = userId; 
+            moodEntry.UserId = userId;
+            moodEntry.Date = DateTime.UtcNow;
 
             if (ModelState.IsValid)
             {
-          
-                var patients = _context.Patients // SAme as Create method above the patients variable is intitialized to grabs all patients that have the same userid as the loggedi n user.
-                    .Where(p => p.UserId == userId)
-                    .ToList();
+                _context.Add(moodEntry);
 
+                user.LastMoodCheckIn = DateTime.UtcNow;
+                await _userManager.UpdateAsync(user);
 
-                //Popoulate dropdwons 
-
-                ViewData["PatientId"] = new SelectList(patients, "PatientId", "FirstName", moodEntry.PatientId);
-                ViewData["MoodId"] = new SelectList(_context.MoodTypes, "MoodTypeId", "Name", moodEntry.MoodId);
-
-                return View(moodEntry);
+                await _context.SaveChangesAsync();
+                TempData["SuccessToast"] = "Mood entry added successfully!";
+                return RedirectToAction(nameof(Index));
             }
 
-            _context.Add(moodEntry);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            var patients = _context.Patients.Where(p => p.UserId == userId).ToList();
+            ViewData["PatientId"] = new SelectList(patients, "PatientId", "FirstName", moodEntry.PatientId);
+            ViewData["MoodId"] = new SelectList(_context.MoodTypes, "MoodTypeId", "Name", moodEntry.MoodId);
+            TempData["FailedToast"] = "Failed to add mood entry. Please check your inputs.";
+            return View(moodEntry);
         }
-
 
         // GET: MoodEntries/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            if (id == null) return NotFound();
 
             var moodEntry = await _context.MoodEntries.FindAsync(id);
-            if (moodEntry == null)
-            {
-                return NotFound();
-            }
+            if (moodEntry == null) return NotFound();
 
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-
-            // Filter the patients based on the current user's ID
-            var patients = _context.Patients
-                .Where(p => p.UserId == userId)
-                .ToList();
-
+            var patients = _context.Patients.Where(p => p.UserId == userId).ToList();
 
             ViewData["MoodId"] = new SelectList(_context.MoodTypes, "MoodTypeId", "Name", moodEntry.MoodId);
             ViewData["PatientId"] = new SelectList(patients, "PatientId", "FirstName", moodEntry.PatientId);
@@ -140,18 +123,12 @@ namespace MentalHealthApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,MoodId,Date,Notes,PatientId")] MoodEntry moodEntry)
         {
-            if (id != moodEntry.Id)
-            {
-                return NotFound();
-            }
+            if (id != moodEntry.Id) return NotFound();
 
             var existingEntry = await _context.MoodEntries.AsNoTracking().FirstOrDefaultAsync(m => m.Id == id);
-            if (existingEntry == null)
-            {
-                return NotFound();
-            }
+            if (existingEntry == null) return NotFound();
 
-            moodEntry.UserId = existingEntry.UserId; // Preserve the original UserId
+            moodEntry.UserId = existingEntry.UserId;
 
             if (!ModelState.IsValid)
             {
@@ -159,50 +136,36 @@ namespace MentalHealthApp.Controllers
                 {
                     _context.Update(moodEntry);
                     await _context.SaveChangesAsync();
+                    TempData["SuccessToast"] = "Mood entry updated!";
+                    return RedirectToAction(nameof(Index));
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!MoodEntryExists(moodEntry.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
+                    if (!MoodEntryExists(moodEntry.Id)) return NotFound();
+                    else throw;
                 }
-                return RedirectToAction(nameof(Index));
             }
 
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-
-            // Filter the patients based on the current user's ID
-            var patients = _context.Patients
-                .Where(p => p.UserId == userId)
-                .ToList();
-
+            var patients = _context.Patients.Where(p => p.UserId == userId).ToList();
 
             ViewData["MoodId"] = new SelectList(_context.MoodTypes, "MoodTypeId", "Name", moodEntry.MoodId);
-            ViewData["PatientId"] = new SelectList(_context.Patients, "PatientId", "FirstName", moodEntry.PatientId);
+            ViewData["PatientId"] = new SelectList(patients, "PatientId", "FirstName", moodEntry.PatientId);
+            TempData["FailedToast"] = "Update failed. Please try again.";
             return View(moodEntry);
         }
 
         // GET: MoodEntries/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            if (id == null) return NotFound();
 
             var moodEntry = await _context.MoodEntries
                 .Include(m => m.Mood)
                 .Include(m => m.Patient)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (moodEntry == null)
-            {
-                return NotFound();
-            }
+
+            if (moodEntry == null) return NotFound();
 
             return View(moodEntry);
         }
@@ -216,9 +179,10 @@ namespace MentalHealthApp.Controllers
             if (moodEntry != null)
             {
                 _context.MoodEntries.Remove(moodEntry);
+                await _context.SaveChangesAsync();
+                TempData["SuccessToast"] = "Mood entry deleted.";
             }
 
-            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 

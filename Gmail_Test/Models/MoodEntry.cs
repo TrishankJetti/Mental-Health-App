@@ -30,6 +30,8 @@ namespace MentalHealthApp.Models
 
         [ForeignKey("PatientId")]
         public Patient Patient { get; set; }  // Navigation property for Patient
+
+      
     }
 
 }
