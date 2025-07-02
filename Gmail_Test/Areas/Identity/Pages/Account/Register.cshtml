@@ -2,16 +2,88 @@
 @model RegisterModel
 @{
     ViewData["Title"] = "Register";
+    ViewData["HideNavbar"] = true;
 }
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Register - Shanti</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <style>
+        body {
+            background-color: #6b44b3;
+            margin: 0;
+            color: white;
+        }
 
-<div class="d-flex justify-content-center align-items-center vh-100">
-    <br/>
-    <div class="card shadow-lg p-3" style="max-width: 500px; width: 100%; border-radius: 15px;margin-top: 50px; ">
-        <div class="card-body">
+        .card-container {
+            max-width: 500px;
+            width: 100%;
+            border-radius: 15px;
+            background-color: white;
+            color: black;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+            padding: 2rem;
+        }
+
+        .back-arrow {
+            position: fixed;
+            top: 16px;
+            left: 16px;
+            color: white;
+            font-size: 2rem;
+            text-decoration: none;
+            z-index: 999;
+            transform: scale(1.0);
+            transition: transform 0.2s ease;
+        }
+
+            .back-arrow:hover {
+                transition: transform 0.2s ease;
+                transform: scale(1.5);
+            }
+
+        .text-purple {
+            color: #6f42c1;
+        }
+
+        .border-purple {
+            border-color: #6f42c1 !important;
+        }
+
+        .btn-purple {
+            background-color: #6f42c1;
+            color: white;
+            border: none;
+        }
+
+            .btn-purple:hover {
+                background-color: #5a32a3;
+            }
+
+        .btn-outline-purple {
+            border: 2px solid #6f42c1;
+            color: #6f42c1;
+        }
+
+            .btn-outline-purple:hover {
+                background-color: #6f42c1;
+                color: white;
+            }
+    </style>
+</head>
+<body>
+    <a href="javascript:history.back()" class="back-arrow" title="Click to Go Back!">&#8592;</a>
+
+    <br />
+    <br />
+    <div class="container d-flex justify-content-center align-items-center" style="min-height: 100vh;">
+        <div class="card-container">
             <h2 class="text-center text-purple mb-3">Create Your Account</h2>
             <hr />
-
+            <br />
             <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
                 <div asp-validation-summary="ModelOnly" class="text-danger text-center"></div>
 
@@ -26,26 +98,27 @@
                     <label asp-for="Input.LastName" class="text-purple">Last Name</label>
                     <span asp-validation-for="Input.LastName" class="text-danger"></span>
                 </div>
+
                 <div class="form-floating mb-3">
-                    <label for="inputAge" class="text-purple">Age</label>
                     <input asp-for="Input.Age" class="form-control border-purple" id="inputAge" placeholder="Age" type="number">
-                <span asp-validation-for="Input.Age" class="text-danger"></span>
+                    <label for="inputAge" class="text-purple">Age</label>
+                    <span asp-validation-for="Input.Age" class="text-danger"></span>
                 </div>
 
                 <div class="form-floating mb-3">
-                    <input asp-for="Input.Email" class="form-control border-purple" autocomplete="username" placeholder="name@example.com" />
+                    <input asp-for="Input.Email" class="form-control border-purple" placeholder="Email" />
                     <label asp-for="Input.Email" class="text-purple">Email</label>
                     <span asp-validation-for="Input.Email" class="text-danger"></span>
                 </div>
 
                 <div class="form-floating mb-3">
-                    <input asp-for="Input.Password" class="form-control border-purple" autocomplete="new-password" placeholder="Password" />
+                    <input asp-for="Input.Password" class="form-control border-purple" placeholder="Password" />
                     <label asp-for="Input.Password" class="text-purple">Password</label>
                     <span asp-validation-for="Input.Password" class="text-danger"></span>
                 </div>
 
                 <div class="form-floating mb-3">
-                    <input asp-for="Input.ConfirmPassword" class="form-control border-purple" autocomplete="new-password" placeholder="Confirm Password" />
+                    <input asp-for="Input.ConfirmPassword" class="form-control border-purple" placeholder="Confirm Password" />
                     <label asp-for="Input.ConfirmPassword" class="text-purple">Confirm Password</label>
                     <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
                 </div>
@@ -55,7 +128,6 @@
 
             <hr />
 
-            <!-- External Logins -->
             <div class="text-center">
                 <h4 class="text-purple mb-3">Or Sign Up With</h4>
                 @if ((Model.ExternalLogins?.Count ?? 0) == 0)
@@ -81,38 +153,11 @@
             </div>
         </div>
     </div>
-</div>
+
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }
-
-<style>
-    .text-purple {
-        color: #6f42c1;
-    }
-
-    .border-purple {
-        border-color: #6f42c1 !important;
-    }
-
-    .btn-purple {
-        background-color: #6f42c1;
-        color: white;
-        border: none;
-    }
-
-        .btn-purple:hover {
-            background-color: #5a32a3;
-        }
-
-    .btn-outline-purple {
-        border: 2px solid #6f42c1;
-        color: #6f42c1;
-    }
-
-        .btn-outline-purple:hover {
-            background-color: #6f42c1;
-            color: white;
-        }
-</style>

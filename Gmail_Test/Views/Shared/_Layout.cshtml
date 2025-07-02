@@ -138,22 +138,16 @@
 
     <style>
         .scale-down-center {
-            transition: transform 0.4s cubic-bezier(0.250, 0.460, 0.450, 0.940);
+            transition: transform 0.2s ease;
+            transform: scale(0.7);
         }
 
             .scale-down-center:hover {
-                animation: scale-down-center 0.4s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+                transition: transform 0.2s ease;
+                transform: scale(1.5);
             }
 
-        @@keyframes scale-down-center {
-            0% {
-                transform: scale(1);
-            }
-
-            100% {
-                transform: scale(0.5);
-            }
-        }
+       
 
         a {
             text-decoration: none;
