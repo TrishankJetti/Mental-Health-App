@@ -81,12 +81,12 @@
                                     Mood Tracker
                                     @if (showCheckInReminder)
                                     {
-                                        <span class="pulse-dot position-absolute top-0 start-100 translate-middle bg-danger border border-white rounded-circle" style="width: 10px; height: 10px;"></span>
+                                        <span class="pulse-dot position-absolute top-0 start-100 translate-middle bg-danger rounded-circle" style="width: 10px; height: 10px;"></span>
                                     }
                                 </a>
                             </li>
 
-                            @if (User.IsInRole("Admin"))// Admin action Drop Down
+                            @if (User.IsInRole("Therapist"))
                             {
                                 <li class="nav-item">
                                     <a class="nav-link text-light" asp-area="" asp-controller="MoodTypes" asp-action="Index">Mood Types</a>
@@ -115,7 +115,8 @@
                                 </button>
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                     <li><a class="dropdown-item" asp-controller="MoodTypes" asp-action="Index">Mood Types</a></li>
-                                    <a class="dropdown-item" asp-controller="RoleManagement" asp-action="Index">Role Management</a>
+                                    <li><a class="dropdown-item" asp-controller="RoleManagement" asp-action="Index">Role Management</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Products" asp-action="Index">Products Management</a></li>
 
                                 </div>
                             </div>

@@ -111,7 +111,7 @@ public class CartController : Controller
             }).ToList(),
             Mode = "payment",
             SuccessUrl = domain + Url.Action("Success", "Cart"),
-            CancelUrl = domain + Url.Action("Index", "Cart")
+            CancelUrl = domain + Url.Action("Cancelled", "Cart")
         };
 
         var service = new SessionService();

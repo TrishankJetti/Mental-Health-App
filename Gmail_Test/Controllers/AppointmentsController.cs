@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using MentalHealthApp.Data;
 using MentalHealthApp.Models;
 using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace MentalHealthApp.Controllers
 {
@@ -24,8 +25,16 @@ namespace MentalHealthApp.Controllers
         // GET: Appointments
         public async Task<IActionResult> Index()
         {
-            var mentalHealthContext = _context.Appointments.Include(a => a.Patient).Include(a => a.Therapist);
-            return View(await mentalHealthContext.ToListAsync());
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier); // Logged-in user's ID
+
+            var appointments = await _context.Appointments
+                .Include(a => a.Patient)
+                .ThenInclude(p => p.User) // ensure Patient.User is loaded
+                .Include(a => a.Therapist)
+                .Where(a => a.Patient.UserId == userId) // only appointments where patient belongs to current user
+                .ToListAsync();
+
+            return View(appointments);
         }
 
         // GET: Appointments/Details/5
