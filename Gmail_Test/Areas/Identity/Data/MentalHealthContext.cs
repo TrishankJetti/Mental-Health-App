@@ -16,7 +16,7 @@ namespace MentalHealthApp.Data
         public DbSet<Therapist> Therapists { get; set; }
         public DbSet<Appointment> Appointments { get; set; }
         public DbSet<Patient> Patients { get; set; }
-        public DbSet<ProductEntity> ProductEntities { get; set; }
+        public DbSet<Product> Products { get; set; }
         public DbSet<MoodEntry> MoodEntries { get; set; }
         public DbSet<MoodType> MoodTypes { get; set; } = default!;
 
@@ -759,6 +759,7 @@ namespace MentalHealthApp.Data
                 }
             );
         }
+        public DbSet<MentalHealthApp.Models.Product> Product { get; set; } = default!;
 
     }
 }

@@ -23,8 +23,7 @@ builder.Services.AddIdentity<CustomUser, IdentityRole>(options =>
 })
     .AddEntityFrameworkStores<MentalHealthContext>()
     .AddDefaultTokenProviders()
-    .AddDefaultUI();  
-
+    .AddDefaultUI();
 
 
 
@@ -33,6 +32,14 @@ builder.Services.AddSignalR();
 // Add Controllers with Views and Razor Pages
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
+
+
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(30);
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+});
 
 // Configure Google Authentication
 builder.Services.AddAuthentication()
@@ -53,7 +60,10 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-app.UseStaticFiles();
+app.UseStaticFiles(); 
+
+
+app.UseSession();
 
 app.UseRouting();
 

@@ -1,0 +1,86 @@
+﻿@model IEnumerable<MentalHealthApp.Models.Product>
+@{
+    ViewData["Title"] = "Shop";
+}
+
+<style>
+    .shop-header {
+        color: #6b44b3;
+        font-weight: 600;
+    }
+
+    .product-img {
+        height: 200px;
+        object-fit: cover;
+        border-radius: 0.5rem;
+    }
+
+    .btn-purple {
+        background-color: #6b44b3;
+        color: white;
+        transition: transform 0.2s ease-in-out;
+    }
+
+    .btn-purple:hover {
+        background-color: #59359b;
+        transform: scale(1.05);
+    }
+</style>
+
+@if (TempData["Toast"] != null)
+{
+    <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 1100;">
+        <div class="toast show align-items-center text-white bg-success border-0" role="alert">
+            <div class="d-flex">
+                <div class="toast-body">
+                    @TempData["Toast"]
+                    <br />
+                    <a asp-controller="Cart" asp-action="Index" class="link link-light">Click to View Cart</a>
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+            </div>
+        </div>
+    </div>
+}
+
+<div class="container py-5">
+    <h2 class="text-center mb-4 shop-header">Shop Our Wellness Products</h2>
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <form asp-action="Index" method="get" class="d-flex">
+            <input type="text" name="searchString" value="@ViewData["CurrentFilter"]" class="form-control me-2" placeholder="Search..." />
+            <button type="submit" class="btn btn-outline-secondary">Search</button>
+        </form>
+
+        <a asp-action="Index" asp-route-priceOrder="@ViewData["PriceSortParm"]" asp-route-searchString="@ViewData["CurrentFilter"]" class="btn btn-outline-primary">
+            Sort by Price
+        </a>
+    </div>
+
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
+        @foreach (var item in Model)
+        {
+            <div class="row align-items-center py-4 border-bottom">
+                <div class="col-md-4 text-center mb-3 mb-md-0">
+                    <img src="~/img/@item.ImageUrl" alt="@item.Name"
+                         class="img-fluid rounded shadow-sm"
+                         style="max-height: 180px; object-fit: cover;" asp-append-version="true" />
+                </div>
+                <div class="col-md-8">
+                    <h4 class="fw-bold text-dark mb-1">@item.Name</h4>
+                    <p class="text-muted mb-2">@item.Description</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span class="text-success fw-semibold fs-5">$@item.Price</span>
+                        <form asp-controller="Cart" asp-action="AddWithToast" method="post" class="d-inline">
+                            <input type="hidden" name="productId" value="@item.Id" />
+                            <input type="hidden" name="productName" value="@item.Name" />
+                            <input type="hidden" name="price" value="@item.Price" />
+                            <input type="hidden" name="quantity" value="1" />                    
+                            <button type="submit" class="btn btn-sm btn-purple px-4">Add to Cart</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
