@@ -34,11 +34,16 @@
                 <td>@therapist.Specialization</td>
                 <td>@therapist.Email</td>
                 <td>@therapist.PhoneNumber</td>
-                <td>
-                    <a asp-action="Details" asp-route-id="@therapist.TherapistId">Details</a> |
+
+                @if (User.IsInRole("Admin"))// Admin action Drop Down
+                {
+                    <td>
+                        <a asp-action="Details" asp-route-id="@therapist.TherapistId">Details</a> |
                     <a asp-action="Edit" asp-route-id="@therapist.TherapistId">Edit</a> |
                     <a asp-action="Delete" asp-route-id="@therapist.TherapistId">Delete</a>
+                    
                 </td>
+                }
             </tr>
         }
     </tbody>

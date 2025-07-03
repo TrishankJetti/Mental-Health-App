@@ -12,7 +12,7 @@ using System.Security.Claims;
 
 namespace MentalHealthApp.Controllers
 {
-    [Authorize(Roles ="Patient")]
+    
     public class AppointmentsController : Controller
     {
         private readonly MentalHealthContext _context;
@@ -25,17 +25,39 @@ namespace MentalHealthApp.Controllers
         // GET: Appointments
         public async Task<IActionResult> Index()
         {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier); // Logged-in user's ID
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            var appointments = await _context.Appointments
-                .Include(a => a.Patient)
-                .ThenInclude(p => p.User) // ensure Patient.User is loaded
-                .Include(a => a.Therapist)
-                .Where(a => a.Patient.UserId == userId) // only appointments where patient belongs to current user
-                .ToListAsync();
+            if (User.IsInRole("Therapist"))
+            {
+                // Get this therapist's ID from the userId
+                var therapist = await _context.Therapists
+                    .FirstOrDefaultAsync(t => t.UserId == userId);
 
-            return View(appointments);
+                if (therapist == null)
+                    return Unauthorized();
+
+                var appointments = await _context.Appointments
+                    .Include(a => a.Patient).ThenInclude(p => p.User)
+                    .Include(a => a.Therapist)
+                    .Where(a => a.TherapistId == therapist.TherapistId)
+                    .ToListAsync();
+
+                return View(appointments);
+            }
+            else if (User.IsInRole("Patient"))
+            {
+                var appointments = await _context.Appointments
+                    .Include(a => a.Patient).ThenInclude(p => p.User)
+                    .Include(a => a.Therapist)
+                    .Where(a => a.Patient.UserId == userId)
+                    .ToListAsync();
+
+                return View(appointments);
+            }
+
+            return Unauthorized(); // restrict access for other roles
         }
+
 
         // GET: Appointments/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -60,7 +82,20 @@ namespace MentalHealthApp.Controllers
         // GET: Appointments/Create
         public IActionResult Create()
         {
+            if (User.IsInRole("Patient"))
+            {
+                var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                var userPatients = _context.Patients
+                    .Where(p => p.UserId == userId) // 
+                    .ToList();
+
+                ViewData["PatientId"] = new SelectList(userPatients, "PatientId", "FirstName");
+
+            }
+
             ViewData["PatientId"] = new SelectList(_context.Patients, "PatientId", "FirstName");
+
+
             ViewData["TherapistId"] = new SelectList(_context.Therapists, "TherapistId", "FirstName");
             return View();
         }
@@ -72,16 +107,40 @@ namespace MentalHealthApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("AppointmentId,TherapistId,PatientId,AppointmentDate,DurationMinutes,Status,Notes,CreatedAt,UpdatedAt")] Appointment appointment)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 _context.Add(appointment);
                 await _context.SaveChangesAsync();
+
+                // Find the UserId of the Therapist
+                var therapistUserId = await _context.Therapists
+                    .Where(t => t.TherapistId == appointment.TherapistId)
+                    .Select(t => t.UserId)
+                    .FirstOrDefaultAsync();
+
+                //  Create and Save Notification
+                if (therapistUserId != null)
+                {
+                    var notification = new Notification
+                    {
+                        UserId = therapistUserId,
+                        Message = "A new appointment has been booked by a patient.",
+                        IsRead = false,
+                        CreatedAt = DateTime.Now
+                    };
+
+                    _context.Notifications.Add(notification);
+                    await _context.SaveChangesAsync(); // Save the notification
+                }
+
                 return RedirectToAction(nameof(Index));
             }
+
             ViewData["PatientId"] = new SelectList(_context.Patients, "PatientId", "FirstName", appointment.PatientId);
             ViewData["TherapistId"] = new SelectList(_context.Therapists, "TherapistId", "FirstName", appointment.TherapistId);
             return View(appointment);
         }
+
 
         // GET: Appointments/Edit/5
         public async Task<IActionResult> Edit(int? id)
@@ -96,7 +155,13 @@ namespace MentalHealthApp.Controllers
             {
                 return NotFound();
             }
-            ViewData["PatientId"] = new SelectList(_context.Patients, "PatientId", "FirstName", appointment.PatientId);
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var userPatients = _context.Patients
+                .Where(p => p.UserId == userId) // assuming Patient.UserId stores the creator's ID
+                .ToList();
+
+            ViewData["PatientId"] = new SelectList(userPatients, "PatientId", "FirstName");
+
             ViewData["TherapistId"] = new SelectList(_context.Therapists, "TherapistId", "Email", appointment.TherapistId);
             return View(appointment);
         }
@@ -104,6 +169,7 @@ namespace MentalHealthApp.Controllers
         // POST: Appointments/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Therapist,Admin")] // Only allow editing if role matches
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("AppointmentId,TherapistId,PatientId,AppointmentDate,DurationMinutes,Status,Notes,CreatedAt,UpdatedAt")] Appointment appointment)

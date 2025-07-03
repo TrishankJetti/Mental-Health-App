@@ -2,6 +2,8 @@
     @using MentalHealthApp.Models
     @inject UserManager<CustomUser> UserManager
     @inject SignInManager<CustomUser> SignInManager
+    @inject MentalHealthApp.Data.MentalHealthContext DbContext
+    @using MentalHealthApp.Models
 
 @{
     bool showCheckInReminder = false; // At first the program sets the CheckInReminder to false
@@ -122,7 +124,59 @@
                             </div>
 
                         }
+
+
+                        @{
+                            var userId = UserManager.GetUserId(User); //Creates a variable after the user's UserId
+                            var notifications = DbContext.Notifications  //Creates a variable for the notifications, which is taken directly fromt he db context's notification model.
+
+                            .Where(n => n.UserId == userId && !n.IsRead) // The code here takes the first 5 notifications and creates a list. These notifications are descending and have to have the same UserId as the current logged in user and they shouldn't have been read.
+                            .OrderByDescending(n => n.CreatedAt)
+                            .Take(5)
+                            .ToList();
+                        }
+
+                        <!-- Notification Bell -->
+                        <div class="dropdown me-3">
+                            <button class="btn btn-outline-light dropdown-toggle" data-bs-toggle="dropdown">
+                                🔔 (@notifications.Count)
+                            </button>
+
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                @if (notifications.Count == 0)
+                                {
+                                    <li class="dropdown-item text-muted">No new notifications</li>
+                                }
+                                else
+                                {
+                                    @foreach (var n in notifications)
+                                    {
+                                        <li class="dropdown-item">
+                                            @n.Message<br />
+                                            <small class="text-muted">@n.CreatedAt.ToShortTimeString()</small>
+                                        </li>
+                                    }
+                                }
+
+                                <li><hr class="dropdown-divider" /></li>
+                                <li>
+                                    <form asp-controller="Notifications" asp-action="MarkAllAsRead" method="post">
+                                        <button type="submit" class="dropdown-item text-center">Mark all as read</button>
+                                    </form>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="nav-item  me-3">
+                            <a class="nav-link text-light" asp-area="" asp-controller="Cart" asp-action="Index" style="padding: 0.5rem 1rem;">
+                                <i class="bi bi-cart4" style="font-size:25px;"></i>
+                            </a>
+                        </div>
+
+
+
                         <div class="nav-link">
+
                             <partial name="_LoginPartial.cshtml" />
                         </div>
                     </div>

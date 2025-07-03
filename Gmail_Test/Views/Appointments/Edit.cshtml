@@ -3,11 +3,14 @@
 @{
     ViewData["Title"] = "Edit";
 }
-
+<link rel="stylesheet" href="~/css/form.css" />
 <h1>Edit</h1>
 
 <h4>Appointment</h4>
-<hr />
+<br />
+
+<a href="javascript:history.back()" class="back-arrow" ata-toggle="tooltip" data-placement="bottom" title="Click to Go Back!" style="font-size:50px;">&#8592;</a>
+
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Edit">

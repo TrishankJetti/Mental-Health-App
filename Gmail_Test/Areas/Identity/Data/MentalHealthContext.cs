@@ -13,6 +13,8 @@ namespace MentalHealthApp.Data
         {
         }
 
+        public DbSet<Notification> Notifications { get; set; }
+
         public DbSet<Therapist> Therapists { get; set; }
         public DbSet<Appointment> Appointments { get; set; }
         public DbSet<Patient> Patients { get; set; }

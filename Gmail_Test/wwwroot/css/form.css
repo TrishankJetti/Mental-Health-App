@@ -1,0 +1,114 @@
+﻿/* GENERAL BODY STYLING */
+body {
+    background-color: #6b44b3;
+    color: white;
+    font-family: 'Segoe UI', sans-serif;
+    margin: 0;
+}
+
+/* CONTAINER FOR FORM */
+.row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.col-md-4 {
+    background-color: white;
+    color: black;
+    padding: 2rem;
+    border-radius: 16px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 500px;
+}
+
+/* HEADINGS */
+h1, h4 {
+    text-align: center;
+    color: white;
+}
+
+/* FORM FIELDS */
+.form-group {
+    margin-bottom: 1.2rem;
+}
+
+label.control-label {
+    font-weight: 600;
+    color: #6f42c1;
+    margin-bottom: 0.5rem;
+    display: block;
+}
+
+.form-control {
+    border: 2px solid #6f42c1;
+    border-radius: 8px;
+    padding: 0.6rem;
+    font-size: 1rem;
+}
+
+    .form-control:focus {
+        border-color: #5a32a3;
+        box-shadow: 0 0 5px rgba(111, 66, 193, 0.5);
+    }
+
+/* BUTTON */
+.btn-primary {
+    background-color: #6f42c1;
+    border: none;
+    width: 100%;
+    padding: 0.6rem;
+    font-weight: bold;
+    transition: all 0.2s ease-in-out;
+}
+
+    .btn-primary:hover {
+        background-color: #5a32a3;
+        transform: scale(1.02);
+    }
+
+/* BACK LINK */
+a {
+    color: white;
+    font-weight: 500;
+    text-decoration: underline;
+    display: inline-block;
+    margin-top: 1rem;
+}
+
+    a:hover {
+        color: #dcd0f3;
+    }
+
+/* VALIDATION */
+.text-danger {
+    color: #dc3545;
+    font-size: 0.9rem;
+}
+
+
+.back-arrow {
+    position: fixed;
+    top: 16px;
+    left: 16px;
+    color: white;
+    font-size: 2rem;
+    text-decoration: none;
+    z-index: 999;
+    transition: transform 0.2s ease;
+    transform: scale(1.0);
+}
+
+    .back-arrow:hover {
+        position: fixed;
+        top: 16px;
+        left: 16px;
+        color: white;
+        font-size: 2rem;
+        text-decoration: none;
+        z-index: 999;
+        transition: transform 0.2s ease;
+        transform: scale(1.5);
+    }
