@@ -12,7 +12,8 @@ using System.Security.Claims;
 
 namespace MentalHealthApp.Controllers
 {
-    
+    [Authorize
+        ]
     public class AppointmentsController : Controller
     {
         private readonly MentalHealthContext _context;
@@ -29,7 +30,6 @@ namespace MentalHealthApp.Controllers
 
             if (User.IsInRole("Therapist"))
             {
-                // Get this therapist's ID from the userId
                 var therapist = await _context.Therapists
                     .FirstOrDefaultAsync(t => t.UserId == userId);
 
@@ -54,6 +54,15 @@ namespace MentalHealthApp.Controllers
 
                 return View(appointments);
             }
+            else if (User.IsInRole("Admin"))
+            {
+                var appointments = await _context.Appointments
+                    .Include(a => a.Patient).ThenInclude(p => p.User)
+                    .Include(a => a.Therapist)
+                    .ToListAsync();
+
+                return View(appointments);
+            }
 
             return Unauthorized(); // restrict access for other roles
         }
@@ -62,19 +71,14 @@ namespace MentalHealthApp.Controllers
         // GET: Appointments/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            if (id == null) return NotFound();
 
             var appointment = await _context.Appointments
                 .Include(a => a.Patient)
                 .Include(a => a.Therapist)
                 .FirstOrDefaultAsync(m => m.AppointmentId == id);
-            if (appointment == null)
-            {
-                return NotFound();
-            }
+
+            if (appointment == null) return NotFound();
 
             return View(appointment);
         }
@@ -82,43 +86,43 @@ namespace MentalHealthApp.Controllers
         // GET: Appointments/Create
         public IActionResult Create()
         {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
             if (User.IsInRole("Patient"))
             {
-                var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
                 var userPatients = _context.Patients
-                    .Where(p => p.UserId == userId) // 
+                    .Where(p => p.UserId == userId)
                     .ToList();
-
                 ViewData["PatientId"] = new SelectList(userPatients, "PatientId", "FirstName");
-
             }
-
-            ViewData["PatientId"] = new SelectList(_context.Patients, "PatientId", "FirstName");
-
+            else
+            {
+                ViewData["PatientId"] = new SelectList(_context.Patients, "PatientId", "FirstName");
+            }
 
             ViewData["TherapistId"] = new SelectList(_context.Therapists, "TherapistId", "FirstName");
             return View();
         }
 
         // POST: Appointments/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("AppointmentId,TherapistId,PatientId,AppointmentDate,DurationMinutes,Status,Notes,CreatedAt,UpdatedAt")] Appointment appointment)
+        public async Task<IActionResult> Create([Bind("AppointmentId,TherapistId,PatientId,AppointmentDate,DurationMinutes,Notes")] Appointment appointment)
         {
             if (!ModelState.IsValid)
             {
+                appointment.Status = AppointmentStatus.Scheduled;
+                appointment.CreatedAt = DateTime.Now;
+                appointment.UpdatedAt = DateTime.Now;
+
                 _context.Add(appointment);
                 await _context.SaveChangesAsync();
 
-                // Find the UserId of the Therapist
                 var therapistUserId = await _context.Therapists
                     .Where(t => t.TherapistId == appointment.TherapistId)
                     .Select(t => t.UserId)
                     .FirstOrDefaultAsync();
 
-                //  Create and Save Notification
                 if (therapistUserId != null)
                 {
                     var notification = new Notification
@@ -130,7 +134,7 @@ namespace MentalHealthApp.Controllers
                     };
 
                     _context.Notifications.Add(notification);
-                    await _context.SaveChangesAsync(); // Save the notification
+                    await _context.SaveChangesAsync();
                 }
 
                 return RedirectToAction(nameof(Index));
@@ -141,85 +145,102 @@ namespace MentalHealthApp.Controllers
             return View(appointment);
         }
 
-
         // GET: Appointments/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            if (id == null) return NotFound();
 
             var appointment = await _context.Appointments.FindAsync(id);
-            if (appointment == null)
-            {
-                return NotFound();
-            }
+            if (appointment == null) return NotFound();
+
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var userPatients = _context.Patients
-                .Where(p => p.UserId == userId) // assuming Patient.UserId stores the creator's ID
+                .Where(p => p.UserId == userId)
                 .ToList();
 
-            ViewData["PatientId"] = new SelectList(userPatients, "PatientId", "FirstName");
+            ViewData["PatientId"] = new SelectList(userPatients, "PatientId", "FirstName", appointment.PatientId);
+            ViewData["TherapistId"] = new SelectList(_context.Therapists, "TherapistId", "FirstName", appointment.TherapistId);
 
-            ViewData["TherapistId"] = new SelectList(_context.Therapists, "TherapistId", "Email", appointment.TherapistId);
             return View(appointment);
         }
 
         // POST: Appointments/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [Authorize(Roles = "Therapist,Admin")] // Only allow editing if role matches
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("AppointmentId,TherapistId,PatientId,AppointmentDate,DurationMinutes,Status,Notes,CreatedAt,UpdatedAt")] Appointment appointment)
+        public async Task<IActionResult> Edit(int id, [Bind("AppointmentId,TherapistId,PatientId,AppointmentDate,DurationMinutes,Status,Notes")] Appointment appointment)
         {
-            if (id != appointment.AppointmentId)
-            {
-                return NotFound();
-            }
+            if (id != appointment.AppointmentId) return NotFound();
 
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
+
+
+                // Only send notification if patient is editing
+                if (User.IsInRole("Therapist"))
+                {
+                    var therapistUserId = await _context.Therapists
+                        .Where(t => t.TherapistId == appointment.TherapistId)
+                        .Select(t => t.UserId)
+                        .FirstOrDefaultAsync();
+
+                    if (therapistUserId != null)
+                    {
+                        var notification = new Notification
+                        {
+                            UserId = therapistUserId,
+                            Message = "An appointment has been updated by your patient.",
+                            IsRead = false,
+                            CreatedAt = DateTime.Now
+                        };
+                        _context.Notifications.Add(notification);
+                        await _context.SaveChangesAsync(); // Save the notification
+                    }
+                }
+
+
                 try
                 {
+                    var existing = await _context.Appointments.AsNoTracking().FirstOrDefaultAsync(a => a.AppointmentId == id);
+                    if (existing == null) return NotFound();
+
+                    // Prevent non-therapists from editing the status
+                    if (!User.IsInRole("Therapist"))
+                    {
+                        appointment.Status = existing.Status;
+                    }
+
+                    appointment.CreatedAt = existing.CreatedAt;
+                    appointment.UpdatedAt = DateTime.Now;
+
                     _context.Update(appointment);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
                     if (!AppointmentExists(appointment.AppointmentId))
-                    {
                         return NotFound();
-                    }
                     else
-                    {
                         throw;
-                    }
                 }
                 return RedirectToAction(nameof(Index));
             }
+
             ViewData["PatientId"] = new SelectList(_context.Patients, "PatientId", "FirstName", appointment.PatientId);
-            ViewData["TherapistId"] = new SelectList(_context.Therapists, "TherapistId", "Email", appointment.TherapistId);
+            ViewData["TherapistId"] = new SelectList(_context.Therapists, "TherapistId", "FirstName", appointment.TherapistId);
             return View(appointment);
         }
 
         // GET: Appointments/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            if (id == null) return NotFound();
 
             var appointment = await _context.Appointments
                 .Include(a => a.Patient)
                 .Include(a => a.Therapist)
                 .FirstOrDefaultAsync(m => m.AppointmentId == id);
-            if (appointment == null)
-            {
-                return NotFound();
-            }
+
+            if (appointment == null) return NotFound();
 
             return View(appointment);
         }
@@ -233,9 +254,9 @@ namespace MentalHealthApp.Controllers
             if (appointment != null)
             {
                 _context.Appointments.Remove(appointment);
+                await _context.SaveChangesAsync();
             }
 
-            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 

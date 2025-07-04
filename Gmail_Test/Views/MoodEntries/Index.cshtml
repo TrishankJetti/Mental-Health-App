@@ -2,19 +2,34 @@
 
 @{
     ViewData["Title"] = "Index";
+
+    int patientCount = 0;
+    if (ViewData["PatientCount"] != null)
+    {
+        patientCount = (int)ViewData["PatientCount"];
+    }
+
 }
 
-@if (ViewData["ShowCheckInReminder"] as bool? == true)
+
+
+@if (patientCount == 0)
 {
-    <div class="alert alert-warning">You haven't checked in recently!</div>
+    <div class="alert alert-info text-center mt-4">
+        You haven’t added any patients yet.<br />
+        <a asp-controller="Patients" asp-action="Create" class="btn btn-primary mt-2">
+            ➕ Add Your First Patient
+        </a>
+    </div>
 }
-
-
 
 @if (Model.Any())
 {
    
-
+    @if (ViewData["ShowCheckInReminder"] as bool? == true)
+    {
+        <div class="alert alert-warning">You haven't checked in recently!</div>
+    }
 
     <h1 style="text-align: center; color:#6b44b3" class="tracking-in-expand">Your Mood Entries</h1>
     <form method="get">
@@ -32,7 +47,7 @@
             +
         </a>
     </div>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+  
     // Bootstrap javascript link used for the toast's animation
 
     <hr />
@@ -50,19 +65,7 @@
             </div>
         </div>
     }
-    @if (TempData["FailedToast"] != null)
-    {
-        <div class="toast-container position-fixed bottom-0 end-0 p-3">
-            <div class="toast show text-white bg-danger shadow" role="alert">
-                <div class="d-flex">
-                    <div class="toast-body">
-                        @TempData["FailedToast"]
-                    </div>
-                    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
-                </div>
-            </div>
-        </div>
-    }
+  
     <table class="table table-bordered table-hover table-striped">
         <thead class="table accordion-header">
             <tr>
@@ -99,8 +102,7 @@
                     </td>
                     <td>
 
-                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning btn-sm">Edit</a> |
-                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info btn-sm">Details</a> |
+                        <a asp-action="Edit" asp-route-id="@item.Id" ><i class="bi bi-pen-fill" style="text-decoration:none;"></i></a>
                         <a asp-action="Delete" asp-route-id="@item.Id" class="btn ">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#6b44b3" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
                                 <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293z" />
@@ -113,7 +115,7 @@
     </table>
 }
 
-else
+else if (patientCount == 1 || patientCount >1 && Model.Count()==0)
 {
     <div class="text-center mt-5">
         <img src="/img/undraw_blank-canvas_a6x5 1.png" class="img-fluid mb-4" style="max-width: 400px;" /> <!-- Centres the image and give it fludity to move with resizing of the window.-->

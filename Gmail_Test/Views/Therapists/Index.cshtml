@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Therapists";
+
 }
 
 <h2>Therapists</h2>
@@ -27,7 +28,11 @@
         {
             <tr>
                 <td>
-                    <img src="~/img/@therapist.ImageFileName" alt="Therapist Image" style="height:50px;" />
+                    <img src="~/img/@(string.IsNullOrEmpty(therapist.ImageFileName) ? "default-therapist.jpg" : therapist.ImageFileName)"
+                         alt="Therapist Image"
+                         style="height:50px;" />
+
+
                 </td>
                 <td>@therapist.FirstName</td>
                 <td>@therapist.LastName</td>

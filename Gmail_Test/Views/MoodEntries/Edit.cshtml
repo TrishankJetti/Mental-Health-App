@@ -2,12 +2,14 @@
 
 @{
     ViewData["Title"] = "Edit";
+    ViewData["HideNavbar"] = true;
 }
+<link rel="stylesheet" href="~/css/form.css" />
 
-<h1>Edit</h1>
-
-<h4>MoodEntry</h4>
-<hr />
+<a href="javascript:history.back()" class="back-arrow" ata-toggle="tooltip" data-placement="bottom" title="Click to Go Back!" style="font-size:50px;">&#8592;</a>
+<br />
+<br />
+<h1>Editing Your Mood Entry ✏️</h1>
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Edit">
@@ -35,9 +37,6 @@
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

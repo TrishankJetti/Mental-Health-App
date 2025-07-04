@@ -29,6 +29,7 @@ namespace MentalHealthApp.Controllers
         public async Task<IActionResult> Index(int? patientId)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
             var query = _context.MoodEntries
                 .Where(m => m.UserId == userId)
                 .Include(m => m.Mood)
@@ -38,6 +39,13 @@ namespace MentalHealthApp.Controllers
             var patients = await _context.Patients
                 .Where(p => _context.MoodEntries.Any(m => m.PatientId == p.PatientId && m.UserId == userId))
                 .ToListAsync();
+
+            // counts all patients 
+            var allPatientCount = await _context.Patients
+                .Where(p => p.UserId == userId)
+                .CountAsync();
+
+            ViewData["PatientCount"] = allPatientCount;
 
             if (patientId.HasValue)
             {
@@ -83,7 +91,7 @@ namespace MentalHealthApp.Controllers
             moodEntry.UserId = userId;
             moodEntry.Date = DateTime.UtcNow;
 
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 _context.Add(moodEntry);
 

@@ -2,12 +2,13 @@
 
 @{
     ViewData["Title"] = "Edit";
+    ViewData["HideNavbar"] = true;
 }
-
-<h1>Edit</h1>
-
-<h4>Product</h4>
-<hr />
+<link rel="stylesheet" href="~/css/form.css" />
+<a href="javascript:history.back()" class="back-arrow" ata-toggle="tooltip" data-placement="bottom" title="Click to Go Back!" style="font-size:50px;">&#8592;</a>
+<br />
+<br />
+<h1>Product Edit</h1>
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Edit">
@@ -29,9 +30,8 @@
                 <span asp-validation-for="Price" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ImageUrl" class="control-label"></label>
-                <input asp-for="ImageUrl" class="form-control" />
-                <span asp-validation-for="ImageUrl" class="text-danger"></span>
+                <label asp-for="ImageFile" class="control-label"></label>
+                <input asp-for="ImageFile" type="file" class="form-control" />
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />

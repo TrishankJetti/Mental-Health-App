@@ -85,7 +85,8 @@ namespace MentalHealthApp.Controllers
                 }
                 else
                 {
-                    therapist.ImageFileName = "default.jpg";
+                    therapist.ImageFileName = "default-therapist.jpg";
+
                 }
 
                 _context.Add(therapist);
@@ -133,7 +134,8 @@ namespace MentalHealthApp.Controllers
                     }
                     else if (string.IsNullOrEmpty(therapist.ImageFileName))
                     {
-                        therapist.ImageFileName = "default.jpg";
+                        therapist.ImageFileName = "default-therapist.jpg";
+
                     }
 
                     _context.Update(therapist);

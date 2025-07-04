@@ -30,6 +30,11 @@ namespace MentalHealthApp.Controllers
             return View();
         }
 
+        public IActionResult BreatheExercise()
+        {
+            return View();
+        }
+
         public IActionResult Privacy()
         {
          

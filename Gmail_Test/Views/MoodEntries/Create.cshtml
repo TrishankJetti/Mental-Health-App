@@ -2,18 +2,24 @@
 
 @{
     ViewData["Title"] = "Create";
+    ViewData["HideNavbar"] = true;
 }
 
-<h1>Create</h1>
 
-<h4>MoodEntry</h4>
-<hr />
-<div class="row">
+<link rel="stylesheet" href="~/css/form.css" />
+
+
+<a href="javascript:history.back()" class="back-arrow" ata-toggle="tooltip" data-placement="bottom" title="Click to Go Back!" style="font-size:50px;">&#8592;</a>
+<br />
+<br/>
+<h1>Create your daily Mood Entry! 😃</h1>
+
+<div class="row" >
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="MoodId" class="control-label"></label>
+                <label asp-for="MoodId" class="control-label">How are you Feeling Today?</label>
                 <select asp-for="MoodId" class ="form-control" asp-items="ViewBag.MoodId"></select>
             </div>
             <div class="form-group">
@@ -22,7 +28,7 @@
                 <span asp-validation-for="Notes" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="PatientId" class="control-label"></label>
+                <label asp-for="PatientId" class="control-label">Pick your patient</label>
                 <select asp-for="PatientId" class ="form-control" asp-items="ViewBag.PatientId"></select>
             </div>
             <div class="form-group">
@@ -30,10 +36,6 @@
             </div>
         </form>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {
