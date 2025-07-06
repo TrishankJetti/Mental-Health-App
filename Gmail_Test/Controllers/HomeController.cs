@@ -23,6 +23,13 @@ namespace MentalHealthApp.Controllers
             return View();
         }
 
+
+        public IActionResult HowToUse()
+        {
+
+
+            return View();
+        }
         public IActionResult Chat()
         {
 

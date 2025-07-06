@@ -1,0 +1,96 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using MentalHealthApp.Models
+@inject SignInManager<CustomUser> SignInManager
+@inject UserManager<CustomUser> UserManager
+
+@{
+    ViewData["Title"] = "How to Use Shanti";
+    var currentUser = await UserManager.GetUserAsync(User);
+    var userRole = currentUser != null ? (await UserManager.GetRolesAsync(currentUser)).FirstOrDefault() : "";
+}
+
+<div class="container py-5">
+    <h1 class="text-center mb-4">How to Use <strong>Shanti</strong></h1>
+
+    <section class="mb-5">
+        <h2>1. Getting Started</h2>
+        <p>To begin using Shanti:</p>
+        <ul>
+            <li><strong>Sign Up</strong> with your email to create a secure account.</li>
+            <li>If you're already registered, simply <strong>Log In</strong> to access your personal dashboard.</li>
+        </ul>
+        <p>Once logged in, you'll see features tailored to your role: Visitor, Employee, or Admin.</p>
+    </section>
+
+    <section class="mb-5">
+        <h2>2. Daily Check-ins</h2>
+        <p>Get daily reminders to check in and track your mental health:</p>
+        <ul>
+            <li>Rate your mood.</li>
+            <li>Write a short reflection or note.</li>
+            <li>View your previous entries over time.</li>
+        </ul>
+    </section>
+
+    <section class="mb-5">
+        <h2>3. Mindfulness & Breathing Exercises</h2>
+        <p>Feeling overwhelmed? Visit our <strong>Mindfulness</strong> section to:</p>
+        <ul>
+            <li>Use guided breathing tools.</li>
+            <li>Practice techniques like grounding and body scans.</li>
+        </ul>
+    </section>
+
+
+    <section class="mb-5">
+        <h2>4. Manage Your Profile</h2>
+        <p>You can view and update your personal information from your profile section. </p>
+    </section>
+
+
+    @if (SignInManager.IsSignedIn(User))
+    {
+           if (userRole == "Admin")
+              {
+            <section class="mb-5">
+                <h2>7. Admin Tools</h2>
+                <p>As an admin, you can manage:</p>
+                <ul>
+                    <li>Users and their roles</li>
+                    <li>Event listings and pricing</li>
+                    <li>Site content and logs</li>
+                </ul>
+            </section>
+              }
+        else if (userRole == "Employee")
+        {
+            <section class="mb-5">
+                <h2>7. Employee Dashboard</h2>
+                <p>As a team member, you can:</p>
+                <ul>
+                    <li>View and manage visitors</li>
+                    <li>Support check-ins and track user wellness</li>
+                </ul>
+            </section>
+        }
+    }
+
+    <section class="mb-5">
+        <h2>5. Safe and Secure</h2>
+        <p>We take privacy seriously:</p>
+        <ul>
+            <li>Encrypted passwords and session handling</li>
+            <li>Only authorized users can access sensitive features</li>
+            <li>Session expires after 30 minutes of inactivity</li>
+        </ul>
+    </section>
+
+    <section class="mb-5">
+        <h2>6. Need Help?</h2>
+        <p>If you're stuck or need support, go to the <strong>Contact</strong> page or reach out to a support team member.</p>
+    </section>
+
+    <div class="text-center mt-5">
+        <a asp-controller="Home" asp-action="Index" class="btn btn-primary">Return to Home</a>
+    </div>
+</div>

@@ -14,10 +14,6 @@ namespace MentalHealthApp.Models
         [Required]
         public string Message { get; set; } = string.Empty;
 
-        public string? LinkUrl { get; set; } // Optional link
-
-        public string? Type { get; set; } // E.g. "Appointment"
-
         public bool IsRead { get; set; } = false;
 
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;

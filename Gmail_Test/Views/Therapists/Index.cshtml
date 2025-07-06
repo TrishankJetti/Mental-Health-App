@@ -7,9 +7,13 @@
 
 <h2>Therapists</h2>
 
+@if (User.IsInRole("Admin"))// Admin action Drop Down
+                {
+
 <p>
     <a asp-action="Create" class="btn btn-primary">Create New Therapist</a>
 </p>
+                }
 
 <table class="table table-striped">
     <thead>
