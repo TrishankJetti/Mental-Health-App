@@ -83,9 +83,10 @@ namespace MentalHealthApp.Areas.Identity.Pages.Account.Manage
                 PhoneNumber = phoneNumber,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
-              
+    
             };
         }
+
 
         public async Task<IActionResult> OnPostAsync()
         {
@@ -97,6 +98,12 @@ namespace MentalHealthApp.Areas.Identity.Pages.Account.Manage
 
             if (!ModelState.IsValid)
             {
+
+                // Update custom fields
+                user.FirstName = Input.FirstName;
+                user.LastName = Input.LastName;
+          
+
                 await LoadAsync(user);
                 return Page();
             }
@@ -130,5 +137,21 @@ namespace MentalHealthApp.Areas.Identity.Pages.Account.Manage
         }
 
 
+        public async Task<IActionResult> OnGetAsync()
+        {
+            var user = await _userManager.GetUserAsync(User);
+
+            Input = new InputModel
+            {
+                FirstName = user.FirstName,
+                 LastName = user.LastName
+            };
+
+            return Page();
+        }
+
+
     }
+
+
 }
