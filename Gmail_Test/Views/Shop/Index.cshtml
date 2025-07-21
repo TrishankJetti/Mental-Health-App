@@ -27,6 +27,11 @@
     }
 </style>
 
+
+@if ( Model.Any())
+{
+
+
 @if (TempData["Toast"] != null)
 {
     <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 1100;">
@@ -67,6 +72,7 @@
     </div>
 
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
+
         @foreach (var item in Model)
         {
             <div class="row align-items-center py-4 border-bottom">
@@ -93,3 +99,15 @@
         }
     </div>
 </div>
+}
+
+else {
+
+
+
+    <div class="alert alert-info">No Items in the Shop at the Moment. Please comeback later!</div>
+    <img src="~/img/undraw_feeling-blue_8si6.png" height="1024px" width="2000px"/>
+
+
+
+}
