@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
@@ -16,11 +18,20 @@ public class CustomUser : IdentityUser
     public string? FirstName { get; set; }
     public string? LastName { get; set; }
 
-    public int? Age { get; set; }
-
     public DateTime? LastMoodCheckIn { get; set; }
 
     public List<Patient> Patients { get; set; } = new();
+
+
+    public string? PfpName { get; set; }
+
+
+
+
+    [NotMapped]
+    [DisplayName("Upload PFP")]
+    public IFormFile PfpFile { get; set; }
+
 }
 
 

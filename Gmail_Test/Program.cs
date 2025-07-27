@@ -15,6 +15,8 @@ var connectionString = builder.Configuration.GetConnectionString("MentalHealthAp
 builder.Services.AddDbContext<MentalHealthContext>(options =>
     options.UseSqlServer(connectionString));
 
+builder.Services.AddTransient<IEmailSender, EmailSender>();
+
 
 
 builder.Services.AddIdentity<CustomUser, IdentityRole>(options =>
@@ -60,7 +62,8 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-app.UseStaticFiles(); 
+app.UseStaticFiles();
+
 
 
 app.UseSession();

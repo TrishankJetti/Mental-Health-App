@@ -89,11 +89,7 @@ namespace MentalHealthApp.Areas.Identity.Pages.Account
             public string? LastName { get; set; }
 
 
-            [Required(ErrorMessage = "Age is required.")]
-            [Range(13, int.MaxValue, ErrorMessage = "You must be at least 13 years old to register.")] // User must be at the age of atleast 13 to use the website and sign up.
-            [RegularExpression(@"^\d+$", ErrorMessage = "Age must be a whole number.")] // Makes sure that age has to be a whole number and nota decimal
-            [Display(Name = "Age")]
-            public int? Age { get; set; }
+           
 
             /// <summary>
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used

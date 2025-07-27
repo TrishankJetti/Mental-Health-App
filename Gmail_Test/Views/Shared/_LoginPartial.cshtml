@@ -1,45 +1,69 @@
 ﻿@using Microsoft.AspNetCore.Identity
-@using MentalHealthApp.Models
-@using MentalHealthApp.Models
-
 @inject SignInManager<CustomUser> SignInManager
 @inject UserManager<CustomUser> UserManager
 
+@{
+    var user = await UserManager.GetUserAsync(User);
+    var pfpName = user?.PfpName;
+    string pfpUrl = !string.IsNullOrEmpty(pfpName)
+        ? Url.Content($"~/img/pfps/{pfpName}")
+        : Url.Content("~/img/pfps/default-pfp.png");
+}
+
 <ul class="navbar-nav">
-@if (SignInManager.IsSignedIn(User))
-{
-
-        // Retrieve the current user FirstName to dispaly in the navbar.
-        var currentUser = await UserManager.GetUserAsync(User);
-        var firstName = currentUser?.FirstName ?? "User";
-
-
-        <!--Style sheet for icons in html derived from Bootstrap-->
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
-
-
-    <li class="nav-item">
-        <a id="manage" class="nav-link text-white" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">
-            Logged in as @firstName <i class="bi bi-person-circle" style="font-size: 30px;"></i> <!--Icon-->
-        </a>
-    </li>
-    <li class="nav-item">
-        <form id="logoutForm" class="nav-link" asp-area="Identity" asp-page="/Account/Logout"
-              asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-            <button id="logout" type="submit" class="btn btn-link p-0 m-0 text-white" title="Logout">
-                <i class="bi bi-box-arrow-right" style="font-size: 30px;"></i>
-            </button>
-        </form>
-    </li>
-}
-else
-{
-    <li class="nav-item">
-        <a class="nav-link text-white" id="register" asp-area="Identity" asp-page="/Account/Register">Register</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link text-white" id="login" asp-area="Identity" asp-page="/Account/Login">Login</a>
-    </li>
-}
+    @if (SignInManager.IsSignedIn(User))
+    {
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <div class="profile-picture me-2">
+                    <img src="@pfpUrl" alt="Profile" class="rounded-circle" />
+                </div>
+                <span class="user-name">@user?.FirstName @user?.LastName</span>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end">
+                <li>
+                    <a class="dropdown-item" asp-area="Identity" asp-page="/Account/Manage/Index">Manage Profile</a>
+                </li>
+                <li><hr class="dropdown-divider"></li>
+                <li>
+                    <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home")">
+                        <button type="submit" class="dropdown-item">Logout</button>
+                    </form>
+                </li>
+            </ul>
+        </li>
+    }
+    else
+    {
+        <li class="nav-item">
+            <a class="nav-link" asp-area="Identity" asp-page="/Account/Login">Login</a>
+        </li>
+    }
 </ul>
 
+@if (!string.IsNullOrEmpty(Model.CurrentProfilePicture) &&
+    Model.CurrentProfilePicture != "default-avatar.png")
+{
+    <div class="mt-3">
+        <button type="submit" name="removePfp" value="true" class="btn btn-danger btn-sm">
+            Remove Profile Picture
+        </button>
+    </div>
+}
+
+
+
+<style>
+    .profile-picture {
+        width: 32px;
+        height: 32px;
+    }
+
+        .profile-picture img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+   
+</style>
