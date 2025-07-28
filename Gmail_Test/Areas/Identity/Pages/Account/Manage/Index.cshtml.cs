@@ -30,7 +30,7 @@ namespace MentalHealthApp.Areas.Identity.Pages.Account.Manage
         }
 
         public string Username { get; set; }
-        public string? CurrentProfilePicture { get; set; } // For displaying current image
+        public string CurrentProfilePicture { get; set; } = string.Empty; // Initialize as empty string if user hasnt set a pfp yet. 
 
         [TempData]
         public string StatusMessage { get; set; }
@@ -65,7 +65,7 @@ namespace MentalHealthApp.Areas.Identity.Pages.Account.Manage
             };
 
             // Store current profile picture for display
-            CurrentProfilePicture = user.PfpName;
+            CurrentProfilePicture = user.PfpName ?? string.Empty; // Handle null PfpName, if the pfpName is empty.
         }
 
         public async Task<IActionResult> OnGetAsync()
