@@ -14,32 +14,34 @@
             <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
 
             <div class="form-floating mb-3">
-                <input asp-for="Input.FirstName" class="form-control" placeholder="First Name" />
+                <input asp-for="Input.FirstName" class="form-control" placeholder="First Name" /> <!-- First name field that belongs to the user.-->
                 <label asp-for="Input.FirstName">First Name</label>
                 <span asp-validation-for="Input.FirstName" class="text-danger"></span>
             </div>
 
             <div class="form-floating mb-3">
-                <input asp-for="Input.LastName" class="form-control" placeholder="Last Name" />
+                <input asp-for="Input.LastName" class="form-control" placeholder="Last Name" />  <!-- Last name field that belongs to the user.-->
                 <label asp-for="Input.LastName">Last Name</label>
                 <span asp-validation-for="Input.LastName" class="text-danger"></span>
             </div>
 
             <div class="form-group mb-3">
                 <label asp-for="Input.PfpFile" class="form-label">Profile Picture</label>
-                <input asp-for="Input.PfpFile" type="file" class="form-control" accept=".jpg,.jpeg,.png,.gif" />
+                <input asp-for="Input.PfpFile" type="file" class="form-control" accept=".jpg,.jpeg,.png,.gif" />  <!-- This is the image upload input field that allows users to upload files that are stored locally on their device.-->
                 <span asp-validation-for="Input.PfpFile" class="text-danger"></span>
-                <div class="form-text">Max file size: 2MB. Allowed formats: JPG, PNG, GIF</div>
+                <div class="form-text">Allowed formats: JPG, PNG, GIF</div>  <!-- Form text that describes the allowed file types within the input field.-->
             </div>
 
-            <button id="update-profile-button" type="submit" class="w-100 btn btn-lg btn-primary">Save</button>
+            <button id="update-profile-button" type="submit" class="w-100 btn btn-lg btn-primary">Save</button> <!-- THis button submits the form and saves the changes.-->
         </form>
     </div>
 
     <div class="col-md-6 d-flex flex-column justify-content-center align-items-center">
         <!-- Profile Picture Display -->
         <div class="text-center mb-3">
-            @if (!string.IsNullOrEmpty(Model.CurrentProfilePicture))
+            @if (!string.IsNullOrEmpty(Model.CurrentProfilePicture)) 
+            // This if statement check whether or not the profile picture field has a value or not. If so thye If statement will run and the users current upla0oded file which is their pfp will dispaly as a circle
+            // otherwise the else will run and a temporary grey circle with a question mark will appear, encouraging the user to uplaod their own image.
             {
                 <img src="~/img/pfps/@Model.CurrentProfilePicture"
                      class="img-thumbnail"
@@ -53,7 +55,7 @@
                     <span class="text-white fs-1">?</span>
                 </div>
             }
-            <div class="mt-2">Current Profile Picture</div>
+            <div class="mt-2">Current Profile Picture</div> <!-- Display text for the current pfp so the user canc confirm what they are setting it as.-->
         </div>
     </div>
 </div>
