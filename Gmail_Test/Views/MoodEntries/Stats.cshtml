@@ -1,0 +1,73 @@
+﻿@model MentalHealthApp.Models.MoodEntriesViewModel
+
+@{
+    ViewData["Title"] = "Your Stats";
+}
+
+<link href="~/css/site.css" rel="stylesheet" />
+<h1 class="text-center mt-4" style="color:#6b44b3;">Your Mental Health Stats</h1>
+
+<div class="container mt-4 tracking-in-contract-bck-top">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card text-center shadow-sm mb-4" style="border-radius:10px;">
+                <div class="card-body" style="background-color:#6b44b3; color:white;">
+                    <h4 class="card-title"><b>🔥 Current Streak</b></h4>
+                    <p class="card-text" style="font-size:24px;">@Model.CurrentStreak days</p>
+
+                    <h4 class="card-title"><b>🏆 Best Streak</b></h4>
+                    <p class="card-text" style="font-size:24px;">@Model.BestStreak days</p>
+
+                    <h4 class="card-title"><b>🎖️ Badge</b></h4>
+                    <p class="card-text" style="font-size:24px;">@Model.Badge</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="text-center mt-3">
+        <a asp-controller="MoodEntries" asp-action="Index" class="btn btn-purple">Go Back</a>
+    </div>
+
+
+<style>
+
+    .tracking-in-contract-bck-top {   /* animation from animista */
+        -webkit-animation: tracking-in-contract-bck-top 1s cubic-bezier(0.215, 0.610, 0.355, 1.000) 2s both;
+        animation: tracking-in-contract-bck-top 1s cubic-bezier(0.215, 0.610, 0.355, 1.000) 2s both;
+    }
+
+    @@-webkit-keyframes tracking-in-contract-bck-top {
+  0% {
+    letter-spacing: 1em;
+    -webkit-transform: translateZ(400px) translateY(-300px);
+            transform: translateZ(400px) translateY(-300px);
+    opacity: 0;
+  }
+  40% {
+    opacity: 0.6;
+  }
+  100% {
+    -webkit-transform: translateZ(0) translateY(0);
+            transform: translateZ(0) translateY(0);
+    opacity: 1;
+  }
+}
+@@keyframes tracking-in-contract-bck-top {
+  0% {
+    letter-spacing: 1em;
+    -webkit-transform: translateZ(400px) translateY(-300px);
+            transform: translateZ(400px) translateY(-300px);
+    opacity: 0;
+  }
+  40% {
+    opacity: 0.6;
+  }
+  100% {
+    -webkit-transform: translateZ(0) translateY(0);
+            transform: translateZ(0) translateY(0);
+    opacity: 1;
+  }
+}
+</style>

@@ -1,15 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MentalHealthApp.Data;
 using MentalHealthApp.Models;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Authorization;
-using System.Security.Claims;
 
 namespace MentalHealthApp.Controllers
 {
@@ -26,61 +25,44 @@ namespace MentalHealthApp.Controllers
         }
 
         // GET: MoodEntries
-        public async Task<IActionResult> Index(int? patientId)
+        public async Task<IActionResult> Index()
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            var query = _context.MoodEntries
+            var entries = await _context.MoodEntries
                 .Where(m => m.UserId == userId)
-                .Include(m => m.Mood)
-                .Include(m => m.Patient)
-                .AsQueryable();
-
-            var patients = await _context.Patients
-                .Where(p => _context.MoodEntries.Any(m => m.PatientId == p.PatientId && m.UserId == userId))
+                .OrderByDescending(m => m.Date)
                 .ToListAsync();
 
-            // counts all patients 
-            var allPatientCount = await _context.Patients
-                .Where(p => p.UserId == userId)
-                .CountAsync();
-
-            ViewData["PatientCount"] = allPatientCount;
-
-            if (patientId.HasValue)
-            {
-                query = query.Where(m => m.PatientId == patientId);
-            }
-
-            ViewData["Patients"] = new SelectList(patients, "PatientId", "FirstName");
-
-            // Check-in reminder logic
+            // Check-in reminder
             var user = await _userManager.GetUserAsync(User);
             var lastCheck = user?.LastMoodCheckIn?.Date ?? DateTime.MinValue;
-            ViewBag.LastCheckIn = user?.LastMoodCheckIn;
             ViewData["ShowCheckInReminder"] = lastCheck.AddDays(2) < DateTime.UtcNow.Date;
 
-            return View(await query.ToListAsync());
+            // Prepare chart data
+            var moodCounts = entries
+                .GroupBy(m => m.Mood)
+                .Select(g => new { Mood = g.Key.ToString(), Count = g.Count() })
+                .ToList();
+
+            ViewBag.MoodLabels = moodCounts.Select(m => m.Mood).ToList();
+            ViewBag.MoodData = moodCounts.Select(m => m.Count).ToList();
+
+            return View(entries);
         }
+
 
         // GET: MoodEntries/Create
         public IActionResult Create()
         {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var patients = _context.Patients
-                .Where(p => p.UserId == userId)
-                .ToList();
-
-            ViewData["PatientId"] = new SelectList(patients, "PatientId", "FirstName");
-            ViewData["MoodId"] = new SelectList(_context.MoodTypes, "MoodTypeId", "Name");
-
+            ViewData["MoodList"] = new SelectList(Enum.GetValues(typeof(MoodType)));
             return View();
         }
 
         // POST: MoodEntries/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("MoodId,Date,Notes,PatientId")] MoodEntry moodEntry)
+        public async Task<IActionResult> Create([Bind("Mood,Date,Notes")] MoodEntry moodEntry)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             if (userId == null) return Unauthorized();
@@ -91,24 +73,49 @@ namespace MentalHealthApp.Controllers
             moodEntry.UserId = userId;
             moodEntry.Date = DateTime.UtcNow;
 
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 _context.Add(moodEntry);
+                await _context.SaveChangesAsync();
 
-                user.LastMoodCheckIn = DateTime.UtcNow;
+                
+                if (user.LastMoodCheckIn.HasValue)
+                {
+                    if (user.LastMoodCheckIn.Value.Date == DateTime.Today.AddDays(-1))
+                        user.CurrentStreak++;
+                    else if (user.LastMoodCheckIn.Value.Date != DateTime.Today)
+                        user.CurrentStreak = 1;
+                }
+                else
+                {
+                    user.CurrentStreak = 1;
+                }
+
+                if (user.CurrentStreak > user.LongestStreak)
+                    user.LongestStreak = user.CurrentStreak;
+
+                user.LastMoodCheckIn = DateTime.Today;
+
+                if (user.CurrentStreak >= 30)
+                    user.Badge = "Gold";
+                else if (user.CurrentStreak >= 14)
+                    user.Badge = "Silver";
+                else if (user.CurrentStreak >= 7)
+                    user.Badge = "Bronze";
+                else
+                    user.Badge = "None";
+
                 await _userManager.UpdateAsync(user);
 
-                await _context.SaveChangesAsync();
                 TempData["SuccessToast"] = "Mood entry added successfully!";
                 return RedirectToAction(nameof(Index));
             }
 
-            var patients = _context.Patients.Where(p => p.UserId == userId).ToList();
-            ViewData["PatientId"] = new SelectList(patients, "PatientId", "FirstName", moodEntry.PatientId);
-            ViewData["MoodId"] = new SelectList(_context.MoodTypes, "MoodTypeId", "Name", moodEntry.MoodId);
-            TempData["FailedToast"] = "Failed to add mood entry. Please check your inputs.";
+            ViewData["MoodList"] = new SelectList(Enum.GetValues(typeof(MoodType)), moodEntry.Mood);
+            TempData["FailedToast"] = "Failed to add mood entry. Please try again.";
             return View(moodEntry);
         }
+
 
         // GET: MoodEntries/Edit/5
         public async Task<IActionResult> Edit(int? id)
@@ -118,25 +125,21 @@ namespace MentalHealthApp.Controllers
             var moodEntry = await _context.MoodEntries.FindAsync(id);
             if (moodEntry == null) return NotFound();
 
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var patients = _context.Patients.Where(p => p.UserId == userId).ToList();
-
-            ViewData["MoodId"] = new SelectList(_context.MoodTypes, "MoodTypeId", "Name", moodEntry.MoodId);
-            ViewData["PatientId"] = new SelectList(patients, "PatientId", "FirstName", moodEntry.PatientId);
+            ViewData["MoodList"] = new SelectList(Enum.GetValues(typeof(MoodType)), moodEntry.Mood);
             return View(moodEntry);
         }
 
         // POST: MoodEntries/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,MoodId,Date,Notes,PatientId")] MoodEntry moodEntry)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Mood,Date,Notes")] MoodEntry moodEntry)
         {
             if (id != moodEntry.Id) return NotFound();
 
             var existingEntry = await _context.MoodEntries.AsNoTracking().FirstOrDefaultAsync(m => m.Id == id);
             if (existingEntry == null) return NotFound();
 
-            moodEntry.UserId = existingEntry.UserId;
+            moodEntry.UserId = existingEntry.UserId; // keep user ID safe
 
             if (!ModelState.IsValid)
             {
@@ -154,11 +157,7 @@ namespace MentalHealthApp.Controllers
                 }
             }
 
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var patients = _context.Patients.Where(p => p.UserId == userId).ToList();
-
-            ViewData["MoodId"] = new SelectList(_context.MoodTypes, "MoodTypeId", "Name", moodEntry.MoodId);
-            ViewData["PatientId"] = new SelectList(patients, "PatientId", "FirstName", moodEntry.PatientId);
+            ViewData["MoodList"] = new SelectList(Enum.GetValues(typeof(MoodType)), moodEntry.Mood);
             TempData["FailedToast"] = "Update failed. Please try again.";
             return View(moodEntry);
         }
@@ -168,11 +167,7 @@ namespace MentalHealthApp.Controllers
         {
             if (id == null) return NotFound();
 
-            var moodEntry = await _context.MoodEntries
-                .Include(m => m.Mood)
-                .Include(m => m.Patient)
-                .FirstOrDefaultAsync(m => m.Id == id);
-
+            var moodEntry = await _context.MoodEntries.FirstOrDefaultAsync(m => m.Id == id);
             if (moodEntry == null) return NotFound();
 
             return View(moodEntry);
@@ -198,5 +193,57 @@ namespace MentalHealthApp.Controllers
         {
             return _context.MoodEntries.Any(e => e.Id == id);
         }
+
+        public async Task<IActionResult> MoodChart()
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (userId == null) return Unauthorized();
+
+            var entries = await _context.MoodEntries
+                .Where(m => m.UserId == userId)
+                .ToListAsync();
+
+            // Make sure we always have all moods, even if count is 0
+            var allMoods = Enum.GetValues(typeof(MoodType)).Cast<MoodType>().ToList();
+
+            var moodCounts = allMoods
+                .Select(m => new
+                {
+                    Mood = m.ToString(),
+                    Count = entries.Count(e => e.Mood == m)
+                }).ToList();
+
+            ViewBag.MoodLabels = moodCounts.Select(m => m.Mood).ToList();
+            ViewBag.MoodData = moodCounts.Select(m => m.Count).ToList();
+
+            return View();
+        }
+
+
+        public async Task<IActionResult> Stats()
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (userId == null) return Unauthorized();
+
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user == null) return Unauthorized();
+
+            var entries = await _context.MoodEntries
+                .Where(m => m.UserId == userId)
+                .OrderByDescending(m => m.Date)
+                .ToListAsync();
+
+            var model = new MoodEntriesViewModel
+            {
+                Entries = entries,
+                CurrentStreak = user.CurrentStreak,
+                BestStreak = user.LongestStreak,
+                Badge = user.Badge
+            };
+
+            return View(model);
+        }
+
+
     }
 }

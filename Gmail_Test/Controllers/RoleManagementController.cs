@@ -18,11 +18,27 @@ public class RoleManagementController : Controller
         _roleManager = roleManager;
     }
 
-    public IActionResult Index()
+    public async Task<IActionResult> Index(string role)
     {
         var users = _userManager.Users.ToList();
-        return View(users);
+        var filteredUsers = new List<CustomUser>();
+
+        foreach (var user in users)
+        {
+            var roles = await _userManager.GetRolesAsync(user);
+            if (string.IsNullOrEmpty(role) || roles.Contains(role))
+            {
+                filteredUsers.Add(user);
+            }
+        }
+
+        // Send roles to the view for dropdown
+        ViewBag.Roles = _roleManager.Roles.Select(r => r.Name).ToList();
+        ViewBag.SelectedRole = role;
+
+        return View(filteredUsers);
     }
+
 
     public async Task<IActionResult> ManageRole(string userId)
     {

@@ -5,39 +5,47 @@
     ViewData["HideNavbar"] = true;
 }
 
-
 <link rel="stylesheet" href="~/css/form.css" />
 
-
-<a href="javascript:history.back()" class="back-arrow" ata-toggle="tooltip" data-placement="bottom" title="Click to Go Back!" style="font-size:50px;">&#8592;</a>
+<a href="javascript:history.back()" class="back-arrow" data-toggle="tooltip"
+   data-placement="bottom" title="Click to Go Back!" style="font-size:50px;">&#8592;</a>
 <br />
-<br/>
+<br />
 <h1>Create your daily Mood Entry! 😃</h1>
 
-<div class="row" >
-    <div class="col-md-4">
+<div class="row">
+    <div class="col-md-6">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
             <div class="form-group">
-                <label asp-for="MoodId" class="control-label">How are you Feeling Today?</label>
-                <select asp-for="MoodId" class ="form-control" asp-items="ViewBag.MoodId"></select>
+                <label asp-for="Mood" class="control-label">How are you feeling today?</label>
+                <select asp-for="Mood" class="form-control" asp-items="ViewBag.MoodList"></select>
+                <span asp-validation-for="Mood" class="text-danger"></span>
             </div>
+
             <div class="form-group">
                 <label asp-for="Notes" class="control-label"></label>
                 <input asp-for="Notes" class="form-control" />
                 <span asp-validation-for="Notes" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="PatientId" class="control-label">Pick your patient</label>
-                <select asp-for="PatientId" class ="form-control" asp-items="ViewBag.PatientId"></select>
-            </div>
-            <div class="form-group">
+
+            <div class="form-group mt-3">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
+
+<style>
+    .form-control {
+        color: white;
+    }
+
+</style>
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

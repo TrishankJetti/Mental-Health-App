@@ -4,6 +4,7 @@ using MentalHealthApp.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MentalHealthApp.Migrations
 {
     [DbContext(typeof(MentalHealthContext))]
-    partial class MentalHealthContextModelSnapshot : ModelSnapshot
+    [Migration("20250820074349_NewAndImprovedSimplificationSystem")]
+    partial class NewAndImprovedSimplificationSystem
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -30,16 +33,9 @@ namespace MentalHealthApp.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
-                    b.Property<string>("Badge")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("CurrentStreak")
-                        .HasColumnType("int");
 
                     b.Property<string>("Email")
                         .HasMaxLength(256)
@@ -62,9 +58,6 @@ namespace MentalHealthApp.Migrations
 
                     b.Property<DateTimeOffset?>("LockoutEnd")
                         .HasColumnType("datetimeoffset");
-
-                    b.Property<int>("LongestStreak")
-                        .HasColumnType("int");
 
                     b.Property<string>("NormalizedEmail")
                         .HasMaxLength(256)
@@ -113,20 +106,17 @@ namespace MentalHealthApp.Migrations
                         {
                             Id = "1",
                             AccessFailedCount = 0,
-                            Badge = "None",
-                            ConcurrencyStamp = "f9f9f32c-d2b8-425e-b13d-49f296e80ca8",
-                            CurrentStreak = 0,
+                            ConcurrencyStamp = "e24503ba-f47f-4a96-9e92-80299dde27ce",
                             Email = "admin@example.com",
                             EmailConfirmed = true,
                             FirstName = "System",
                             LastName = "Admin",
                             LockoutEnabled = false,
-                            LongestStreak = 0,
                             NormalizedEmail = "ADMIN@EXAMPLE.COM",
                             NormalizedUserName = "ADMIN@EXAMPLE.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEPCr8VMyGJIoXgf1qRKt5Rf/795Qhs/DMquTsEu1uDn1il7jwUuB17V0z2iToIDTJA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEFG/6LOoWb98Winnjy3BVUKYvryEXbb5+B8zfQYN/1TicrdGI11bihctMUiOaHkAkw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "814a1b09-3496-4167-8871-3c2284668ce9",
+                            SecurityStamp = "69bac645-f4c5-4195-9b46-d89ff029d5e7",
                             TwoFactorEnabled = false,
                             UserName = "admin@example.com"
                         },
@@ -134,20 +124,17 @@ namespace MentalHealthApp.Migrations
                         {
                             Id = "2",
                             AccessFailedCount = 0,
-                            Badge = "None",
-                            ConcurrencyStamp = "a4b73dea-7f60-4f29-b664-80016c1da2b8",
-                            CurrentStreak = 0,
+                            ConcurrencyStamp = "0b4cf2b8-c281-45f7-a4d7-05166633ed7b",
                             Email = "admin2@example.com",
                             EmailConfirmed = true,
                             FirstName = "Second",
                             LastName = "Admin",
                             LockoutEnabled = false,
-                            LongestStreak = 0,
                             NormalizedEmail = "ADMIN2@EXAMPLE.COM",
                             NormalizedUserName = "ADMIN2@EXAMPLE.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEHPqWRw5lLqdPL6AUrZDZ3dbYoJNjHa9PgUgmPC4DWI+sD+M9POboUDQENARa/dj4A==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEK0A5jq/59omDUDd394DCfNRKWILNANPQUVKNJDAp+4mRsekde/eQX6XF3nUPA6xig==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "314a8cfb-090c-4aa2-9cc5-68b5d9560056",
+                            SecurityStamp = "a7888464-0188-4831-a603-dea327344e5f",
                             TwoFactorEnabled = false,
                             UserName = "admin2@example.com"
                         },
@@ -155,20 +142,17 @@ namespace MentalHealthApp.Migrations
                         {
                             Id = "3",
                             AccessFailedCount = 0,
-                            Badge = "None",
-                            ConcurrencyStamp = "09fc4574-d8eb-4f73-baa5-6f29cf4bf97b",
-                            CurrentStreak = 0,
+                            ConcurrencyStamp = "3e54aeb0-ddc5-4574-a58d-8f4b7d09635b",
                             Email = "admin3@example.com",
                             EmailConfirmed = true,
                             FirstName = "Third",
                             LastName = "Admin",
                             LockoutEnabled = false,
-                            LongestStreak = 0,
                             NormalizedEmail = "ADMIN3@EXAMPLE.COM",
                             NormalizedUserName = "ADMIN3@EXAMPLE.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEPBgJ7QHKhDHJzwxywILNrLVYgvbjLDGrjfTCinE6JBgRIYsffsjd0ChrUKV32ZWEA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEAlDjiOO5EEL57mTcKInoa95La0Wbd7FFoN9hIMirdVESZCON0MIcbnlZMgMkpZq5Q==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "6e29fc28-2a5c-4552-a98c-4ea418316a85",
+                            SecurityStamp = "16199e4c-f5a7-415b-9b6f-19ced6a569e7",
                             TwoFactorEnabled = false,
                             UserName = "admin3@example.com"
                         },
@@ -176,21 +160,17 @@ namespace MentalHealthApp.Migrations
                         {
                             Id = "14",
                             AccessFailedCount = 0,
-                            Badge = "Bronze",
-                            ConcurrencyStamp = "78c63d6f-d427-4b1d-a8db-39a15680eb9c",
-                            CurrentStreak = 1,
+                            ConcurrencyStamp = "dd8b516d-4790-4d66-9aee-a2b3c19398dd",
                             Email = "patient1@example.com",
                             EmailConfirmed = true,
                             FirstName = "Alice",
-                            LastMoodCheckIn = new DateTime(2025, 8, 22, 0, 0, 0, 0, DateTimeKind.Local),
                             LastName = "Smith",
                             LockoutEnabled = false,
-                            LongestStreak = 2,
                             NormalizedEmail = "PATIENT1@EXAMPLE.COM",
                             NormalizedUserName = "PATIENT1@EXAMPLE.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEOJWfDuznxPqZUO4fSyLF1hTi0tQ+49fa7wAjUgN8V9VQWsBg8K83OciQ6IQDak3tg==",
+                            PasswordHash = "AQAAAAIAAYagAAAAENjuHTc4hdxkqDwT3SMIgibxmcJpDlxbVOqbZlPeJi00YoJKrmfTslDEfu4CzNp2tQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "56fab9ed-cebb-46fc-9d78-46d8bcf94b09",
+                            SecurityStamp = "43602844-e7c5-4621-9360-b36bc27d7b2f",
                             TwoFactorEnabled = false,
                             UserName = "patient1@example.com"
                         },
@@ -198,21 +178,17 @@ namespace MentalHealthApp.Migrations
                         {
                             Id = "15",
                             AccessFailedCount = 0,
-                            Badge = "Bronze",
-                            ConcurrencyStamp = "5c1d0cc9-ae88-4ea6-b926-e442b67cc929",
-                            CurrentStreak = 1,
+                            ConcurrencyStamp = "1c4d9af3-a778-4e2f-a1d4-2583095a82be",
                             Email = "patient2@example.com",
                             EmailConfirmed = true,
                             FirstName = "Mike",
-                            LastMoodCheckIn = new DateTime(2025, 8, 22, 0, 0, 0, 0, DateTimeKind.Local),
                             LastName = "Johnson",
                             LockoutEnabled = false,
-                            LongestStreak = 1,
                             NormalizedEmail = "PATIENT2@EXAMPLE.COM",
                             NormalizedUserName = "PATIENT2@EXAMPLE.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEAcOzRDcDJgaXBleLVUhVQXT2N9dxI92Odz2lJz3tMIWUJL6Vn1bExUR5D53AD9iGw==",
+                            PasswordHash = "AQAAAAIAAYagAAAAECBSFdpkGmhx16FsvmwcIklC4/628hT7rGnT8vvOiUADtz+AK55FtIYh8ggW1MHuGw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "016b2d89-78d6-45b1-94e4-19a4c60f4f8c",
+                            SecurityStamp = "a5ad57e7-0784-478d-b85c-1d8624a3b528",
                             TwoFactorEnabled = false,
                             UserName = "patient2@example.com"
                         },
@@ -220,21 +196,17 @@ namespace MentalHealthApp.Migrations
                         {
                             Id = "16",
                             AccessFailedCount = 0,
-                            Badge = "Bronze",
-                            ConcurrencyStamp = "f3903cad-5c71-4635-976c-11337d34bac8",
-                            CurrentStreak = 1,
+                            ConcurrencyStamp = "57b7abd6-5f86-4aa0-ae9e-bcd0e967d418",
                             Email = "patient3@example.com",
                             EmailConfirmed = true,
                             FirstName = "Emily",
-                            LastMoodCheckIn = new DateTime(2025, 8, 21, 0, 0, 0, 0, DateTimeKind.Local),
                             LastName = "Williams",
                             LockoutEnabled = false,
-                            LongestStreak = 1,
                             NormalizedEmail = "PATIENT3@EXAMPLE.COM",
                             NormalizedUserName = "PATIENT3@EXAMPLE.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAENjxTN3FB0vSJ/PsfNsmTRWTOfegnY2FzUHu3Yws+xvwwf4dqJfsE6hr3qd4w8ImLA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEKQ5zhd480gmSXz9xeKVuVn5iOG2BPrwotPNIt/vM9l9U7aX42i4s7cJxsse2JOz+A==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "ea409b9d-5256-42e6-b736-1e4b86968004",
+                            SecurityStamp = "3493e827-46dc-4fed-97cf-b6307e7f78ef",
                             TwoFactorEnabled = false,
                             UserName = "patient3@example.com"
                         },
@@ -242,21 +214,17 @@ namespace MentalHealthApp.Migrations
                         {
                             Id = "17",
                             AccessFailedCount = 0,
-                            Badge = "Bronze",
-                            ConcurrencyStamp = "425d4f0a-e19d-430c-b73f-1036a12bcdba",
-                            CurrentStreak = 1,
+                            ConcurrencyStamp = "a875fa66-93de-4c03-b8c3-f60de9e78a71",
                             Email = "patient4@example.com",
                             EmailConfirmed = true,
                             FirstName = "David",
-                            LastMoodCheckIn = new DateTime(2025, 8, 22, 0, 0, 0, 0, DateTimeKind.Local),
                             LastName = "Lee",
                             LockoutEnabled = false,
-                            LongestStreak = 1,
                             NormalizedEmail = "PATIENT4@EXAMPLE.COM",
                             NormalizedUserName = "PATIENT4@EXAMPLE.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEFHMvWis+6awRDSaypsv8EQsZerlhS58GFb68L2ReXUP0nKAqXn6RpwRhFoyr+Mgwg==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEE4BWHGdsCTpY3tAC+u6jLTWNvgxIidwSR2775CyI2kWbyTrUx/3xVURiWltTlGCrQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "16a1e924-7c46-445b-8d06-64ae9f8cbd9e",
+                            SecurityStamp = "eb535a87-acbf-4ed5-a44b-007798bd399b",
                             TwoFactorEnabled = false,
                             UserName = "patient4@example.com"
                         },
@@ -264,21 +232,17 @@ namespace MentalHealthApp.Migrations
                         {
                             Id = "18",
                             AccessFailedCount = 0,
-                            Badge = "Bronze",
-                            ConcurrencyStamp = "8ff402f5-a783-4dc0-9c7a-6fd21e6c0e43",
-                            CurrentStreak = 1,
+                            ConcurrencyStamp = "d31716cf-58ec-42ae-918d-acc33a75d38b",
                             Email = "patient5@example.com",
                             EmailConfirmed = true,
                             FirstName = "Sophia",
-                            LastMoodCheckIn = new DateTime(2025, 8, 21, 0, 0, 0, 0, DateTimeKind.Local),
                             LastName = "Garcia",
                             LockoutEnabled = false,
-                            LongestStreak = 1,
                             NormalizedEmail = "PATIENT5@EXAMPLE.COM",
                             NormalizedUserName = "PATIENT5@EXAMPLE.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEDQ0NpH7a3uaBFJCBKraJ18k1mbOizLERQ7KYruWyMqjWAmj+rjWIcSzeFbPQLNSaw==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEKDP7seHMNfIM5sLe/FqTzwa5Vgo/0y79HSiCIJTj6vBrT+Es9fG7ytYNnS5NkKfKg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "176d9f0d-3f3a-4d39-831e-2e57b41d73a8",
+                            SecurityStamp = "565b6ab7-d91c-40b7-b741-e9ac47acef2a",
                             TwoFactorEnabled = false,
                             UserName = "patient5@example.com"
                         },
@@ -286,21 +250,17 @@ namespace MentalHealthApp.Migrations
                         {
                             Id = "19",
                             AccessFailedCount = 0,
-                            Badge = "Bronze",
-                            ConcurrencyStamp = "45db957c-d4de-4ee4-b11b-5ead4ca9b70e",
-                            CurrentStreak = 1,
+                            ConcurrencyStamp = "a35510c7-f342-4323-a8aa-8760fcd2e686",
                             Email = "patient6@example.com",
                             EmailConfirmed = true,
                             FirstName = "James",
-                            LastMoodCheckIn = new DateTime(2025, 8, 22, 0, 0, 0, 0, DateTimeKind.Local),
                             LastName = "Wilson",
                             LockoutEnabled = false,
-                            LongestStreak = 1,
                             NormalizedEmail = "PATIENT6@EXAMPLE.COM",
                             NormalizedUserName = "PATIENT6@EXAMPLE.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEAtKZlvfU34XN+XcMfzqQdlxtpIeGJiK+N2zvkf6bQujZTykAi4yOB1+G0uWsPPsOg==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEGlV25IA1pkno7z9mpgZXYadpHtmyrlM4Spu5ZpewpV9GVocfmDgNz+8cthWXx6X/w==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "151fd924-eccb-4c23-804c-8a1846c64d78",
+                            SecurityStamp = "dd705dac-72a1-4082-a7b7-2392af8e0a66",
                             TwoFactorEnabled = false,
                             UserName = "patient6@example.com"
                         },
@@ -308,21 +268,17 @@ namespace MentalHealthApp.Migrations
                         {
                             Id = "20",
                             AccessFailedCount = 0,
-                            Badge = "Bronze",
-                            ConcurrencyStamp = "e1701031-6d20-4a4f-8c52-14a8b53b9ac3",
-                            CurrentStreak = 1,
+                            ConcurrencyStamp = "46b12849-e399-4295-a28e-5419440ab8b7",
                             Email = "patient7@example.com",
                             EmailConfirmed = true,
                             FirstName = "Olivia",
-                            LastMoodCheckIn = new DateTime(2025, 8, 22, 0, 0, 0, 0, DateTimeKind.Local),
                             LastName = "Martinez",
                             LockoutEnabled = false,
-                            LongestStreak = 1,
                             NormalizedEmail = "PATIENT7@EXAMPLE.COM",
                             NormalizedUserName = "PATIENT7@EXAMPLE.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEPaKqycSevhHtmj/1T92gzFd/mjgNrSO51ElA9k8MNzu1waUwd7CCBdKTwqnIXB3ug==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEKjwN/+IYD6ywxQMHzTs1bQGVhY51COYtKjJ9narExzzmhNBTS4WrN1IRt+tl5tO5A==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "fd246182-b3f3-493a-b2ad-f9a17de1474e",
+                            SecurityStamp = "a0f9ad0d-ed00-4fe2-bcff-648d29676e10",
                             TwoFactorEnabled = false,
                             UserName = "patient7@example.com"
                         });
@@ -342,6 +298,9 @@ namespace MentalHealthApp.Migrations
                     b.Property<int>("Mood")
                         .HasColumnType("int");
 
+                    b.Property<int>("MoodId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Notes")
                         .IsRequired()
                         .HasMaxLength(200)
@@ -359,160 +318,180 @@ namespace MentalHealthApp.Migrations
                         new
                         {
                             Id = 1,
-                            Date = new DateTime(2025, 8, 18, 0, 0, 0, 0, DateTimeKind.Local),
-                            Mood = 1,
+                            Date = new DateTime(2025, 8, 15, 0, 0, 0, 0, DateTimeKind.Local),
+                            Mood = 0,
+                            MoodId = 1,
                             Notes = "Had a great day with friends",
                             UserId = "14"
                         },
                         new
                         {
                             Id = 2,
-                            Date = new DateTime(2025, 8, 20, 0, 0, 0, 0, DateTimeKind.Local),
-                            Mood = 4,
+                            Date = new DateTime(2025, 8, 17, 0, 0, 0, 0, DateTimeKind.Local),
+                            Mood = 0,
+                            MoodId = 4,
                             Notes = "Work stress is getting to me",
                             UserId = "14"
                         },
                         new
                         {
                             Id = 3,
-                            Date = new DateTime(2025, 8, 22, 0, 0, 0, 0, DateTimeKind.Local),
-                            Mood = 6,
+                            Date = new DateTime(2025, 8, 19, 0, 0, 0, 0, DateTimeKind.Local),
+                            Mood = 0,
+                            MoodId = 6,
                             Notes = "Feeling calm after meditation",
                             UserId = "14"
                         },
                         new
                         {
                             Id = 4,
-                            Date = new DateTime(2025, 8, 17, 0, 0, 0, 0, DateTimeKind.Local),
-                            Mood = 2,
+                            Date = new DateTime(2025, 8, 14, 0, 0, 0, 0, DateTimeKind.Local),
+                            Mood = 0,
+                            MoodId = 2,
                             Notes = "Feeling down today",
                             UserId = "15"
                         },
                         new
                         {
                             Id = 5,
-                            Date = new DateTime(2025, 8, 21, 0, 0, 0, 0, DateTimeKind.Local),
-                            Mood = 5,
+                            Date = new DateTime(2025, 8, 18, 0, 0, 0, 0, DateTimeKind.Local),
+                            Mood = 0,
+                            MoodId = 5,
                             Notes = "Excited for upcoming trip",
                             UserId = "15"
                         },
                         new
                         {
                             Id = 6,
-                            Date = new DateTime(2025, 8, 22, 0, 0, 0, 0, DateTimeKind.Local),
-                            Mood = 4,
+                            Date = new DateTime(2025, 8, 19, 0, 0, 0, 0, DateTimeKind.Local),
+                            Mood = 0,
+                            MoodId = 4,
                             Notes = "Stressed about work deadline",
                             UserId = "15"
                         },
                         new
                         {
                             Id = 7,
-                            Date = new DateTime(2025, 8, 16, 0, 0, 0, 0, DateTimeKind.Local),
-                            Mood = 3,
+                            Date = new DateTime(2025, 8, 13, 0, 0, 0, 0, DateTimeKind.Local),
+                            Mood = 0,
+                            MoodId = 3,
                             Notes = "Angry about argument with friend",
                             UserId = "16"
                         },
                         new
                         {
                             Id = 8,
-                            Date = new DateTime(2025, 8, 19, 0, 0, 0, 0, DateTimeKind.Local),
-                            Mood = 4,
+                            Date = new DateTime(2025, 8, 16, 0, 0, 0, 0, DateTimeKind.Local),
+                            Mood = 0,
+                            MoodId = 4,
                             Notes = "Exhausted from lack of sleep",
                             UserId = "16"
                         },
                         new
                         {
                             Id = 9,
-                            Date = new DateTime(2025, 8, 21, 0, 0, 0, 0, DateTimeKind.Local),
-                            Mood = 6,
+                            Date = new DateTime(2025, 8, 18, 0, 0, 0, 0, DateTimeKind.Local),
+                            Mood = 0,
+                            MoodId = 6,
                             Notes = "Content with how things are going",
                             UserId = "16"
                         },
                         new
                         {
                             Id = 10,
-                            Date = new DateTime(2025, 8, 18, 0, 0, 0, 0, DateTimeKind.Local),
-                            Mood = 2,
+                            Date = new DateTime(2025, 8, 15, 0, 0, 0, 0, DateTimeKind.Local),
+                            Mood = 0,
+                            MoodId = 2,
                             Notes = "Feeling lonely this weekend",
                             UserId = "17"
                         },
                         new
                         {
                             Id = 11,
-                            Date = new DateTime(2025, 8, 20, 0, 0, 0, 0, DateTimeKind.Local),
-                            Mood = 1,
+                            Date = new DateTime(2025, 8, 17, 0, 0, 0, 0, DateTimeKind.Local),
+                            Mood = 0,
+                            MoodId = 1,
                             Notes = "Hopeful about therapy progress",
                             UserId = "17"
                         },
                         new
                         {
                             Id = 12,
-                            Date = new DateTime(2025, 8, 22, 0, 0, 0, 0, DateTimeKind.Local),
-                            Mood = 6,
+                            Date = new DateTime(2025, 8, 19, 0, 0, 0, 0, DateTimeKind.Local),
+                            Mood = 0,
+                            MoodId = 6,
                             Notes = "Confused about my feelings",
                             UserId = "17"
                         },
                         new
                         {
                             Id = 13,
-                            Date = new DateTime(2025, 8, 19, 0, 0, 0, 0, DateTimeKind.Local),
-                            Mood = 1,
+                            Date = new DateTime(2025, 8, 16, 0, 0, 0, 0, DateTimeKind.Local),
+                            Mood = 0,
+                            MoodId = 1,
                             Notes = "Happy about good news",
                             UserId = "18"
                         },
                         new
                         {
                             Id = 14,
-                            Date = new DateTime(2025, 8, 21, 0, 0, 0, 0, DateTimeKind.Local),
-                            Mood = 4,
+                            Date = new DateTime(2025, 8, 18, 0, 0, 0, 0, DateTimeKind.Local),
+                            Mood = 0,
+                            MoodId = 4,
                             Notes = "Anxious about upcoming test",
                             UserId = "18"
                         },
                         new
                         {
                             Id = 15,
-                            Date = new DateTime(2025, 8, 17, 0, 0, 0, 0, DateTimeKind.Local),
-                            Mood = 5,
+                            Date = new DateTime(2025, 8, 14, 0, 0, 0, 0, DateTimeKind.Local),
+                            Mood = 0,
+                            MoodId = 5,
                             Notes = "Excited to see family",
                             UserId = "19"
                         },
                         new
                         {
                             Id = 16,
-                            Date = new DateTime(2025, 8, 20, 0, 0, 0, 0, DateTimeKind.Local),
-                            Mood = 6,
+                            Date = new DateTime(2025, 8, 17, 0, 0, 0, 0, DateTimeKind.Local),
+                            Mood = 0,
+                            MoodId = 6,
                             Notes = "Calm after yoga session",
                             UserId = "19"
                         },
                         new
                         {
                             Id = 17,
-                            Date = new DateTime(2025, 8, 22, 0, 0, 0, 0, DateTimeKind.Local),
-                            Mood = 2,
+                            Date = new DateTime(2025, 8, 19, 0, 0, 0, 0, DateTimeKind.Local),
+                            Mood = 0,
+                            MoodId = 2,
                             Notes = "Sad about pet being sick",
                             UserId = "19"
                         },
                         new
                         {
                             Id = 18,
-                            Date = new DateTime(2025, 8, 18, 0, 0, 0, 0, DateTimeKind.Local),
-                            Mood = 4,
+                            Date = new DateTime(2025, 8, 15, 0, 0, 0, 0, DateTimeKind.Local),
+                            Mood = 0,
+                            MoodId = 4,
                             Notes = "Tired from work week",
                             UserId = "20"
                         },
                         new
                         {
                             Id = 19,
-                            Date = new DateTime(2025, 8, 21, 0, 0, 0, 0, DateTimeKind.Local),
-                            Mood = 6,
+                            Date = new DateTime(2025, 8, 18, 0, 0, 0, 0, DateTimeKind.Local),
+                            Mood = 0,
+                            MoodId = 6,
                             Notes = "Content with life right now",
                             UserId = "20"
                         },
                         new
                         {
                             Id = 20,
-                            Date = new DateTime(2025, 8, 22, 0, 0, 0, 0, DateTimeKind.Local),
-                            Mood = 1,
+                            Date = new DateTime(2025, 8, 19, 0, 0, 0, 0, DateTimeKind.Local),
+                            Mood = 0,
+                            MoodId = 1,
                             Notes = "Hopeful about new treatment",
                             UserId = "20"
                         });

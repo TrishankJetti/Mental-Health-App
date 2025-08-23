@@ -1,18 +1,45 @@
-﻿@model IEnumerable<MentalHealthApp.Models.CustomUser>
+﻿@using Microsoft.AspNetCore.Identity
+@model IEnumerable<MentalHealthApp.Models.CustomUser>
+@{
+    var roles = ViewBag.Roles as List<string>;
+    var selectedRole = ViewBag.SelectedRole as string;
+}
 
 <h2>User List</h2>
+
+<form method="get" asp-action="Index" class="mb-3">
+    <label for="roleFilter">Filter by Role:</label>
+    <select name="role" id="roleFilter" class="form-control" onchange="this.form.submit()">
+        <option value="">All Roles</option>
+        @foreach (var role in roles)
+        {
+            <option value="@role" selected="@(role == selectedRole ? "selected" : null)">@role</option>
+        }
+    </select>
+</form>
+
 <table class="table">
     <thead>
         <tr>
             <th>Email</th>
+            <th>Roles</th>
             <th>Actions</th>
         </tr>
     </thead>
     <tbody>
         @foreach (var user in Model)
         {
+            var userRoles = await Context.RequestServices
+            .GetService<UserManager<CustomUser>>()
+            .GetRolesAsync(user);
             <tr>
                 <td>@user.Email</td>
+                <td>
+                    @foreach (var role in userRoles)
+                    {
+                        <span class="badge bg-secondary">@role</span>
+                    }
+                </td>
                 <td>
                     <a asp-action="ManageRole" asp-route-userId="@user.Id">Manage Roles</a>
                 </td>

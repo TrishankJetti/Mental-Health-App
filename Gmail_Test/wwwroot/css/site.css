@@ -124,4 +124,36 @@ html, body {
     100% {
         opacity: 1;
     }
+
 }
+
+.btn-purple {
+    background-color: #6b44b3;
+    color: #fff;
+    border: none;
+}
+
+    .btn-purple:hover {
+        background-color: #583495;
+        color: #fff;
+    }
+
+
+
+.purple-table {
+    background-color: #6b44b3;
+    color: white;
+    border: 1px solid #6b44b3;
+}
+
+    .purple-table th {
+        background-color: #8e6fd1;
+    }
+
+    .purple-table tr:hover {
+        background-color: #8e6fd1;
+    }
+
+    .purple-table a {
+        color: white;
+    }
