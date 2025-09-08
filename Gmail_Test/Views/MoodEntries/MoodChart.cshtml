@@ -33,8 +33,11 @@
     </div>
 </div>
 
-<canvas id="moodChart" style="max-width:1000px; margin:auto; display:block;"></canvas>
-<!--Back button-->
+<div class="chart-container">
+    <canvas id="moodChart"></canvas>
+</div>
+
+<!--Back button sith javascript function for previous page.-->
 <div class="text-center mt-3">
     <a href="javascript:history.back()" class="btn btn-purple">Go Back</a>
 </div>
@@ -46,8 +49,7 @@
 <!-- Bootstrap library link.-->
 
 <script>
-    // Initialize Bootstrap tooltips
-    const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
+
 
     // Chart.js code
     const ctx = document.getElementById('moodChart');
@@ -76,3 +78,16 @@
 </script>
 
 
+                <style>
+    .chart-container {
+        width: 60%; /* Chart takes up 60% of screen width */
+        max-width: 600px; /* But don’t let it get too huge */
+        margin: 0 auto; /* Center it */
+    }
+
+    #moodChart {
+        width: 100% !important;
+        height: auto !important;
+    }
+
+                </style>

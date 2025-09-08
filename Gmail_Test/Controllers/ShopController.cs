@@ -18,26 +18,24 @@ namespace MentalHealthApp.Controllers
         {
             var products = _context.Products.AsQueryable();
 
-            ViewData["CurrentFilter"] = searchString;
-            ViewData["PriceSortParm"] = string.IsNullOrEmpty(priceOrder) ? "price_desc" : "";
-
+            // Search filtering
             if (!string.IsNullOrEmpty(searchString))
             {
-                products = products.Where(p =>
-                    p.Name.Contains(searchString) || p.Description.Contains(searchString));
+                products = products.Where(p => p.Name.Contains(searchString) || p.Description.Contains(searchString));
+                ViewData["CurrentFilter"] = searchString;
             }
 
-            switch (priceOrder)
+            // Price sorting
+            products = priceOrder switch
             {
-                case "price_desc":
-                    products = products.OrderByDescending(p => p.Price);
-                    break;
-                default:
-                    products = products.OrderBy(p => p.Price);
-                    break;
-            }
+                "price_desc" => products.OrderByDescending(p => p.Price),
+                "price_asc" => products.OrderBy(p => p.Price),
+                _ => products.OrderBy(p => p.Id) // Default case order
+            };
 
             return View(products.ToList());
         }
+
+
     }
 }

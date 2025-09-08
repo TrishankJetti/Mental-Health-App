@@ -14,21 +14,26 @@
 <h1>Create your daily Mood Entry! 😃</h1>
 
 <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
             <div class="form-group">
                 <label asp-for="Mood" class="control-label">How are you feeling today?</label>
-                <select asp-for="Mood" class="form-control" asp-items="ViewBag.MoodList"></select>
+                <select asp-for="Mood" class="form-select" asp-items="ViewBag.MoodList">
+                    <option value="" disabled selected> Select your mood </option>
+                </select>
+
+
                 <span asp-validation-for="Mood" class="text-danger"></span>
             </div>
 
             <div class="form-group">
-                <label asp-for="Notes" class="control-label"></label>
-                <input asp-for="Notes" class="form-control" />
+                <label asp-for="Notes" class="control-label">Notes</label>
+                <textarea asp-for="Notes" class="form-control" rows="4" placeholder="Write your thoughts here..."></textarea>
                 <span asp-validation-for="Notes" class="text-danger"></span>
             </div>
+
 
             <div class="form-group mt-3">
                 <input type="submit" value="Create" class="btn btn-primary" />

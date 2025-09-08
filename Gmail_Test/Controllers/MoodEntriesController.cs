@@ -73,7 +73,7 @@ namespace MentalHealthApp.Controllers
             moodEntry.UserId = userId;
             moodEntry.Date = DateTime.UtcNow;
 
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 _context.Add(moodEntry);
                 await _context.SaveChangesAsync();
@@ -244,6 +244,28 @@ namespace MentalHealthApp.Controllers
             return View(model);
         }
 
+
+
+        // GET: MoodEntries/Details/5
+        public async Task<IActionResult> Details(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            var moodEntry = await _context.MoodEntries
+                .FirstOrDefaultAsync(m => m.Id == id && m.UserId == userId);
+
+            if (moodEntry == null)
+            {
+                return NotFound();
+            }
+
+            return View(moodEntry);
+        }
 
     }
 }

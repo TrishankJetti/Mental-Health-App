@@ -1,1 +1,0 @@
-﻿SELECT TOP 3 * FROM MoodEntries ORDER BY Date DESC;

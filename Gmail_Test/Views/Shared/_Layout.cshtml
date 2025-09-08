@@ -71,6 +71,26 @@
                             <li class="nav-item">
                                 <a class="nav-link" asp-controller="Shop" asp-action="Index">Shop</a>
                             </li>
+
+
+                            <ul class="navbar-nav ms-auto">
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Mental Health Support
+                                    </a>
+                                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                        <li><a class="dropdown-item" href="#">National Helplines</a></li>
+                                        <li><a class="dropdown-item" href="#">Apps & Online Platforms</a></li>
+                                        <li><a class="dropdown-item" href="#">Support for Parents</a></li>
+                                        <li><a class="dropdown-item" href="#">Cultural Support</a></li>
+                                        <li><a class="dropdown-item" href="#">Addiction Services</a></li>
+                                        <li><a class="dropdown-item" href="#">Grief & Loss Support</a></li>
+                                        <li><a class="dropdown-item" href="#">Sexual Violence Support</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+
+
                         </ul>
 
                         @if (User.IsInRole("Admin"))
@@ -79,10 +99,10 @@
                                 <button class="btn btn-danger dropdown-toggle" type="button" data-bs-toggle="dropdown">
                                     Admin Actions
                                 </button>
-                                <ul class="dropdown-menu dropdown-menu-end">
-                                    <li><a class="dropdown-item" asp-controller="MoodTypes" asp-action="Index">Mood Types</a></li>
+                                <ul class="dropdown-menu dropdown-menu-end"> 
                                     <li><a class="dropdown-item" asp-controller="RoleManagement" asp-action="Index">Role Management</a></li>
                                     <li><a class="dropdown-item" asp-controller="Products" asp-action="Index">Products Management</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Categories" asp-action="Index">Categories Management</a></li>
                                 </ul>
                             </div>
                         }
@@ -193,6 +213,7 @@
             }
         }
     </style>
+
 
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

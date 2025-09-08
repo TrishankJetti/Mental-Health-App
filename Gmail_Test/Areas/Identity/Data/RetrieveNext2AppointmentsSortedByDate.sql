@@ -1,3 +1,0 @@
-﻿SELECT * FROM Appointments
-ORDER BY AppointmentDate DESC
-OFFSET 1 ROWS FETCH NEXT 2 ROWS ONLY;

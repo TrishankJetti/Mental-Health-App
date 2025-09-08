@@ -8,6 +8,7 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 public class ProductsController : Controller
 {
@@ -26,18 +27,21 @@ public class ProductsController : Controller
         return View(await _context.Products.ToListAsync());
     }
 
+    
     // GET: Products/Create
     public IActionResult Create()
     {
+
         return View();
     }
+
 
     // POST: Products/Create
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Create(Product product, IFormFile ImageFile)
     {
-        if (ModelState.IsValid)
+        if (!ModelState.IsValid)
         {
             // Upload Image
             if (ImageFile != null && ImageFile.Length > 0)
@@ -62,8 +66,11 @@ public class ProductsController : Controller
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
+
+       
         return View(product);
     }
+
 
     // GET: Products/Edit/5
     public async Task<IActionResult> Edit(int? id)
@@ -72,7 +79,7 @@ public class ProductsController : Controller
 
         var product = await _context.Products.FindAsync(id);
         if (product == null) return NotFound();
-
+       
         return View(product);
     }
 
@@ -87,7 +94,6 @@ public class ProductsController : Controller
         {
             try
             {
-                // Replace image if new file uploaded
                 if (ImageFile != null && ImageFile.Length > 0)
                 {
                     var uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "img");
@@ -114,8 +120,11 @@ public class ProductsController : Controller
             }
             return RedirectToAction(nameof(Index));
         }
+
+       
         return View(product);
     }
+
 
     // GET: Products/Delete/5
     public async Task<IActionResult> Delete(int? id)

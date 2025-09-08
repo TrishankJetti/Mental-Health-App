@@ -33,6 +33,23 @@
                 <label asp-for="ImageFile" class="control-label"></label>
                 <input asp-for="ImageFile" type="file" class="form-control" />
             </div>
+         
+            <div class="mb-3 form-check">
+                <input type="checkbox" class="form-check-input" asp-for="IsPrivate" />
+                <label class="form-check-label" asp-for="IsPrivate">Private (hidden from normal users)</label>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Category" class="control-label">Category:</label>
+                <div class="input-group">
+                    <select asp-for="Category" class="form-control" asp-items="Html.GetEnumSelectList<ProductCategory>()">
+                        <option value="" disabled selected>Select Category from dropdown</option>
+                    </select>
+                </div>
+                <span asp-validation-for="Category" class="text-danger"></span>
+            </div>
+
+
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>

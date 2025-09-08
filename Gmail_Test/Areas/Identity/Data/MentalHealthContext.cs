@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Reflection.Emit;
 
 namespace MentalHealthApp.Data
 {
@@ -15,6 +16,7 @@ namespace MentalHealthApp.Data
 
         public DbSet<Notification> Notifications { get; set; }
         public DbSet<Product> Products { get; set; }
+ 
         public DbSet<MoodEntry> MoodEntries { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -231,7 +233,7 @@ namespace MentalHealthApp.Data
                 // Patient 1 (Alice - User ID 14)
                 new MoodEntry { Id = 1, UserId = "14", Mood = MoodType.Happy, Date = baseDate.AddDays(-5), Notes = "Had a great day with friends" },
                 new MoodEntry { Id = 2, UserId = "14", Mood = MoodType.Stressed, Date = baseDate.AddDays(-3), Notes = "Work stress is getting to me" },
-                new MoodEntry { Id = 3, UserId = "14", Mood= MoodType.Neutral, Date = baseDate.AddDays(-1), Notes = "Feeling calm after meditation" },
+                new MoodEntry { Id = 3, UserId = "14", Mood = MoodType.Neutral, Date = baseDate.AddDays(-1), Notes = "Feeling calm after meditation" },
 
                 // Patient 2 (Mike - User ID 15)
                 new MoodEntry { Id = 4, UserId = "15", Mood = MoodType.Sad, Date = baseDate.AddDays(-6), Notes = "Feeling down today" },
@@ -240,7 +242,7 @@ namespace MentalHealthApp.Data
 
                 // Patient 3 (Emily - User ID 16)
                 new MoodEntry { Id = 7, UserId = "16", Mood = MoodType.Angry, Date = baseDate.AddDays(-7), Notes = "Angry about argument with friend" },
-                new MoodEntry { Id = 8, UserId = "16", Mood =MoodType.Stressed, Date = baseDate.AddDays(-4), Notes = "Exhausted from lack of sleep" },
+                new MoodEntry { Id = 8, UserId = "16", Mood = MoodType.Stressed, Date = baseDate.AddDays(-4), Notes = "Exhausted from lack of sleep" },
                 new MoodEntry { Id = 9, UserId = "16", Mood = MoodType.Neutral, Date = baseDate.AddDays(-2), Notes = "Content with how things are going" },
 
                 // Patient 4 (David - User ID 17)
@@ -250,7 +252,7 @@ namespace MentalHealthApp.Data
 
                 // Patient 5 (Sophia - User ID 18)
                 new MoodEntry { Id = 13, UserId = "18", Mood = MoodType.Happy, Date = baseDate.AddDays(-4), Notes = "Happy about good news" },
-                new MoodEntry { Id = 14, UserId = "18", Mood= MoodType.Stressed, Date = baseDate.AddDays(-2), Notes = "Anxious about upcoming test" },
+                new MoodEntry { Id = 14, UserId = "18", Mood = MoodType.Stressed, Date = baseDate.AddDays(-2), Notes = "Anxious about upcoming test" },
 
                 // Patient 6 (James - User ID 19
                 new MoodEntry { Id = 15, UserId = "19", Mood = MoodType.Excited, Date = baseDate.AddDays(-6), Notes = "Excited to see family" },
@@ -263,10 +265,41 @@ namespace MentalHealthApp.Data
                 new MoodEntry { Id = 20, UserId = "20", Mood = MoodType.Happy, Date = baseDate.AddDays(-1), Notes = "Hopeful about new treatment" }
             );
 
+           
+
+        builder.Entity<Product>().HasData(
+                new Product { Id = 1, Category = ProductCategory.Other, Price = 25m, IsPrivate = false, Name = "Shanti Black Tee", Description = "Want to support our cause but rock some swag? This is the perfect  choice for you!", ImageUrl = "/img/ShantiShirtMerch.png" },
+                new Product { Id = 2, Category = ProductCategory.Other, Price = 25m, IsPrivate = false, Name = "Shanti Plushy", Description = "Get a fun plushy to be your companion! ", ImageUrl = "/img/ShantiPlushy.png" },
+                new Product
+                {
+                    Id = 3,
+                    Name = "Wellness Book - 'Calm Your Mind'",
+                    Description = "A bestselling book with practical tips for mental wellness.",
+                    Price = 15.49m,
+                    ImageUrl = "/img/Wellbook.png",
+                    IsPrivate = false,
+                    Category = ProductCategory.Books
+                },
+                 new Product
+                 {
+                     Id = 4,
+                     Name = "Stress Relief Kit",
+                     Description = "Includes stress balls, aroma oils, and calming teas.",
+                     Price = 29.99m,
+                     ImageUrl = "/img/stresskit.png",
+                     IsPrivate = false,
+                     Category = ProductCategory.StressRelief
+                 }
+
+
+                 );
+        
+
 
 
         }
 
-        public DbSet<MentalHealthApp.Models.Product> Product { get; set; } = default!;
+
+
     }
 }

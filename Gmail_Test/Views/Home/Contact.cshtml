@@ -1,14 +1,22 @@
-﻿<!-- modify this form HTML and place wherever you want your form -->
-<form action="https://formspree.io/f/movlvlnq"
-      method="POST">
-    <label>
-        Your email:
-        <input type="email" name="email">
-    </label>
-    <label>
-        Your message:
-        <textarea name="message"></textarea>
-    </label>
-    <!-- your other form fields go here -->
-    <button type="submit">Send</button>
-</form>
+﻿<!-- Centered Simple Form -->
+<div style="max-width: 400px; margin: 2rem auto; text-align: center; font-family: sans-serif; color: #6b44b3;">
+    <form action="https://formspree.io/f/movlvlnq" method="POST">
+        <h2>Contact Us</h2>
+
+        <div style="margin-bottom: 1rem;">
+            <label for="email">Your Email</label><br>
+            <input type="email" name="email" id="email" placeholder="you@example.com"
+                   style="width: 100%; padding: 0.5rem; border: 1px solid #6b44b3; border-radius: 5px;">
+        </div>
+
+        <div style="margin-bottom: 1rem;">
+            <label for="message">Your Message</label><br>
+            <textarea name="message" id="message" placeholder="Write your message here..."
+                      style="width: 100%; padding: 0.5rem; border: 1px solid #6b44b3; border-radius: 5px; min-height: 100px;"></textarea>
+        </div>
+
+        <button type="submit" style="padding: 0.6rem 1.5rem; background-color: #6b44b3; color: white; border: none; border-radius: 5px; cursor: pointer;">
+            Send
+        </button>
+    </form>
+</div>

@@ -100,7 +100,7 @@ public class CartController : Controller
             {
                 PriceData = new SessionLineItemPriceDataOptions
                 {
-                    UnitAmountDecimal = item.Price * 100, // Stripe expects cents
+                    UnitAmountDecimal = item.Price * 100, // Stripe expects cents so multiply by 100 for dollars.
                     Currency = "nzd",
                     ProductData = new SessionLineItemPriceDataProductDataOptions
                     {

@@ -9,17 +9,17 @@ namespace MentalHealthApp.Models
         public int Id { get; set; }
 
         [Required(ErrorMessage = "User ID is required.")]
-        public string UserId { get; set; }  // Foreign key linking to User
+        public string UserId { get; set; }  
 
         [Required(ErrorMessage = "Mood selection is required.")]
-        public MoodType Mood { get; set; }  // use enum directly 🚀
+        public MoodType Mood { get; set; }  
 
         [Required(ErrorMessage = "Date is required.")]
         [DataType(DataType.Date)]
         public DateTime Date { get; set; } = DateTime.Now;
 
         [MaxLength(200, ErrorMessage = "Notes cannot exceed 200 characters.")]
-        public string Notes { get; set; }  // Optional, but limited to 200 chars
+        public string Notes { get; set; }  
     }
 
     public enum MoodType

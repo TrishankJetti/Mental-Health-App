@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using MentalHealthApp.Data;
 using MentalHealthApp.Models;
-using MentalHealthApp.Hubs;
+
 using Stripe;
 using Microsoft.AspNetCore.Identity.UI.Services;
 
@@ -75,8 +75,7 @@ StripeConfiguration.ApiKey = builder.Configuration.GetSection("Stripe:SecretKey"
 app.UseAuthentication(); // Required for Identity
 app.UseAuthorization();
 
-// Map SignalR Hub
-app.MapHub<ChatHub>("/chathub");
+
 
 // Map Razor Pages and Controllers
 app.MapRazorPages();
