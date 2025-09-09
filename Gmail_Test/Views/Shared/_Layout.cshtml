@@ -12,6 +12,7 @@
         if (currentUser != null)
         {
             var lastCheck = currentUser.LastMoodCheckIn?.Date ?? DateTime.MinValue;
+            // Check if it's been more than 2 days since last check-in
             if (DateTime.UtcNow.Date > lastCheck.AddDays(2))
             {
                 showCheckInReminder = true;
@@ -40,6 +41,7 @@
         <p class="loader-text">Please Wait</p>
     </div>
 
+
     @if (!(ViewData["HideNavbar"] as bool? ?? false))
     {
         <header>
@@ -49,6 +51,9 @@
                         <img src="~/img/logo.png" alt="Shanti Logo" style="height: 40px; width: auto; margin-right: 8px;" />
                     </a>
 
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain" aria-controls="navbarMain" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
 
                     <div class="collapse navbar-collapse" id="navbarMain">
                         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
@@ -61,7 +66,7 @@
                                     }
                                 </a>
                             </li>
-                        
+
                             <li class="nav-item">
                                 <a class="nav-link" asp-controller="Home" asp-action="BreatheExercise">Breathing Exercise</a>
                             </li>
@@ -72,37 +77,43 @@
                                 <a class="nav-link" asp-controller="Shop" asp-action="Index">Shop</a>
                             </li>
 
-
-                            <ul class="navbar-nav ms-auto">
-                                <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                        Mental Health Support
-                                    </a>
-                                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                        <li><a class="dropdown-item" href="#">National Helplines</a></li>
-                                        <li><a class="dropdown-item" href="#">Apps & Online Platforms</a></li>
-                                        <li><a class="dropdown-item" href="#">Support for Parents</a></li>
-                                        <li><a class="dropdown-item" href="#">Cultural Support</a></li>
-                                        <li><a class="dropdown-item" href="#">Addiction Services</a></li>
-                                        <li><a class="dropdown-item" href="#">Grief & Loss Support</a></li>
-                                        <li><a class="dropdown-item" href="#">Sexual Violence Support</a></li>
-                                    </ul>
-                                </li>
-                            </ul>
-
+                            <!-- Drop down for MentalHealthSupport in New Zealand -->
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="nzHelplinesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    NZ Helplines & Support
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="nzHelplinesDropdown">
+                                    <li><h6 class="dropdown-header">Immediate Support</h6></li>
+                                    <li><a class="dropdown-item" href="tel:111">Emergency (Police, Fire, Ambulance) - Call 111</a></li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li><h6 class="dropdown-header">Mental Health Helplines</h6></li>
+                                    <li><a class="dropdown-item" href="tel:1737">Need to Talk? - Call or text 1737</a></li>
+                                    <li><a class="dropdown-item" href="https://www.lifeline.org.nz/" target="_blank" rel="noopener noreferrer">Lifeline Aotearoa - 0800 543 354</a></li>
+                                    <li><a class="dropdown-item" href="https://www.samaritans.org.nz/" target="_blank" rel="noopener noreferrer">Samaritans - 0800 726 666</a></li>
+                                    <li><a class="dropdown-item" href="https://www.depression.org.nz/" target="_blank" rel="noopener noreferrer">Depression.org.nz - 0800 111 757</a></li>
+                                    <li><a class="dropdown-item" href="https://www.youthline.co.nz/" target="_blank" rel="noopener noreferrer">Youthline - 0800 376 633</a></li>
+                                    <li><a class="dropdown-item" href="https://www.thelowdown.co.nz/" target="_blank" rel="noopener noreferrer">The Lowdown - Text 5626</a></li>
+                                    <li><a class="dropdown-item" href="https://www.anxiety.org.nz/" target="_blank" rel="noopener noreferrer">Anxiety NZ - 0800 ANXIETY (0800 269 4389)</a></li>
+                                    <li><a class="dropdown-item" href="https://www.alcohol.org.nz/help-advice/alcohol-drug-helpline" target="_blank" rel="noopener noreferrer">Alcohol Drug Helpline - 0800 787 797</a></li>
+                                    <li><a class="dropdown-item" href="https://www.gamblinghelpline.co.nz/" target="_blank" rel="noopener noreferrer">Gambling Helpline - 0800 654 655</a></li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li><a class="dropdown-item" href="https://www.mentalhealth.org.nz/get-help/in-crisis/helplines/" target="_blank" rel="noopener noreferrer">Find More NZ Helplines & Resources</a></li>
+                                </ul>
+                            </li>
+                            <!-- MODIFIED SECTION END -->
 
                         </ul>
 
                         @if (User.IsInRole("Admin"))
                         {
                             <div class="dropdown me-3">
-                                <button class="btn btn-danger dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                                <button class="btn btn-danger dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     Admin Actions
                                 </button>
-                                <ul class="dropdown-menu dropdown-menu-end"> 
+                                <ul class="dropdown-menu dropdown-menu-end">
                                     <li><a class="dropdown-item" asp-controller="RoleManagement" asp-action="Index">Role Management</a></li>
                                     <li><a class="dropdown-item" asp-controller="Products" asp-action="Index">Products Management</a></li>
-                                    <li><a class="dropdown-item" asp-controller="Categories" asp-action="Index">Categories Management</a></li>
+                                   
                                 </ul>
                             </div>
                         }
@@ -117,7 +128,7 @@
                             .ToList();
 
                             <div class="dropdown me-3">
-                                <button class="btn btn-outline-light dropdown-toggle" data-bs-toggle="dropdown">
+                                <button class="btn btn-outline-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     🔔 (@notifications.Count)
                                 </button>
                                 <ul class="dropdown-menu dropdown-menu-end">
@@ -215,7 +226,7 @@
     </style>
 
 
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @RenderSection("Scripts", required: false)
 </body>

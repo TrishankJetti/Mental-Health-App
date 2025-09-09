@@ -5,13 +5,17 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
 
 
-@if (!Model.Any())
+@if (!(bool)ViewData["HasAnyEntries"])
 {
-    <div class="alert alert-info text-center mt-4" style="background-color:#e5d4f7; color:#6b44b3;">
-        You haven’t written any Entries yet.<br />
-        <a asp-controller="MoodEntries" asp-action="Create" class="btn btn-purple">
-            ➕ WRITE Your First!
-        </a>
+    <div class="alert alert-info text-center mt-4">
+        You haven’t written any entries yet.<br />
+        <a asp-action="Create" class="btn btn-purple">➕ WRITE Your First!</a>
+    </div>
+}
+else if (!Model.Any())
+{
+    <div class="alert alert-warning text-center mt-4">
+        No entries match the selected mood filter.
     </div>
 }
 else
@@ -22,6 +26,22 @@ else
             You haven't checked in recently!
         </div>
     }
+
+    <div class="d-flex justify-content-center mb-3 gap-2">
+    <form asp-action="Index" method="get" class="d-flex align-items-center gap-2">
+        <label for="moodFilter">Filter by Mood:</label>
+        <select name="moodFilter" id="moodFilter" class="form-select" onchange="this.form.submit()">
+            <option value="">All</option>
+            @foreach (var mood in Enum.GetValues(typeof(MoodType)))
+{
+    var isSelected = ViewData["CurrentMoodFilter"] != null && (MoodType)ViewData["CurrentMoodFilter"] == (MoodType)mood ? "selected" : "";
+    <option value="@mood" isSelected>@mood</option>
+}
+
+        </select>
+    </form>
+</div>
+
 
     <h1 class="text-center tracking-in-expand" style="color:#6b44b3;">
         Your Mood Entries

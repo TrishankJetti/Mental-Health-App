@@ -25,31 +25,31 @@ namespace MentalHealthApp.Controllers
         }
 
         // GET: MoodEntries
-        public async Task<IActionResult> Index()
+        // GET: MoodEntries
+        public async Task<IActionResult> Index(MoodType? moodFilter)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            var entries = await _context.MoodEntries
+            var allEntries = await _context.MoodEntries
                 .Where(m => m.UserId == userId)
                 .OrderByDescending(m => m.Date)
                 .ToListAsync();
 
-            // Check-in reminder
-            var user = await _userManager.GetUserAsync(User);
-            var lastCheck = user?.LastMoodCheckIn?.Date ?? DateTime.MinValue;
-            ViewData["ShowCheckInReminder"] = lastCheck.AddDays(2) < DateTime.UtcNow.Date;
+            ViewData["HasAnyEntries"] = allEntries.Any();
 
-            // Prepare chart data
-            var moodCounts = entries
-                .GroupBy(m => m.Mood)
-                .Select(g => new { Mood = g.Key.ToString(), Count = g.Count() })
-                .ToList();
+            // Apply filter if selected
+            var filteredEntries = allEntries.AsQueryable();
+            if (moodFilter.HasValue)
+            {
+                filteredEntries = filteredEntries.Where(m => m.Mood == moodFilter.Value);
+            }
 
-            ViewBag.MoodLabels = moodCounts.Select(m => m.Mood).ToList();
-            ViewBag.MoodData = moodCounts.Select(m => m.Count).ToList();
+            ViewData["CurrentMoodFilter"] = moodFilter;
 
-            return View(entries);
+            return View(filteredEntries.ToList());
         }
+
+
 
 
         // GET: MoodEntries/Create

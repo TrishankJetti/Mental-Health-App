@@ -1,0 +1,40 @@
+﻿@{
+    ViewData["Title"] = "Daily Quote";
+    var quote = ViewData["Quote"] as string;
+}
+
+<div class="container py-5 text-center">
+    <h1 class="mb-4" style="color: #6b44b3;">
+        Daily Affirmation
+        <button type="button" class="btn btn-link p-0 ms-2" data-bs-toggle="modal" data-bs-target="#infoModal" aria-label="Info about daily affirmation">
+            <i class="bi bi-question-circle" style="font-size: 1.2rem; color: #6b44b3;"></i>
+        </button>
+    </h1>
+
+    <div class="alert alert-info fs-4 fst-italic">
+        <i class="bi bi-chat-quote-fill me-2"></i>
+        @quote
+    </div>
+
+    <a href="javascript:history.back()" class="btn btn-purple mt-3">
+        <i class="bi bi-arrow-left-circle me-2"></i> Back
+    </a>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="infoModal" tabindex="-1" aria-labelledby="infoModalLabel" aria-hidden="true"> <!-- The modal fade class allows the modal to work with a nice fade effect when it transtions. -->
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="infoModalLabel">How to get a new quote</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                To see a new daily affirmation, please refresh the page.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-purple" data-bs-dismiss="modal">Got it</button> <!-- Close button for modal-->
+            </div>
+        </div>
+    </div>
+</div>

@@ -268,15 +268,15 @@ namespace MentalHealthApp.Data
            
 
         builder.Entity<Product>().HasData(
-                new Product { Id = 1, Category = ProductCategory.Other, Price = 25m, IsPrivate = false, Name = "Shanti Black Tee", Description = "Want to support our cause but rock some swag? This is the perfect  choice for you!", ImageUrl = "/img/ShantiShirtMerch.png" },
-                new Product { Id = 2, Category = ProductCategory.Other, Price = 25m, IsPrivate = false, Name = "Shanti Plushy", Description = "Get a fun plushy to be your companion! ", ImageUrl = "/img/ShantiPlushy.png" },
+                new Product { Id = 1, Category = ProductCategory.Other, Price = 25m, IsPrivate = false, Name = "Shanti Black Tee", Description = "Want to support our cause but rock some swag? This is the perfect  choice for you!", ImageUrl = "ShantiShirtMerch.png" },
+                new Product { Id = 2, Category = ProductCategory.Other, Price = 25m, IsPrivate = false, Name = "Shanti Plushy", Description = "Get a fun plushy to be your companion! ", ImageUrl = "ShantiPlushy.png" },
                 new Product
                 {
                     Id = 3,
                     Name = "Wellness Book - 'Calm Your Mind'",
                     Description = "A bestselling book with practical tips for mental wellness.",
                     Price = 15.49m,
-                    ImageUrl = "/img/Wellbook.png",
+                    ImageUrl = "Wellbook.png",
                     IsPrivate = false,
                     Category = ProductCategory.Books
                 },
@@ -286,7 +286,7 @@ namespace MentalHealthApp.Data
                      Name = "Stress Relief Kit",
                      Description = "Includes stress balls, aroma oils, and calming teas.",
                      Price = 29.99m,
-                     ImageUrl = "/img/stresskit.png",
+                     ImageUrl = "default-product.png",
                      IsPrivate = false,
                      Category = ProductCategory.StressRelief
                  }
