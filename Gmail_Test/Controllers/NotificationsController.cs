@@ -30,5 +30,30 @@ namespace MentalHealthApp.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction("Index", "Home");
         }
+
+        public async Task<IActionResult> HandleNotification(int id)
+        {
+            var notification = await _context.Notifications.FindAsync(id);
+            if (notification == null) return NotFound();
+
+            // Mark as read
+            notification.IsRead = true;
+            _context.Notifications.Update(notification);
+            await _context.SaveChangesAsync();
+
+            // Redirect based on notification type
+            if (notification.Message.Contains("friend request"))
+            {
+                return RedirectToAction("Index", "Friends"); // Go to friends page
+            }
+            else if (notification.Message.Contains("message"))
+            {
+                return RedirectToAction("Chat", "Messages", new { friendId = notification.SenderId });
+            }
+
+            return RedirectToAction("Index", "Home");
+        }
+
+
     }
 }

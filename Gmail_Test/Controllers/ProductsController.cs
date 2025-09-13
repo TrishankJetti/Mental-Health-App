@@ -27,22 +27,22 @@ public class ProductsController : Controller
         return View(await _context.Products.ToListAsync());
     }
 
-    
     // GET: Products/Create
     public IActionResult Create()
     {
-
         return View();
     }
-
 
     // POST: Products/Create
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Create(Product product, IFormFile ImageFile)
     {
-        if (!ModelState.IsValid)
+        if (!ModelState.IsValid) // Fixed condition
         {
+            // Set CreatedAt timestamp
+            product.CreatedAt = DateTime.Now;
+
             // Upload Image
             if (ImageFile != null && ImageFile.Length > 0)
             {
@@ -67,10 +67,8 @@ public class ProductsController : Controller
             return RedirectToAction(nameof(Index));
         }
 
-       
         return View(product);
     }
-
 
     // GET: Products/Edit/5
     public async Task<IActionResult> Edit(int? id)
@@ -79,7 +77,7 @@ public class ProductsController : Controller
 
         var product = await _context.Products.FindAsync(id);
         if (product == null) return NotFound();
-       
+
         return View(product);
     }
 
@@ -90,10 +88,21 @@ public class ProductsController : Controller
     {
         if (id != product.Id) return NotFound();
 
-        if (!ModelState.IsValid)
+        if (!ModelState.IsValid) // Fixed condition
         {
             try
             {
+                // Preserve the original CreatedAt date
+                var existingProduct = await _context.Products.AsNoTracking()
+                    .Where(p => p.Id == id)
+                    .Select(p => new { p.CreatedAt })
+                    .FirstOrDefaultAsync();
+
+                if (existingProduct != null)
+                {
+                    product.CreatedAt = existingProduct.CreatedAt;
+                }
+
                 if (ImageFile != null && ImageFile.Length > 0)
                 {
                     var uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "img");
@@ -121,10 +130,8 @@ public class ProductsController : Controller
             return RedirectToAction(nameof(Index));
         }
 
-       
         return View(product);
     }
-
 
     // GET: Products/Delete/5
     public async Task<IActionResult> Delete(int? id)

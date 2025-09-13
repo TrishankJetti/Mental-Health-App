@@ -50,7 +50,7 @@ namespace MentalHealthApp.Areas.Identity.Pages.Account.Manage
 
             [NotMapped]
             [DisplayName("Profile Picture")]
-            public IFormFile PfpFile { get; set; }
+            public IFormFile? PfpFile { get; set; }
         }
 
         private async Task LoadAsync(CustomUser user)

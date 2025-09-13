@@ -100,7 +100,7 @@
                                     <li><a class="dropdown-item" href="https://www.mentalhealth.org.nz/get-help/in-crisis/helplines/" target="_blank" rel="noopener noreferrer">Find More NZ Helplines & Resources</a></li>
                                 </ul>
                             </li>
-                            <!-- MODIFIED SECTION END -->
+                        
 
                         </ul>
 
@@ -129,7 +129,7 @@
 
                             <div class="dropdown me-3">
                                 <button class="btn btn-outline-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    🔔 (@notifications.Count)
+                                    🔔 @notifications.Count
                                 </button>
                                 <ul class="dropdown-menu dropdown-menu-end">
                                     @if (notifications.Count == 0)
@@ -141,8 +141,12 @@
                                         @foreach (var n in notifications)
                                         {
                                             <li class="dropdown-item">
-                                                @n.Message <br />
-                                                <small class="text-muted">@n.CreatedAt.ToShortTimeString()</small>
+                                                <!-- Make the notification clickable -->
+                                                <a href="@Url.Action("HandleNotification", "Notifications", new { id = n.NotificationId })"
+                                                   class="text-decoration-none text-dark">
+                                                    @n.Message <br />
+                                                    <small class="text-muted">@n.CreatedAt.ToShortTimeString()</small>
+                                                </a>
                                             </li>
                                         }
                                     }

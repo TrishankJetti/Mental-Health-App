@@ -1,0 +1,47 @@
+﻿@model List<Friendship>
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<CustomUser> UserManager
+
+@{
+    var currentUser = await UserManager.GetUserAsync(User);
+    var pendingRequests = Model.Where(f => f.AddresseeId == currentUser.Id && f.Status == FriendshipStatus.Pending).ToList();
+}
+
+@if (pendingRequests.Any())
+{
+    <div class="card mt-4">
+        <div class="card-header">
+            <h5>Pending Friend Requests</h5>
+        </div>
+        <div class="card-body">
+            @foreach (var request in pendingRequests)
+            {
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <div>
+                        <strong>@request.Requester.UserName</strong>
+                        <small class="text-muted d-block">@request.CreatedAt.ToString("g")</small>
+                    </div>
+                    <div>
+                        <form asp-action="AcceptRequest" method="post" class="d-inline">
+                            <input type="hidden" name="friendshipId" value="@request.Id" />
+                            <button type="submit" class="btn btn-success btn-sm">Accept</button>
+                        </form>
+                        <form asp-action="DeclineRequest" method="post" class="d-inline">
+                            <input type="hidden" name="friendshipId" value="@request.Id" />
+                            <button type="submit" class="btn btn-danger btn-sm">Decline</button>
+                        </form>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+}
+
+@if (!pendingRequests.Any())
+{
+    <div class="alert alert-info mt-4" role="alert">
+        🎉 No pending friend requests right now!
+    </div>
+
+
+}

@@ -39,5 +39,8 @@ namespace MentalHealthApp.Models
 
         [Required(ErrorMessage = "Category is required")]
         public ProductCategory Category { get; set; }
+
+
+        public DateTime CreatedAt { get; set; } = DateTime.Now; // Default value of Right now, with Date and Time.
     }
 }

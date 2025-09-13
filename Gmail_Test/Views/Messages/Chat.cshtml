@@ -1,0 +1,28 @@
+﻿@model List<Message>
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<CustomUser> UserManager
+
+@{
+    var currentUser = await UserManager.GetUserAsync(User);
+    var friend = ViewBag.Friend as CustomUser;
+}
+
+<h2>Chat with @friend.UserName</h2>
+
+<div style="border: 1px solid #ccc; padding: 10px; height: 300px; overflow-y: scroll; margin-bottom: 15px;">
+    @foreach (var message in Model)
+    {
+        <div style="margin-bottom: 10px;">
+            <b>@(message.SenderId == currentUser.Id ? "You" : friend.UserName):</b>
+            @message.Content
+            <br />
+            <small>@message.SentAt.ToString("g")</small>
+        </div>
+    }
+</div>
+
+<form asp-action="SendMessage" method="post">
+    <input type="hidden" name="receiverId" value="@friend.Id" />
+    <input type="text" name="content" placeholder="Type your message..." style="width: 70%;" required />
+    <button type="submit">Send</button>
+</form>

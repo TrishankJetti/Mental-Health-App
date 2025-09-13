@@ -16,12 +16,52 @@ namespace MentalHealthApp.Data
 
         public DbSet<Notification> Notifications { get; set; }
         public DbSet<Product> Products { get; set; }
- 
+        public DbSet<Friendship> Friendships { get; set; }
+
+        public DbSet<Message> Messages { get; set; }
         public DbSet<MoodEntry> MoodEntries { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+
+
+            builder.Entity<Friendship>()
+                .HasOne(f => f.Requester)
+                .WithMany()
+                .HasForeignKey(f => f.RequesterId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+          builder.Entity<Friendship>()
+                .HasOne(f => f.Addressee)
+                .WithMany()
+                .HasForeignKey(f => f.AddresseeId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<Message>()
+                .HasOne(m => m.Sender)
+                .WithMany()
+                .HasForeignKey(m => m.SenderId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+           builder.Entity<Message>()
+                .HasOne(m => m.Receiver)
+                .WithMany()
+                .HasForeignKey(m => m.ReceiverId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<Notification>()
+                .HasOne(n => n.User)
+                .WithMany()
+                .HasForeignKey(n => n.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<Notification>()
+                .HasOne(n => n.Sender)
+                .WithMany()
+                .HasForeignKey(n => n.SenderId)
+                .OnDelete(DeleteBehavior.Restrict);
+
 
             // Seed Roles
             builder.Entity<IdentityRole>().HasData(
@@ -265,41 +305,55 @@ namespace MentalHealthApp.Data
                 new MoodEntry { Id = 20, UserId = "20", Mood = MoodType.Happy, Date = baseDate.AddDays(-1), Notes = "Hopeful about new treatment" }
             );
 
-           
 
-        builder.Entity<Product>().HasData(
-                new Product { Id = 1, Category = ProductCategory.Other, Price = 25m, IsPrivate = false, Name = "Shanti Black Tee", Description = "Want to support our cause but rock some swag? This is the perfect  choice for you!", ImageUrl = "ShantiShirtMerch.png" },
-                new Product { Id = 2, Category = ProductCategory.Other, Price = 25m, IsPrivate = false, Name = "Shanti Plushy", Description = "Get a fun plushy to be your companion! ", ImageUrl = "ShantiPlushy.png" },
+            builder.Entity<Product>().HasData(
+                new Product
+                {
+                    Id = 1,
+                    Category = ProductCategory.Other,
+                    Price = 25m,
+                    IsPrivate = false,
+                    Name = "Shanti Black Tee",
+                    Description = "Want to support our cause but rock some swag? This is the perfect choice for you!",
+                    ImageUrl = "ShantiShirtMerch.png",
+                    CreatedAt = DateTime.Now.AddDays(-2)
+                },
+                new Product
+                {
+                    Id = 2,
+                    Category = ProductCategory.Other,
+                    Price = 25m,
+                    IsPrivate = false,
+                    Name = "Shanti Plushy",
+                    Description = "Get a fun plushy to be your companion!",
+                    ImageUrl = "ShantiPlushy.jpg",
+                    CreatedAt = DateTime.Now.AddDays(-6)
+                },
                 new Product
                 {
                     Id = 3,
                     Name = "Wellness Book - 'Calm Your Mind'",
                     Description = "A bestselling book with practical tips for mental wellness.",
                     Price = 15.49m,
-                    ImageUrl = "Wellbook.png",
+                    ImageUrl = "Wellbook.jpg",
                     IsPrivate = false,
-                    Category = ProductCategory.Books
+                    Category = ProductCategory.Books,
+                    CreatedAt = DateTime.Now.AddDays(-67)
                 },
-                 new Product
-                 {
-                     Id = 4,
-                     Name = "Stress Relief Kit",
-                     Description = "Includes stress balls, aroma oils, and calming teas.",
-                     Price = 29.99m,
-                     ImageUrl = "default-product.png",
-                     IsPrivate = false,
-                     Category = ProductCategory.StressRelief
-                 }
-
-
-                 );
-        
-
-
+                new Product
+                {
+                    Id = 4,
+                    Name = "Stress Relief Kit",
+                    Description = "Includes stress balls, aroma oils, and calming teas.",
+                    Price = 29.99m,
+                    ImageUrl = "default-product.png",
+                    IsPrivate = false,
+                    Category = ProductCategory.StressRelief,
+                    CreatedAt = DateTime.Now.AddDays(-14)
+                }
+            );
 
         }
 
-
-
-    }
+        }
 }
