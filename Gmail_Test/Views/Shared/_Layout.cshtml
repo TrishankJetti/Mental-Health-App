@@ -101,7 +101,16 @@
                                 </ul>
                             </li>
                         
-
+                            <li>
+                                <!-- In your navbar, alongside other items -->
+                            <li class="nav-item">
+                                <button class="btn btn-outline-danger btn-sm nav-link border-0"
+                                        data-bs-toggle="modal" data-bs-target="#crisisModal">
+                                    <i class="bi bi-exclamation-circle"></i>
+                                    <span class="d-none d-md-inline">Crisis Help</span>
+                                </button>
+                            </li>
+                            </li>
                         </ul>
 
                         @if (User.IsInRole("Admin"))
@@ -171,6 +180,24 @@
                 </div>
             </nav>
         </header>
+
+
+        <!--Modal code that pops up when button is pressed. -->
+        <div class="modal fade" id="crisisModal" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header bg-danger text-white">
+                        <h5 class="modal-title">Immediate Help</h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- Crisis resources content here -->
+                        <a href="tel:1737" class="btn btn-danger w-100 mb-2">📞 Call 1737</a>
+                        <a href="tel:0800543354" class="btn btn-danger w-100">📞 Lifeline Aotearoa</a>
+                    </div>
+                </div>
+            </div>
+        </div>
     }
 
     <div class="container mt-3 flex-grow-1">

@@ -8,6 +8,28 @@
 
 <h2>Find Friends</h2>
 
+<!-- SEARCH BAR FOR FIND FRIENDS PAGE -->
+<div class="card mb-4">
+    <div class="card-body">
+        <form asp-action="Find" method="get" class="row g-2">
+            <div class="col-md-8">
+                <input type="text" name="searchString" value="@ViewBag.SearchString"
+                       class="form-control" placeholder="Search users by name or email..." />
+            </div>
+            <div class="col-md-2">
+                <button type="submit" class="btn btn-purple w-100">
+                    <i class="bi bi-search"></i> Search
+                </button>
+            </div>
+            <div class="col-md-2">
+                <a asp-action="Find" class="btn btn-outline-secondary w-100">
+                    <i class="bi bi-x-circle"></i> Clear
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+
 @if (Model.Any())
 {
     <div class="row">

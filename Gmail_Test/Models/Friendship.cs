@@ -14,7 +14,7 @@ namespace MentalHealthApp.Models
         public string RequesterId { get; set; } //Requester's ID
 
         [Required]
-        public string AddresseeId { get; set; } //Email Adress of user
+        public string AddresseeId { get; set; } //The guy who is getting the message/'frienship message.
 
         public FriendshipStatus Status { get; set; } = FriendshipStatus.Pending;  // Freindship status enum 
         public DateTime CreatedAt { get; set; } = DateTime.Now;   // Created time 

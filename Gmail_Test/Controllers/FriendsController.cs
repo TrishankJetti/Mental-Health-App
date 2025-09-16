@@ -60,7 +60,7 @@ public class FriendsController : Controller
 
     // GET: Find users to add
     [HttpGet]
-    public async Task<IActionResult> Find() //FInd method that allows users to conenct with other people who signed up to the site.
+    public async Task<IActionResult> Find(string searchString) //FInd method that allows users to conenct with other people who signed up to the site.
     {
         var currentUser = await _userManager.GetUserAsync(User); //Gathers the user Id again/
   
@@ -88,6 +88,19 @@ public class FriendsController : Controller
             .Where(u => !excludedIds.Contains(u.Id)) //Users mustnt be on the list of admin ids hence the exclude id list.
             .ToListAsync();
 
+        // Apply search filter if provided
+        if (!string.IsNullOrEmpty(searchString))
+        {
+            searchString = searchString.ToLower();
+            users = users.Where(u =>
+                u.UserName.ToLower().Contains(searchString) ||
+                u.Email.ToLower().Contains(searchString) ||
+                (u.FirstName != null && u.FirstName.ToLower().Contains(searchString)) ||
+                (u.LastName != null && u.LastName.ToLower().Contains(searchString))
+            ).ToList();
+        }
+
+        ViewBag.SearchString = searchString;
         return View(users); // Returns the users to the View.
     }
 

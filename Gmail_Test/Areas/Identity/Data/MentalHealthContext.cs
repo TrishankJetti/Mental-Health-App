@@ -32,11 +32,11 @@ namespace MentalHealthApp.Data
                 .HasForeignKey(f => f.RequesterId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-          builder.Entity<Friendship>()
-                .HasOne(f => f.Addressee)
-                .WithMany()
-                .HasForeignKey(f => f.AddresseeId)
-                .OnDelete(DeleteBehavior.Restrict);
+            builder.Entity<Friendship>()
+                  .HasOne(f => f.Addressee)
+                  .WithMany()
+                  .HasForeignKey(f => f.AddresseeId)
+                  .OnDelete(DeleteBehavior.Restrict);
 
             builder.Entity<Message>()
                 .HasOne(m => m.Sender)
@@ -44,11 +44,11 @@ namespace MentalHealthApp.Data
                 .HasForeignKey(m => m.SenderId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-           builder.Entity<Message>()
-                .HasOne(m => m.Receiver)
-                .WithMany()
-                .HasForeignKey(m => m.ReceiverId)
-                .OnDelete(DeleteBehavior.Restrict);
+            builder.Entity<Message>()
+                 .HasOne(m => m.Receiver)
+                 .WithMany()
+                 .HasForeignKey(m => m.ReceiverId)
+                 .OnDelete(DeleteBehavior.Restrict);
 
             builder.Entity<Notification>()
                 .HasOne(n => n.User)
@@ -353,7 +353,294 @@ namespace MentalHealthApp.Data
                 }
             );
 
-        }
+
+            // Seed Friendships
+            builder.Entity<Friendship>().HasData(
+                // Alice's friendships (User 14)
+                new Friendship
+                {
+                    Id = 1,
+                    RequesterId = "14", // Alice
+                    AddresseeId = "15", // Mike
+                    Status = FriendshipStatus.Accepted,
+                    CreatedAt = DateTime.Now.AddDays(-10),
+                    RespondedAt = DateTime.Now.AddDays(-9)
+                },
+                new Friendship
+                {
+                    Id = 2,
+                    RequesterId = "14", // Alice
+                    AddresseeId = "16", // Emily
+                    Status = FriendshipStatus.Accepted,
+                    CreatedAt = DateTime.Now.AddDays(-8),
+                    RespondedAt = DateTime.Now.AddDays(-7)
+                },
+                new Friendship
+                {
+                    Id = 3,
+                    RequesterId = "17", // David
+                    AddresseeId = "14", // Alice
+                    Status = FriendshipStatus.Accepted,
+                    CreatedAt = DateTime.Now.AddDays(-5),
+                    RespondedAt = DateTime.Now.AddDays(-4)
+                },
+
+                // Mike's friendships (User 15)
+                new Friendship
+                {
+                    Id = 4,
+                    RequesterId = "15", // Mike
+                    AddresseeId = "17", // David
+                    Status = FriendshipStatus.Accepted,
+                    CreatedAt = DateTime.Now.AddDays(-12),
+                    RespondedAt = DateTime.Now.AddDays(-11)
+                },
+                new Friendship
+                {
+                    Id = 5,
+                    RequesterId = "18", // Sophia
+                    AddresseeId = "15", // Mike
+                    Status = FriendshipStatus.Pending, // Mike hasn't accepted yet
+                    CreatedAt = DateTime.Now.AddDays(-2),
+                    RespondedAt = null
+                },
+
+                // Emily's friendships (User 16)
+                new Friendship
+                {
+                    Id = 6,
+                    RequesterId = "16", // Emily
+                    AddresseeId = "19", // James
+                    Status = FriendshipStatus.Accepted,
+                    CreatedAt = DateTime.Now.AddDays(-15),
+                    RespondedAt = DateTime.Now.AddDays(-14)
+                },
+                new Friendship
+                {
+                    Id = 7,
+                    RequesterId = "20", // Olivia
+                    AddresseeId = "16", // Emily
+                    Status = FriendshipStatus.Accepted,
+                    CreatedAt = DateTime.Now.AddDays(-7),
+                    RespondedAt = DateTime.Now.AddDays(-6)
+                },
+
+                // David's friendships (User 17)
+                new Friendship
+                {
+                    Id = 8,
+                    RequesterId = "17", // David
+                    AddresseeId = "19", // James
+                    Status = FriendshipStatus.Accepted,
+                    CreatedAt = DateTime.Now.AddDays(-9),
+                    RespondedAt = DateTime.Now.AddDays(-8)
+                },
+
+                // Sophia's friendships (User 18)
+                new Friendship
+                {
+                    Id = 9,
+                    RequesterId = "18", // Sophia
+                    AddresseeId = "20", // Olivia
+                    Status = FriendshipStatus.Accepted,
+                    CreatedAt = DateTime.Now.AddDays(-11),
+                    RespondedAt = DateTime.Now.AddDays(-10)
+                },
+
+                // James's friendships (User 19)
+                new Friendship
+                {
+                    Id = 10,
+                    RequesterId = "19", // James
+                    AddresseeId = "20", // Olivia
+                    Status = FriendshipStatus.Accepted,
+                    CreatedAt = DateTime.Now.AddDays(-6),
+                    RespondedAt = DateTime.Now.AddDays(-5)
+                }
+            );
+
+            // Seed Messages
+            builder.Entity<Message>().HasData(
+                // Alice and Mike conversation
+                new Message
+                {
+                    Id = 1,
+                    SenderId = "14", // Alice
+                    ReceiverId = "15", // Mike
+                    Content = "Hey Mike! How are you feeling today?",
+                    SentAt = DateTime.Now.AddHours(-48),
+                    IsRead = true
+                },
+                new Message
+                {
+                    Id = 2,
+                    SenderId = "15", // Mike
+                    ReceiverId = "14", // Alice
+                    Content = "Hi Alice! I'm doing okay, just a bit stressed about work. How about you?",
+                    SentAt = DateTime.Now.AddHours(-46),
+                    IsRead = true
+                },
+                new Message
+                {
+                    Id = 3,
+                    SenderId = "14", // Alice
+                    ReceiverId = "15", // Mike
+                    Content = "I understand. Work has been tough for me too. Want to chat about it?",
+                    SentAt = DateTime.Now.AddHours(-44),
+                    IsRead = true
+                },
+
+                // Alice and Emily conversation
+                new Message
+                {
+                    Id = 4,
+                    SenderId = "14", // Alice
+                    ReceiverId = "16", // Emily
+                    Content = "Emily! I saw your mood entry from yesterday. Are you doing better today?",
+                    SentAt = DateTime.Now.AddHours(-36),
+                    IsRead = true
+                },
+                new Message
+                {
+                    Id = 5,
+                    SenderId = "16", // Emily
+                    ReceiverId = "14", // Alice
+                    Content = "Thanks for checking in, Alice. I'm feeling much better today! 😊",
+                    SentAt = DateTime.Now.AddHours(-34),
+                    IsRead = true
+                },
+
+                // Mike and David conversation
+                new Message
+                {
+                    Id = 6,
+                    SenderId = "15", // Mike
+                    ReceiverId = "17", // David
+                    Content = "David, how do you handle stress? I'm really struggling this week.",
+                    SentAt = DateTime.Now.AddHours(-72),
+                    IsRead = true
+                },
+                new Message
+                {
+                    Id = 7,
+                    SenderId = "17", // David
+                    ReceiverId = "15", // Mike
+                    Content = "I've been using the breathing exercises on the app. They really help! Want to try them together?",
+                    SentAt = DateTime.Now.AddHours(-70),
+                    IsRead = true
+                },
+
+                // Emily and James conversation
+                new Message
+                {
+                    Id = 8,
+                    SenderId = "16", // Emily
+                    ReceiverId = "19", // James
+                    Content = "James, I noticed we both had rough days yesterday. Want to support each other today?",
+                    SentAt = DateTime.Now.AddHours(-24),
+                    IsRead = true
+                },
+                new Message
+                {
+                    Id = 9,
+                    SenderId = "19", // James
+                    ReceiverId = "16", // Emily
+                    Content = "That would be great, Emily. It helps to know we're not alone in this.",
+                    SentAt = DateTime.Now.AddHours(-22),
+                    IsRead = true
+                },
+
+                // Sophia and Olivia conversation
+                new Message
+                {
+                    Id = 10,
+                    SenderId = "18", // Sophia
+                    ReceiverId = "20", // Olivia
+                    Content = "Olivia! I'm so proud of your mood streak! 🎉",
+                    SentAt = DateTime.Now.AddHours(-12),
+                    IsRead = false // Olivia hasn't read it yet
+                },
+
+                // David and James conversation
+                new Message
+                {
+                    Id = 11,
+                    SenderId = "17", // David
+                    ReceiverId = "19", // James
+                    Content = "How's your pet doing, James? I've been thinking about you both.",
+                    SentAt = DateTime.Now.AddHours(-6),
+                    IsRead = false
+                },
+
+                // Group support messages
+                new Message
+                {
+                    Id = 12,
+                    SenderId = "14", // Alice
+                    ReceiverId = "15", // Mike
+                    Content = "Remember to use the breathing exercise if you feel overwhelmed!",
+                    SentAt = DateTime.Now.AddHours(-3),
+                    IsRead = true
+                },
+                new Message
+                {
+                    Id = 13,
+                    SenderId = "16", // Emily
+                    ReceiverId = "14", // Alice
+                    Content = "Thanks for being such a good friend, Alice. It means a lot.",
+                    SentAt = DateTime.Now.AddHours(-1),
+                    IsRead = false
+                }
+            );
+
+            // Seed Notifications for friend requests and messages
+            builder.Entity<Notification>().HasData(
+                // Pending friend request notification for Mike
+                new Notification
+                {
+                    NotificationId = 1,
+                    UserId = "15", // Mike
+                    SenderId = "18", // Sophia
+                    Message = "Sophia sent you a friend request",
+                    CreatedAt = DateTime.Now.AddDays(-2),
+                    IsRead = false
+                },
+
+                // Message notifications
+                new Notification
+                {
+                    NotificationId = 2,
+                    UserId = "20", // Olivia
+                    SenderId = "18", // Sophia
+                    Message = "New message from Sophia",
+                    CreatedAt = DateTime.Now.AddHours(-12),
+                    IsRead = false
+                },
+                new Notification
+                {
+                    NotificationId = 3,
+                    UserId = "19", // James
+                    SenderId = "17", // David
+                    Message = "New message from David",
+                    CreatedAt = DateTime.Now.AddHours(-6),
+                    IsRead = false
+                },
+                new Notification
+                {
+                    NotificationId = 4,
+                    UserId = "14", // Alice
+                    SenderId = "16", // Emily
+                    Message = "New message from Emily",
+                    CreatedAt = DateTime.Now.AddHours(-1),
+                    IsRead = false
+                }
+            );
+
+
 
         }
+
+    }
+
+
 }

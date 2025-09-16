@@ -39,24 +39,10 @@ public class CartController : Controller
             cart.Add(new CartItem { ProductId = productId, ProductName = productName, Price = price, Quantity = quantity, ImageUrl = imageUrl });
 
         SaveCart(cart);
-        return RedirectToAction("Index");
-    }
-
-    [HttpPost]
-    public IActionResult AddWithToast(int productId, string productName, decimal price, int quantity, string imageUrl)
-    {
-        var cart = GetCart();
-        var existing = cart.FirstOrDefault(c => c.ProductId == productId);
-
-        if (existing != null)
-            existing.Quantity += quantity;
-        else
-            cart.Add(new CartItem { ProductId = productId, ProductName = productName, Price = price, Quantity = quantity, ImageUrl = imageUrl });
-
-        SaveCart(cart);
         TempData["Toast"] = $"{productName} added to cart!";
         return RedirectToAction("Index", "Shop");
     }
+
 
     [HttpPost]
     public IActionResult Update(int productId, int quantity)

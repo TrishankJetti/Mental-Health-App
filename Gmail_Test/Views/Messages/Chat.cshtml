@@ -2,7 +2,7 @@
 @using Microsoft.AspNetCore.Identity
 @inject UserManager<CustomUser> UserManager
 
-@{
+@{ // Gets all the neccesary variables
     var currentUser = await UserManager.GetUserAsync(User);
     var friend = ViewBag.Friend as CustomUser;
 }
@@ -10,7 +10,7 @@
 <h2>Chat with @friend.UserName</h2>
 
 <div style="border: 1px solid #ccc; padding: 10px; height: 300px; overflow-y: scroll; margin-bottom: 15px;">
-    @foreach (var message in Model)
+    @foreach (var message in Model) // This loop just shows all the records in the model. The speciofic messages are determined within the controller as it checks for the IDs of sender and receiver.
     {
         <div style="margin-bottom: 10px;">
             <b>@(message.SenderId == currentUser.Id ? "You" : friend.UserName):</b>
@@ -21,7 +21,7 @@
     }
 </div>
 
-<form asp-action="SendMessage" method="post">
+<form asp-action="SendMessage" method="post"> <!-- THis is essentially a create form within an index view so it simulataneously sends a message then refreshs the screen to show the changes.-->
     <input type="hidden" name="receiverId" value="@friend.Id" />
     <input type="text" name="content" placeholder="Type your message..." style="width: 70%;" required />
     <button type="submit">Send</button>

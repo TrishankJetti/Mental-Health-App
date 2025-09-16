@@ -194,19 +194,19 @@ namespace MentalHealthApp.Controllers
             return _context.MoodEntries.Any(e => e.Id == id);
         }
 
-        public async Task<IActionResult> MoodChart()
+        public async Task<IActionResult> MoodChart() // MoodChart action 
         {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            if (userId == null) return Unauthorized();
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier); // Grabs user's ID. 
+ 
 
-            var entries = await _context.MoodEntries
+            var entries = await _context.MoodEntries //Gathers all users moodentries. 
                 .Where(m => m.UserId == userId)
                 .ToListAsync();
 
             // Make sure we always have all moods, even if count is 0
-            var allMoods = Enum.GetValues(typeof(MoodType)).Cast<MoodType>().ToList();
+            var allMoods = Enum.GetValues(typeof(MoodType)).Cast<MoodType>().ToList(); // Gathers all Moods as an ENum list for the view to use them. Chart JS will put them into a list then hjandle them into the graph.
 
-            var moodCounts = allMoods
+            var moodCounts = allMoods // Counts all moods for the moodentries 
                 .Select(m => new
                 {
                     Mood = m.ToString(),
@@ -220,20 +220,21 @@ namespace MentalHealthApp.Controllers
         }
 
 
-        public async Task<IActionResult> Stats()
+        public async Task<IActionResult> Stats() // This is the stats method that calculates all the stats of the user 
+            //. This includes there longest login streak. And based on that streak there is a hardcoded rank that is assigned to the users.
         {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            if (userId == null) return Unauthorized();
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier); // Grab User's Id.
+           
 
             var user = await _userManager.FindByIdAsync(userId);
-            if (user == null) return Unauthorized();
+       
 
-            var entries = await _context.MoodEntries
+            var entries = await _context.MoodEntries // All entries that belong to user.
                 .Where(m => m.UserId == userId)
                 .OrderByDescending(m => m.Date)
                 .ToListAsync();
 
-            var model = new MoodEntriesViewModel
+            var model = new MoodEntriesViewModel // Creates a new viewmodel with the currentStreak and best streak of the user. This then accumlutes in the front end.
             {
                 Entries = entries,
                 CurrentStreak = user.CurrentStreak,

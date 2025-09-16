@@ -17,7 +17,7 @@ namespace MentalHealthApp.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> MarkAllAsRead()
+        public async Task<IActionResult> MarkAllAsRead() 
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var unread = await _context.Notifications
@@ -25,13 +25,13 @@ namespace MentalHealthApp.Controllers
                 .ToListAsync();
 
             foreach (var n in unread)
-                n.IsRead = true;
+                n.IsRead = true;      // Sets all unread notificaitons to true for the IsRead variable.
 
             await _context.SaveChangesAsync();
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Home"); // Return to home
         }
 
-        public async Task<IActionResult> HandleNotification(int id)
+        public async Task<IActionResult> HandleNotification(int id) // Notificaiotns with freind requests and etc. 
         {
             var notification = await _context.Notifications.FindAsync(id);
             if (notification == null) return NotFound();
@@ -42,11 +42,11 @@ namespace MentalHealthApp.Controllers
             await _context.SaveChangesAsync();
 
             // Redirect based on notification type
-            if (notification.Message.Contains("friend request"))
+            if (notification.Message.Contains("friend request")) // if it is a friend request , it will contain the friend request strings.
             {
-                return RedirectToAction("Index", "Friends"); // Go to friends page
+                return RedirectToAction("PendingRequests", "Friends"); // Go to pending reqs page.
             }
-            else if (notification.Message.Contains("message"))
+            else if (notification.Message.Contains("message")) // Message type notifciation. 
             {
                 return RedirectToAction("Chat", "Messages", new { friendId = notification.SenderId });
             }

@@ -6,24 +6,22 @@ using Microsoft.AspNetCore.Identity;
 namespace MentalHealthApp.Models
 {
     public class Notification
-    {
+    {   //Notification IDs
         public int NotificationId { get; set; }
 
-        [Required]
+        [Required]  //Users id.
         public string UserId { get; set; } = string.Empty;
 
         [Required]
-        public string Message { get; set; } = string.Empty;
+        public string Message { get; set; } = string.Empty; // Message i nthe notifiaiton by defualt is is empty.
 
-        public bool IsRead { get; set; } = false;
+        public bool IsRead { get; set; } = false; // IsRead is either true or false but flase by default.
 
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
-        // Add these for message notifications
         public string? SenderId { get; set; }
         public int? MessageId { get; set; }
-        public string? ConversationId { get; set; } // Can be friendId or groupId
-
+        public string? ConversationId { get; set; } 
         [ForeignKey("UserId")]
         public virtual CustomUser User { get; set; }
 
