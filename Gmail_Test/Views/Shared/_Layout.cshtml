@@ -1,25 +1,34 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @using MentalHealthApp.Models
+@using Microsoft.EntityFrameworkCore
 @inject UserManager<CustomUser> UserManager
 @inject SignInManager<CustomUser> SignInManager
 @inject MentalHealthApp.Data.MentalHealthContext DbContext
 
 @{
     var showCheckInReminder = false;
+    var pendingRequestsCount = 0;
+
     if (SignInManager.IsSignedIn(User))
     {
         var currentUser = await UserManager.GetUserAsync(User);
         if (currentUser != null)
         {
             var lastCheck = currentUser.LastMoodCheckIn?.Date ?? DateTime.MinValue;
-            // Check if it's been more than 2 days since last check-in
             if (DateTime.UtcNow.Date > lastCheck.AddDays(2))
             {
                 showCheckInReminder = true;
             }
+
+            // Get pending friend requests count
+            pendingRequestsCount = await DbContext.Friendships
+                .CountAsync(f => f.AddresseeId == currentUser.Id && f.Status == FriendshipStatus.Pending);
         }
     }
 }
+
+
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -36,10 +45,13 @@
 </head>
 
 <body class="d-flex flex-column min-vh-100">
-    <div class="loader-overlay">
-        <div class="loader"></div>
-        <p class="loader-text">Please Wait</p>
-    </div>
+    @if (!(ViewData["ShowLoader"] as bool? ?? false))
+    {
+        <div class="loader-overlay">
+            <div class="loader"></div>
+            <p class="loader-text">Please Wait</p>
+        </div>
+    }
 
 
     @if (!(ViewData["HideNavbar"] as bool? ?? false))
@@ -67,15 +79,48 @@
                                 </a>
                             </li>
 
-                            <li class="nav-item">
-                                <a class="nav-link" asp-controller="Home" asp-action="BreatheExercise">Breathing Exercise</a>
+                            <!-- New Activities Dropdown -->
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="activitiesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Activities
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="activitiesDropdown">
+                                    <li><a class="dropdown-item" asp-controller="Home" asp-action="BreatheExercise"> Breathing Exercise</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Home" asp-action="Stressball"> Stress Ball Simualtion</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Quotes" asp-action="Index"> Positive Affirmations Scramble</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Home" asp-action="MusicTimer">1 Minute Music Timer</a></li>
+
+                                </ul>
                             </li>
+
                             <li class="nav-item">
                                 <a class="nav-link" asp-controller="Home" asp-action="HowToUse">FAQ</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" asp-controller="Shop" asp-action="Index">Shop</a>
                             </li>
+                            @if (SignInManager.IsSignedIn(User))
+                            {
+                                <li class="nav-item">
+                                    <!-- Add this to your navbar with other li items -->
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="friendsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                      Friends
+                                    </a>
+                                    <ul class="dropdown-menu" aria-labelledby="friendsDropdown">
+                                        <li><a class="dropdown-item" asp-controller="Friends" asp-action="Index">My Friends</a></li>
+                                        <li><a class="dropdown-item" asp-controller="Friends" asp-action="Find">Find Friends</a></li>
+                                        <li>
+                                            <a class="dropdown-item" asp-controller="Friends" asp-action="PendingRequests">
+                                                Friend Requests
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+
+                                </li>
+
+                            }
 
                             <!-- Drop down for MentalHealthSupport in New Zealand -->
                             <li class="nav-item dropdown">
@@ -107,7 +152,7 @@
                                 <button class="btn btn-outline-danger btn-sm nav-link border-0"
                                         data-bs-toggle="modal" data-bs-target="#crisisModal">
                                     <i class="bi bi-exclamation-circle"></i>
-                                    <span class="d-none d-md-inline">Crisis Help</span>
+                                    <span class="d-none d-md-inline">Immediate </span>
                                 </button>
                             </li>
                             </li>
@@ -180,6 +225,7 @@
                 </div>
             </nav>
         </header>
+
 
 
         <!--Modal code that pops up when button is pressed. -->

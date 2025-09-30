@@ -12,6 +12,8 @@ namespace MentalHealthApp.Models
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
 
+        
+
         // Mood Tracking / Streaks
         public int CurrentStreak { get; set; } = 0;   // how many days in a row
         public int LongestStreak { get; set; } = 0;   // longest streak ever

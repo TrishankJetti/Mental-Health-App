@@ -1,0 +1,76 @@
+﻿@{
+    ViewData["Title"] = "Color Therapy";
+}
+
+<div class="container text-center mt-5">
+    <h2>🎨 Color Therapy</h2>
+    <p class="text-muted">Click a color and breathe deeply for 1 minute</p>
+
+    <div class="row justify-content-center mt-4">
+        <div class="col-md-8">
+            <div class="color-grid">
+                <a href="?color=blue" class="color-box btn m-2" style="background:#667eea; width: 100px; height: 100px;">
+                    <span class="text-white">Calm Blue</span>
+                </a>
+                <a href="?color=green" class="color-box btn m-2" style="background:#44ff44; width: 100px; height: 100px;">
+                    <span class="text-dark">Balancing Green</span>
+                </a>
+                <a href="?color=yellow" class="color-box btn m-2" style="background:#ffaa00; width: 100px; height: 100px;">
+                    <span class="text-dark">Happy Yellow</span>
+                </a>
+                <a href="?color=red" class="color-box btn m-2" style="background:#ff4444; width: 100px; height: 100px;">
+                    <span class="text-white">Energy Red</span>
+                </a>
+                <a href="?color=purple" class="color-box btn m-2" style="background:#764ba2; width: 100px; height: 100px;">
+                    <span class="text-white">Creative Purple</span>
+                </a>
+            </div>
+
+            <div class="mt-4">
+                <a href="?color=reset" class="btn btn-secondary">Reset Colors</a>
+            </div>
+
+            @if (Context.Request.Query["color"].Count > 0)
+            {
+                var color = Context.Request.Query["color"].ToString();
+                <div class="mt-4 p-3 rounded">
+                    @if (color == "blue")
+                    {
+                        <div class="p-4 rounded" style="background:#667eea; color: white;">
+                            <h4>🔵 Calm Blue</h4>
+                            <p>Breathe deeply and feel peaceful</p>
+                        </div>
+                    }
+                    else if (color == "green")
+                    {
+                        <div class="p-4 rounded" style="background:#44ff44;">
+                            <h4>🟢 Balancing Green</h4>
+                            <p>Find your center and balance</p>
+                        </div>
+                    }
+                    else if (color == "yellow")
+                    {
+                        <div class="p-4 rounded" style="background:#ffaa00;">
+                            <h4>🟡 Happy Yellow</h4>
+                            <p>Feel the warmth and positivity</p>
+                        </div>
+                    }
+                    else if (color == "red")
+                    {
+                        <div class="p-4 rounded" style="background:#ff4444; color: white;">
+                            <h4>🔴 Energy Red</h4>
+                            <p>Feel energized and passionate</p>
+                        </div>
+                    }
+                    else if (color == "purple")
+                    {
+                        <div class="p-4 rounded" style="background:#764ba2; color: white;">
+                            <h4>🟣 Creative Purple</h4>
+                            <p>Tap into your creativity</p>
+                        </div>
+                    }
+                </div>
+            }
+        </div>
+    </div>
+</div>

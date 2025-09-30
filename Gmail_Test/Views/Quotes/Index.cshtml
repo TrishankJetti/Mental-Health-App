@@ -19,6 +19,9 @@
     <a href="javascript:history.back()" class="btn btn-purple mt-3">
         <i class="bi bi-arrow-left-circle me-2"></i> Back
     </a>
+    <a asp-controller="Quotes" asp-action="Index" class="btn btn-purple mt-3">
+        Generate New Quote
+    </a>
 </div>
 
 <!-- Modal -->
@@ -30,7 +33,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                To see a new daily affirmation, please refresh the page.
+                To see a new daily affirmation, please refresh the page or click the generate button.
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-purple" data-bs-dismiss="modal">Got it</button> <!-- Close button for modal-->

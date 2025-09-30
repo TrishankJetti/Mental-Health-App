@@ -254,6 +254,9 @@ public class FriendsController : Controller
         return RedirectToAction(nameof(Index));
     }
 
+
+
+
     // POST: Block someone 
     [HttpPost]
     [ValidateAntiForgeryToken]

@@ -45,6 +45,14 @@ namespace MentalHealthApp.Controllers
         {
             return View();
         }
+        public IActionResult ColorTherapy()
+        {
+            return View();
+        }
+        public IActionResult MusicTimer()
+        {
+            return View();
+        }
 
 
         public IActionResult Privacy()
@@ -65,8 +73,8 @@ namespace MentalHealthApp.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
+     
 
-    
     }
 
 

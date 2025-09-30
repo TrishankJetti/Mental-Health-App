@@ -88,8 +88,8 @@ namespace MentalHealthApp.Areas.Identity.Pages.Account
             [Display(Name = "Last Name")]
             public string? LastName { get; set; }
 
+       
 
-           
 
             /// <summary>
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used

@@ -1,8 +1,8 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @using MentalHealthApp.Models
 
-@inject SignInManager<CustomUser > SignInManager
-@inject UserManager<CustomUser > UserManager
+@inject SignInManager<CustomUser> SignInManager
+@inject UserManager<CustomUser> UserManager
 
 @{
     ViewData["Title"] = "Home";
@@ -12,71 +12,226 @@
     var firstName = currentUser?.FirstName ?? "Friend";
 }
 
-<div class="container py-5" style="max-width: 900px;">
-    <header class="text-center mb-5">
-        <h1 class="display-4 fw-bold text-primary" style="color:#5a4d7a;">
-            Welcome to Shanti,<br />
-            <span class="text-secondary">@firstName!</span>
-        </h1>
-        <p class="lead text-muted mt-3">Your safe space for mental wellbeing and growth.</p>
-    </header>
-
-    <section class="mb-5">
-        <h2 class="text-center mb-4 fw-semibold" style="color:#5a4d7a;">Explore Our Tools</h2>
-        <div class="row g-4">
-            <div class="col-md-4">
-                <div class="card h-100 shadow-sm border-0 rounded-4">
-                    <div class="card-body d-flex flex-column align-items-center text-center p-4">
-                        <img src="~/img/Group 1.png" alt="Mindfulness" class="mb-3" style="width: 70px; height: 70px; object-fit: contain;" />
-                        <h5 class="card-title fw-bold" style="color:#5a4d7a;">Mindfulness Exercises</h5>
-                        <p class="card-text text-muted flex-grow-1">Learn techniques to stay present and reduce stress with guided mindfulness activities.</p>
-                        <a href="@Url.Action("BreatheExercise", "Home")" class="btn btn-primary rounded-pill px-4 mt-3 shadow-sm" style="background-color:#6b44b3; border:none;">
-                            Explore
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-4">
-                <div class="card h-100 shadow-sm border-0 rounded-4">
-                    <div class="card-body d-flex flex-column align-items-center text-center p-4">
-                        <img src="~/img/Group 2.png" alt="Journal" class="mb-3" style="width: 70px; height: 70px; object-fit: contain;" />
-                        <h5 class="card-title fw-bold" style="color:#5a4d7a;">Daily Journal</h5>
-                        <p class="card-text text-muted flex-grow-1">Track your moods and thoughts to understand your mental health patterns better.</p>
-                        <a href="@Url.Action("Index", "MoodEntries")" class="btn btn-primary rounded-pill px-4 mt-3 shadow-sm" style="background-color:#6b44b3; border:none;">
-                            Start Journaling
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-4">
-                <div class="card h-100 shadow-sm border-0 rounded-4">
-                    <div class="card-body d-flex flex-column align-items-center text-center p-4">
-                        <img src="~/img/Group 3.png" alt="Support" class="mb-3" style="width: 70px; height: 70px; object-fit: contain;" />
-                        <h5 class="card-title fw-bold" style="color:#5a4d7a;">Connect with others!</h5>
-                        <p class="card-text text-muted flex-grow-1"> Connect with others! </p>
-                        <a href="@Url.Action("Find", "Friends")" class="btn btn-primary rounded-pill px-4 mt-3 shadow-sm" style="background-color:#6b44b3; border:none;">
-                          Ready to mingle?
-                        </a>
-                    </div>
-                </div>
-            </div>
+<div class="container-fluid p-0">
+    <!-- Banner with Monster -->
+    <div class="position-relative bg-primary text-white rounded-3 mb-4" style="background: linear-gradient(135deg, #667eea, #764ba2) !important;">
+        <div class="p-5 text-center">
+            <h1 class="display-4 fw-bold">Hello, @firstName! 🌸</h1>
+            <p class="lead">Take a deep breath. Today is a new beginning.</p>
         </div>
-    </section>
+        <div class="position-absolute bottom-0 end-0" style="width: 500px; height: 200px;">
+            <img src="~/img/HomePageMonster.png" alt="Friendly Monster" class="img-fluid" />
+        </div>
+     
+    </div>
 
-    <footer class="text-center mt-5">
-        <blockquote class="blockquote fs-5 fst-italic text-secondary" style="max-width: 600px; margin: 0 auto;">
-            "Your Greatest Battle is the One with Yourself."
-        </blockquote>
-        <cite class="blockquote-footer text-muted">Shanti Team</cite>
-    </footer>
+<!-- Quick Actions -->
+<div class="quick-actions">
+    <a href="@Url.Action("Create", "MoodEntries")" class="quick-btn">
+        📊 Log Mood
+    </a>
+    <a href="@Url.Action("MeditationTimer", "Home")" class="quick-btn">
+        🧘 Breathe
+    </a>
+</div>
+
+<!-- Activities -->
+<div class="activities">
+    <h2>Your Peaceful Space</h2>
+
+    <div class="activity-grid">
+        <a href="@Url.Action("BreatheExercise", "Home")" class="activity-card">
+            <div class="emoji">🌬️</div>
+            <h3>Breathing</h3>
+            <p>Find your calm</p>
+        </a>
+
+        <a href="@Url.Action("Index", "MoodEntries")" class="activity-card">
+            <div class="emoji">📖</div>
+            <h3>Mood Journal</h3>
+            <p>Track feelings</p>
+        </a>
+
+        <a href="@Url.Action("Find", "Friends")" class="activity-card">
+            <div class="emoji">💫</div>
+            <h3>Connect</h3>
+            <p>Find friends</p>
+        </a>
+
+        <a href="@Url.Action("MoodDoodle", "Home")" class="activity-card">
+            <div class="emoji">🎨</div>
+            <h3>Creative Space</h3>
+            <p>Draw & create</p>
+        </a>
+
+        <a href="@Url.Action("Stressball", "Home")" class="activity-card">
+            <div class="emoji">🎯</div>
+            <h3>Stress Relief</h3>
+            <p>Relax & unwind</p>
+        </a>
+
+        <a href="@Url.Action("ColorTherapy", "Home")" class="activity-card">
+            <div class="emoji">🌈</div>
+            <h3>Color Therapy</h3>
+            <p>Calm colors</p>
+        </a>
+    </div>
 </div>
 
 <style>
-    /* Optional: subtle background gradient for calmness */
-    body {
-        background: linear-gradient(135deg, #f0f4f8 0%, #d9e2ec 100%);
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    /* Top Section with Monster Peeking */
+    .top-section {
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        color: white;
+        padding: 3rem 2rem 6rem; /* Extra padding at bottom for monster */
+        border-radius: 20px;
+        margin-bottom: 2rem;
+        position: relative;
+        overflow: hidden;
+        min-height: 250px;
+    }
+
+    .banner-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        text-align: center;
+        position: relative;
+        z-index: 2;
+    }
+
+        .banner-content h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .banner-content p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+    .monster-peek {
+        position: absolute;
+        bottom: -100px; /* Peeks from bottom */
+        right: 50px;
+        width: 400px;
+        height: 400px;
+        z-index: 1;
+    }
+
+    .monster-img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: bottom; /* Shows bottom part of image */
+        filter: drop-shadow(0 5px 15px rgba(0,0,0,0.3));
+        transform: scale(1.2); /* Makes it larger to focus on bottom */
+    }
+
+    /* Quick Actions */
+    .quick-actions {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        margin-bottom: 3rem;
+    }
+
+    .quick-btn {
+        background: white;
+        padding: 1rem 2rem;
+        border-radius: 50px;
+        text-decoration: none;
+        color: #667eea;
+        font-weight: bold;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        transition: all 0.3s ease;
+    }
+
+        .quick-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            text-decoration: none;
+            color: #764ba2;
+        }
+
+    /* Activities */
+    .activities {
+        max-width: 1000px;
+        margin: 0 auto 3rem;
+    }
+
+        .activities h2 {
+            text-align: center;
+            color: #667eea;
+            font-size: 2rem;
+            margin-bottom: 2rem;
+        }
+
+    .activity-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1.5rem;
+    }
+
+    .activity-card {
+        background: white;
+        padding: 2rem;
+        border-radius: 15px;
+        text-align: center;
+        text-decoration: none;
+        color: inherit;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        transition: all 0.3s ease;
+    }
+
+        .activity-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            text-decoration: none;
+        }
+
+    .emoji {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .activity-card h3 {
+        color: #2d3748;
+        margin-bottom: 0.5rem;
+    }
+
+    .activity-card p {
+        color: #718096;
+        margin: 0;
+    }
+
+    /* Mobile */
+    @@media (max-width: 768px) {
+        .top-section {
+            padding: 2rem 1rem 4rem;
+        }
+
+        .banner-content h1 {
+            font-size: 2rem;
+        }
+
+        .monster-peek {
+            width: 250px;
+            height: 250px;
+            right: 20px;
+            bottom: -60px;
+        }
+
+        .monster-img {
+            transform: scale(1.1);
+        }
+
+        .quick-actions {
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .activity-grid {
+            grid-template-columns: 1fr;
+        }
     }
 </style>

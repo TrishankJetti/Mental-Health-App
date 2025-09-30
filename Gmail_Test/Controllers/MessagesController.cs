@@ -53,8 +53,6 @@ public class MessagesController : Controller
         return View(messages);
     }
 
-    // POST: Send message
-    [HttpPost]
     // In MessagesController.cs
     [HttpPost]
     public async Task<IActionResult> SendMessage(string receiverId, string content)

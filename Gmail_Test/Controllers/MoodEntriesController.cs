@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MentalHealthApp.Data;
 using MentalHealthApp.Models;
+using System.Text;
 
 namespace MentalHealthApp.Controllers
 {
@@ -245,7 +246,23 @@ namespace MentalHealthApp.Controllers
             return View(model);
         }
 
+        public async Task<IActionResult> ExportToday()
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var todaysEntries = await _context.MoodEntries
+                .Where(m => m.UserId == userId)
+                .ToListAsync();
 
+            var csv = new StringBuilder();
+            csv.AppendLine("Date,Mood,Notes"); // Changed from "Time" to "Date"
+
+            foreach (var entry in todaysEntries)
+            {
+                csv.AppendLine($"{entry.Date:yyyy-MM-dd},{entry.Mood},\"{entry.Notes}\""); // Changed to full date format
+            }
+
+            return File(Encoding.UTF8.GetBytes(csv.ToString()), "text/csv", $"mood-export-{DateTime.Today:yyyy-MM-dd}.csv");
+        }
 
         // GET: MoodEntries/Details/5
         public async Task<IActionResult> Details(int? id)

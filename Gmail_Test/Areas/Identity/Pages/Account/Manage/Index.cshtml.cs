@@ -48,6 +48,8 @@ namespace MentalHealthApp.Areas.Identity.Pages.Account.Manage
             [Display(Name = "Last Name")]
             public string LastName { get; set; }
 
+           
+
             [NotMapped]
             [DisplayName("Profile Picture")]
             public IFormFile? PfpFile { get; set; }
