@@ -31,7 +31,7 @@
         {
             var userRoles = await Context.RequestServices
             .GetService<UserManager<CustomUser>>()
-            .GetRolesAsync(user);
+            .GetRolesAsync(user); // Gets all Users roles for the view and stores it as a variable called userRoles
             <tr>
                 <td>@user.Email</td>
                 <td>
@@ -41,7 +41,7 @@
                     }
                 </td>
                 <td>
-                    <a asp-action="ManageRole" asp-route-userId="@user.Id">Manage Roles</a>
+                    <a asp-action="ManageRole" asp-route-userId="@user.Id">Manage Role</a>
                 </td>
             </tr>
         }

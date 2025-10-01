@@ -66,29 +66,25 @@ public class RoleManagementController : Controller
     }
 
     [HttpPost]
-    public async Task<IActionResult> ManageRole(List<UserRoleViewModel> model, string userId)
+    public async Task<IActionResult> ManageRole(string userId, string SelectedRole) // Only allows one role to be added to user.
     {
-        var user = await _userManager.FindByIdAsync(userId);
+        var user = await _userManager.FindByIdAsync(userId); // Finds the user by their Id
         if (user == null)
         {
             return NotFound();
         }
 
+        // Remove existing role from user before applyting then ew role. That way user doesnt have two roles to their name isntead of one.
         var roles = await _userManager.GetRolesAsync(user);
-        var removeResult = await _userManager.RemoveFromRolesAsync(user, roles);
-        if (!removeResult.Succeeded)
+        await _userManager.RemoveFromRolesAsync(user, roles);
+
+        // Add the new single role
+        if (!string.IsNullOrEmpty(SelectedRole))
         {
-            ModelState.AddModelError("", "Cannot remove user existing roles");
-            return View(model);
+            await _userManager.AddToRoleAsync(user, SelectedRole);
         }
 
-        var addResult = await _userManager.AddToRolesAsync(user, model.Where(x => x.IsSelected).Select(y => y.RoleName));
-        if (!addResult.Succeeded)
-        {
-            ModelState.AddModelError("", "Cannot add selected roles to user");
-            return View(model);
-        }
-
-        return RedirectToAction(nameof(Index));
+        return RedirectToAction(nameof(Index)); // Return to index view.
     }
+
 }

@@ -12,6 +12,7 @@
 <div class="container py-5">
     <h1 class="text-center mb-4">How to Use <strong>Shanti</strong></h1>
 
+    <!-- Getting Started -->
     <section class="mb-5">
         <h2>1. Getting Started</h2>
         <p>To begin using Shanti:</p>
@@ -19,75 +20,119 @@
             <li><strong>Sign Up</strong> with your email to create a secure account.</li>
             <li>If you're already registered, simply <strong>Log In</strong> to access your personal dashboard.</li>
         </ul>
-        <p>Once logged in, you'll see features tailored to your role: Visitor, Employee, or Admin.</p>
+        <p>Once logged in, your experience is tailored to your role: Visitor, Employee, or Admin.</p>
     </section>
 
+    <!-- Daily Check-ins -->
     <section class="mb-5">
         <h2>2. Daily Check-ins</h2>
-        <p>Get daily reminders to check in and track your mental health:</p>
+        <p>Track your mental health journey with simple daily tools:</p>
         <ul>
-            <li>Rate your mood.</li>
-            <li>Write a short reflection or note.</li>
-            <li>View your previous entries over time.</li>
+            <li>Rate your mood every day.</li>
+            <li>Write reflections or personal notes.</li>
+            <li>View your progress over time through your journal.</li>
         </ul>
     </section>
 
+    <!-- Mindfulness -->
     <section class="mb-5">
-        <h2>3. Mindfulness & Breathing Exercises</h2>
-        <p>Feeling overwhelmed? Visit our <strong>Mindfulness</strong> section to:</p>
+        <h2>3. Mindfulness & Breathing</h2>
+        <p>When you feel overwhelmed, try our <strong>Mindfulness</strong> section:</p>
         <ul>
-            <li>Use guided breathing tools.</li>
-            <li>Practice techniques like grounding and body scans.</li>
+            <li>Guided breathing and relaxation tools</li>
+            <li>Grounding techniques and calming exercises</li>
+            <li>Quick focus resets during stressful moments</li>
         </ul>
     </section>
 
-
+    <!-- Profile Management -->
     <section class="mb-5">
         <h2>4. Manage Your Profile</h2>
-        <p>You can view and update your personal information from your profile section. </p>
+        <p>Keep your details up to date:</p>
+        <ul>
+            <li>Update your personal information</li>
+            <li>Change your password securely</li>
+            <li>View your role and permissions</li>
+        </ul>
     </section>
 
+    <!-- Chat -->
+    <section class="mb-5">
+        <h2>5. Chat with Friends</h2>
+        <p>Stay connected with others in a safe and supportive way:</p>
+        <ul>
+            <li>Add friends and accept requests</li>
+            <li>Chat one-on-one in real time</li>
+            <li>Get notified when new messages arrive</li>
+        </ul>
+    </section>
 
+    <!-- Shop -->
+    <section class="mb-5">
+        <h2>6. Shanti Shop</h2>
+        <p>Browse our wellness store for supportive items:</p>
+        <ul>
+            <li>Add items to your cart</li>
+            <li>Securely purchase through Stripe</li>
+            <li>Return to your cart after login if required</li>
+        </ul>
+    </section>
+
+    <!-- Notifications -->
+    <section class="mb-5">
+        <h2>7. Notifications</h2>
+        <p>Stay up to date with everything important:</p>
+        <ul>
+            <li>Message alerts</li>
+            <li>Friendship requests</li>
+            <li>Updates on activities and reminders</li>
+        </ul>
+    </section>
+
+    <!-- Role-Specific Features -->
     @if (SignInManager.IsSignedIn(User))
     {
-           if (userRole == "Admin")
-              {
+        if (userRole == "Admin")
+        {
             <section class="mb-5">
-                <h2>7. Admin Tools</h2>
-                <p>As an admin, you can manage:</p>
+                <h2>8. Admin Tools</h2>
+                <p>Admins can manage the platform:</p>
                 <ul>
-                    <li>Users and their roles</li>
-                    <li>Event listings and pricing</li>
-                    <li>Site content and logs</li>
+                    <li>Manage users and assign roles</li>
+                    <li>Control event listings, pricing, and access</li>
+                    <li>Review logs and oversee site content</li>
                 </ul>
             </section>
-              }
+        }
         else if (userRole == "Employee")
         {
             <section class="mb-5">
-                <h2>7. Employee Dashboard</h2>
-                <p>As a team member, you can:</p>
+                <h2>8. Employee Dashboard</h2>
+                <p>Employees can support the community:</p>
                 <ul>
-                    <li>View and manage visitors</li>
-                    <li>Support check-ins and track user wellness</li>
+                    <li>View and assist visitors</li>
+                    <li>Monitor check-ins and trends</li>
+                    <li>Provide wellness support</li>
                 </ul>
             </section>
         }
     }
 
+    <!-- Privacy -->
     <section class="mb-5">
-        <h2>5. Safe and Secure</h2>
-        <p>We take privacy seriously:</p>
+        <h2>9. Safe and Secure</h2>
+        <p>Your privacy matters to us:</p>
         <ul>
-            <li>Encrypted passwords and session handling</li>
-            <li>Only authorized users can access sensitive features</li>
-            <li>Session expires after 30 minutes of inactivity</li>
+            <li>Passwords are encrypted</li>
+            <li>Sessions automatically expire after inactivity</li>
+            <li>Only authorized users access protected areas</li>
         </ul>
     </section>
 
+    <!-- Support -->
     <section class="mb-5">
-        <h2>6. Need Help?</h2>
-        <p>If you're stuck or need support, go to the <strong>Contact</strong> page or reach out to a support team member.</p>
+        <h2>10. Need Help?</h2>
+        <p>If you're stuck or need guidance, visit our <strong>Contact</strong> page or reach out to a support team member.</p>
     </section>
 
     <div class="text-center mt-5">

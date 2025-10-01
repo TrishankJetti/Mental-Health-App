@@ -230,7 +230,7 @@
                                     }
                                     else
                                     {
-                                        <a asp-controller="Account" asp-action="Login" class="btn btn-outline-secondary add-to-cart-btn">
+                                    <a asp-area="Identity" asp-page="/Account/Login" class="btn btn-outline-secondary add-to-cart-btn" asp-route-returnUrl="/Shop/Index">
                                             <i class="bi bi-box-arrow-in-right me-2"></i>Sign in to Add
                                         </a>
                                     }
