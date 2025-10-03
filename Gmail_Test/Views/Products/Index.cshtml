@@ -1,65 +1,103 @@
-﻿@model IEnumerable<MentalHealthApp.Models.Product>
-
+﻿@model List<PlannerEvent>
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Daily Planner";
+    var selectedDate = (DateTime)ViewBag.SelectedDate;
+    var today = (DateTime)ViewBag.Today;
 }
 
-<h1>Index</h1>
+<h2>📅 Daily Planner - @selectedDate.ToString("MMMM d, yyyy")</h2>
 
-<p>
-    <a asp-action="Create" class="btn btn-success">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Price)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Category)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ImageUrl)
-            </th>
-            <th>Category</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Price)
-            </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Category)
-                </td>
-            <td>
-                    <img src="~/img/@item.ImageUrl"
-                         alt="@item.Name"
-                         class="img-thumbnail"
-                         style="height: 100px;"
-                         asp-append-version="true" />
+<div class="d-flex justify-content-between mb-4">
+    <a asp-action="Index" asp-route-selectedDate="@selectedDate.AddDays(-1)" class="btn btn-outline-primary">← Previous Day</a>
+    <a asp-action="Index" asp-route-selectedDate="@today" class="btn btn-outline-secondary">Today</a>
+    <a asp-action="Index" asp-route-selectedDate="@selectedDate.AddDays(1)" class="btn btn-outline-primary">Next Day →</a>
+</div>
 
-            </td>
-            <td>
-                <a asp-action="Edit" class="btn btn-secondary" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-action="Details" class="btn btn-warning" asp-route-id="@item.Id">Details</a> |
-                    <a asp-action="Delete" class="btn btn-danger" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
+<div class="row">
+    <div class="col-md-8">
+        @if (Model.Any())
+        {
+            @foreach (var evt in Model)
+            {
+                <div class="card mb-3 @(evt.IsCompleted ? "border-success" : "")">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div>
+                                <h5 class="card-title">
+                                    @if (evt.IsCompleted)
+                                    {
+                                        <span class="text-success">✓</span>
+                                    }
+                                    @evt.Title
+                                    <span class="badge bg-@GetPriorityColor(evt.Priority) ms-2">@evt.Priority</span>
+                                    <span class="badge bg-secondary ms-1">@evt.EventType</span>
+                                </h5>
+                                <p class="card-text">@evt.Description</p>
+                                <small class="text-muted">
+                                    🕒 @evt.StartTime.ToString("h:mm tt") - @evt.EndTime.ToString("h:mm tt")
+                                </small>
+                            </div>
+                            <div class="btn-group">
+                                <form asp-action="ToggleComplete" method="post">
+                                    <input type="hidden" name="id" value="@evt.Id" />
+                                    <button type="submit" class="btn btn-sm @(evt.IsCompleted ? "btn-warning" : "btn-success")">
+                                        @(evt.IsCompleted ? "Undo" : "Complete")
+                                    </button>
+                                </form>
+                                <a asp-action="Edit" asp-route-id="@evt.Id" class="btn btn-sm btn-outline-primary">Edit</a>
+                                <form asp-action="Delete" method="post" onsubmit="return confirm('Delete this event?')">
+                                    <input type="hidden" name="id" value="@evt.Id" />
+                                    <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="alert alert-info">
+                <p>No events scheduled for today. <a asp-action="Create">Add an event</a> to get started!</p>
+            </div>
+        }
+    </div>
+
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">
+                <h5>Quick Actions</h5>
+            </div>
+            <div class="card-body">
+                <a asp-action="Create" class="btn btn-primary w-100 mb-2">➕ Add New Event</a>
+                <a asp-action="Weekly" class="btn btn-outline-secondary w-100">📅 Weekly View</a>
+            </div>
+        </div>
+
+        <!-- Today's Stats -->
+        <div class="card mt-3">
+            <div class="card-header">
+                <h5>Today's Summary</h5>
+            </div>
+            <div class="card-body">
+                <p>Total Events: <strong>@Model.Count</strong></p>
+                <p>Completed: <strong>@Model.Count(e => e.IsCompleted)</strong></p>
+                <p>Pending: <strong>@Model.Count(e => !e.IsCompleted)</strong></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+@functions {
+    string GetPriorityColor(PriorityLevel priority)
+    {
+        return priority switch
+        {
+            PriorityLevel.Low => "success",
+            PriorityLevel.Medium => "warning",
+            PriorityLevel.High => "danger",
+            PriorityLevel.Critical => "dark",
+            _ => "secondary"
+        };
+    }
 }
-    </tbody>
-</table>

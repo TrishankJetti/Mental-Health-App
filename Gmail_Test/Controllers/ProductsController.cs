@@ -40,7 +40,7 @@ public class ProductsController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Create(Product product, IFormFile ImageFile)
     {
-        if (!ModelState.IsValid) // Fixed condition
+        if (!ModelState.IsValid) 
         {
             // Set CreatedAt timestamp
             product.CreatedAt = DateTime.Now;

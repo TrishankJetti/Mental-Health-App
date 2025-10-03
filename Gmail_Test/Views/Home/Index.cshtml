@@ -8,20 +8,21 @@
     ViewData["Title"] = "Home";
     Layout = "~/Views/Shared/_Layout.cshtml";
 
-    var currentUser = await UserManager.GetUserAsync(User);
-    var firstName = currentUser?.FirstName ?? "Friend";
+    var currentUser = await UserManager.GetUserAsync(User); //Grabs current user from usermanager
+    var firstName = currentUser?.FirstName ?? "Friend"; // Gets Firstname from current user, but if they arent signed in then the default firstname is Friend for this view.
 }
 
 <div class="container-fluid p-0">
-    <!-- Banner with Monster -->
-    <div class="position-relative bg-primary text-white rounded-3 mb-4" style="background: linear-gradient(135deg, #667eea, #764ba2) !important;">
+    <!-- Banner with Monster popping out of it. -->
+    <div class="position-relative bg-primary text-white rounded-3 mb-4" style="background: linear-gradient(135deg, #667eea, #764ba2) !important;"> <!--- This is the Banner code that has a linear gradient that has white text in it. --->
         <div class="p-5 text-center">
-            <h1 class="display-4 fw-bold">Hello, @firstName! 🌸</h1>
+            <h1 class="display-4 fw-bold">Hello, @firstName! 🌸</h1> <!---Display name and greeting!--->
             <p class="lead">Take a deep breath. Today is a new beginning.</p>
         </div>
-        <div class="position-absolute bottom-0 end-0" style="width: 500px; height: 200px;">
-            <img src="~/img/HomePageMonster.png" alt="Friendly Monster" class="img-fluid" />
+        <div class="monster-peek">
+            <img src="~/img/HomePageMonster (1).png" alt="Friendly Monster" class="monster-img" />
         </div>
+
      
     </div>
 
@@ -58,10 +59,10 @@
             <p>Find friends</p>
         </a>
 
-        <a href="@Url.Action("MoodDoodle", "Home")" class="activity-card">
-            <div class="emoji">🛍️</div>
-            <h3>Shop</h3>
-            <p>Awesome Styles</p>
+        <a href="@Url.Action("AllEvents", "Planner")" class="activity-card">
+            <div class="emoji">🗓️</div>
+            <h3>Planner</h3>
+            <p>Plan your adventure!</p>
         </a>
 
         <a href="@Url.Action("Stressball", "Home")" class="activity-card">
@@ -70,7 +71,7 @@
             <p>Relax & unwind</p>
         </a>
 
-        <a href="@Url.Action("ColorTherapy", "Home")" class="activity-card">
+        <a href="@Url.Action("ColorTherapy", "Home")" class="activity-card"> <!---Takes the user to the Home controller's ColorTheraphy action hence showing the view of the ColorTheraphy page.' -->
             <div class="emoji">🌈</div>
             <h3>Color Therapy</h3>
             <p>Calm colors</p>
@@ -79,63 +80,42 @@
 </div>
 
 <style>
-    /* Top Section with Monster Peeking */
-    .top-section {
-        background: linear-gradient(135deg, #667eea, #764ba2);
-        color: white;
-        padding: 3rem 2rem 6rem; /* Extra padding at bottom for monster */
-        border-radius: 20px;
-        margin-bottom: 2rem;
-        position: relative;
-        overflow: hidden;
-        min-height: 250px;
-    }
-
-    .banner-content {
-        max-width: 1200px;
-        margin: 0 auto;
-        text-align: center;
-        position: relative;
-        z-index: 2;
-    }
-
-        .banner-content h1 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
+        .top-section { /* class for topsection that has the background pruple and the text colour white . */
+            background: purple;
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 60px; /* extra space so monster has room */
+            position: relative;
+            /* removed overflow:hidden so monster can stick out */
         }
 
-        .banner-content p {
-            font-size: 1.2rem;
-            opacity: 0.9;
+        /* Monster Image  styling to give it a 3d peeking look for immersiveness.*/
+        .monster-peek {
+            position: absolute;
+            bottom: -156px; /* pushes the mosnter out of the banner for a 3d effect. */
+            right: 20px;
+            width: 300px;
         }
 
-    .monster-peek {
-        position: absolute;
-        bottom: -100px; /* Peeks from bottom */
-        right: 50px;
-        width: 400px;
-        height: 400px;
-        z-index: 1;
-    }
+        .monster-img {
+            width: 100%;
+            height: auto; /* the height of the mosnter is set to the defualt height of the iamge.*/
+        }
 
-    .monster-img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        object-position: bottom; /* Shows bottom part of image */
-        filter: drop-shadow(0 5px 15px rgba(0,0,0,0.3));
-        transform: scale(1.2); /* Makes it larger to focus on bottom */
-    }
+
+
+        
 
     /* Quick Actions */
-    .quick-actions {
+    .quick-actions {  /* Creates a flexible layout for the quick action items to dispklay. */
         display: flex;
         gap: 1rem;
         justify-content: center;
         margin-bottom: 3rem;
     }
 
-    .quick-btn {
+    .quick-btn { /* The actual button's styling */
         background: white;
         padding: 1rem 2rem;
         border-radius: 50px;
@@ -146,14 +126,14 @@
         transition: all 0.3s ease;
     }
 
-        .quick-btn:hover {
+        .quick-btn:hover { /* Then this is the hover aniamtion code. where the button slighly get a lighter shodow to give an illusion of a 3d lift.*/
             transform: translateY(-3px);
             box-shadow: 0 8px 20px rgba(0,0,0,0.15);
             text-decoration: none;
             color: #764ba2;
         }
 
-    /* Activities */
+    /* Activities styling similar to the quick actions.*/
     .activities {
         max-width: 1000px;
         margin: 0 auto 3rem;
@@ -189,8 +169,8 @@
             text-decoration: none;
         }
 
-    .emoji {
-        font-size: 2.5rem;
+        .emoji { /*Styling for emojsi that show up in the name of activity boxes.*/
+            font-size: 2.5rem;
         margin-bottom: 1rem;
     }
 
@@ -204,34 +184,12 @@
         margin: 0;
     }
 
-    /* Mobile */
-    @@media (max-width: 768px) {
-        .top-section {
-            padding: 2rem 1rem 4rem;
+    
+        @@media (max-width: 1000px) { /* When the website is viewed on smaller screens that are smaller than or are 1000 px, the iamge wouldnt show. */
+            .monster-peek,
+            .monster-img {
+                display: none !important;
+            }
         }
 
-        .banner-content h1 {
-            font-size: 2rem;
-        }
-
-        .monster-peek {
-            width: 250px;
-            height: 250px;
-            right: 20px;
-            bottom: -60px;
-        }
-
-        .monster-img {
-            transform: scale(1.1);
-        }
-
-        .quick-actions {
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .activity-grid {
-            grid-template-columns: 1fr;
-        }
-    }
 </style>

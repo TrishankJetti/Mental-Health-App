@@ -1,13 +1,25 @@
 ﻿@model List<CustomUser>
 @using Microsoft.AspNetCore.Identity
+@inject MentalHealthApp.Data.MentalHealthContext DbContext
+@using Microsoft.EntityFrameworkCore
 @inject UserManager<CustomUser> UserManager
 
 @{
     ViewData["Title"] = "My Friends";
     var currentUser = await UserManager.GetUserAsync(User);
 
-    // Gathers all the pending requests as a list else it will create a new list called FriendShip.
     var pendingRequests = ViewBag.PendingRequests as List<Friendship> ?? new List<Friendship>();
+
+    var blockedUsers = await DbContext.Friendships
+        .Where(f => (f.RequesterId == currentUser.Id || f.AddresseeId == currentUser.Id)
+                 && f.Status == FriendshipStatus.Blocked)
+        .Include(f => f.Requester)
+        .Include(f => f.Addressee)
+        .ToListAsync();
+
+    var userBlockedList = blockedUsers.Select(f =>
+        f.RequesterId == currentUser.Id ? f.Addressee : f.Requester
+    ).ToList();
 }
 
 <div class="d-flex justify-content-between align-items-center mb-4 p-3 bg-light rounded">
@@ -16,22 +28,23 @@
         Your Friends
     </h3>
 </div>
+
+<!-- FRIENDS SECTION -->
 @if (Model.Any())
 {
     <div class="row">
-        @foreach (var friend in Model) // Grabs all Freinds from the Friends Model. 
+        @foreach (var friend in Model)
         {
             <div class="col-md-4 mb-3">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">@friend.UserName</h5>
+                        <h5 class="card-title">@friend.FirstName @friend.LastName</h5>
                         <p class="card-text">@friend.Email</p>
 
                         <div class="btn-group w-100">
                             <a asp-controller="Messages" asp-action="Chat" asp-route-friendId="@friend.Id"
                                class="btn btn-primary btn-sm">💬 Message</a>
 
-                            <!-- Dropdown for safety actions -->
                             <button type="button" class="btn btn-outline-danger btn-sm dropdown-toggle dropdown-toggle-split"
                                     data-bs-toggle="dropdown" aria-expanded="false">
                                 <span class="visually-hidden">Safety Options</span>
@@ -63,11 +76,55 @@
         }
     </div>
 }
-
 else
 {
     <div class="alert alert-info">
         <p>You don't have any friends yet. <a asp-action="Find" class="alert-link">Find friends</a> to start chatting!</p>
     </div>
 }
-<!-- Rest of your view remains the same -->
+
+<!-- BLOCKED USERS SECTION - MOVED OUTSIDE THE FRIENDS CONDITION -->
+@if (userBlockedList.Any())
+{
+    <div class="card mb-4">
+        <div class="card-header bg-danger text-white">
+            <h5 class="mb-0">🚫 Blocked Users</h5>
+        </div>
+        <div class="card-body">
+            @foreach (var blockedUser in userBlockedList)
+            {
+                <div class="d-flex justify-content-between align-items-center mb-3 p-2 border rounded">
+                    <div>
+                        <strong>@blockedUser.UserName</strong>
+                        <small class="text-muted d-block">@blockedUser.Email</small>
+                    </div>
+                    <div>
+                        <form asp-action="Unblock" method="post">
+                            <input type="hidden" name="userId" value="@blockedUser.Id" />
+                            <button type="submit" class="btn btn-success btn-sm"
+                                    onclick="return confirm('Are you sure you want to unblock this user?')">
+                                Unblock
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+}
+
+<!-- TOAST NOTIFICATION -->
+@if (TempData["UnblockedMessage"] != null)
+{
+    <div class="toast-container position-fixed top-0 end-0 p-3">
+        <div class="toast show" role="alert">
+            <div class="toast-header bg-success text-white">
+                <strong class="me-auto">Friend Unblocked!</strong>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast"></button>
+            </div>
+            <div class="toast-body">
+                User has been unblocked successfully. Go to Find Page to add them back!
+            </div>
+        </div>
+    </div>
+}

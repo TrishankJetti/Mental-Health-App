@@ -25,6 +25,25 @@
                 .CountAsync(f => f.AddresseeId == currentUser.Id && f.Status == FriendshipStatus.Pending);
         }
     }
+
+    var upcomingEventsCount = 0; // UpcomingEvents variable set to 0 initally 
+
+    if (SignInManager.IsSignedIn(User))
+    {
+        var currentUser = await UserManager.GetUserAsync(User); // Get userid by identity 
+        if (currentUser != null)
+        {
+            var now = DateTime.UtcNow;
+            var nearDueThreshold = now.AddHours(24); // set a due date of 24 hours 
+
+            upcomingEventsCount = await DbContext.PlannerEvents
+                .Where(e => e.UserId == currentUser.Id && !e.IsCompleted && e.StartTime <= nearDueThreshold) // Find events where the due date in less than or 24 hours.
+                .CountAsync();
+        }
+    }
+
+    var showUpcomingEventDot = upcomingEventsCount > 0;
+
 }
 
 
@@ -99,6 +118,16 @@
                             <li class="nav-item">
                                 <a class="nav-link" asp-controller="Shop" asp-action="Index">Shop</a>
                             </li>
+                            <li class="nav-item position-relative">
+                                <a class="nav-link" asp-controller="Planner" asp-action="AllEvents">
+                                    Planner
+                                    @if (showUpcomingEventDot) // Shows upcoming event dot
+                                    {
+                                        <span class="pulse-dot position-absolute top-0 start-100 translate-middle bg-danger rounded-circle" style="width: 10px; height: 10px;"></span>
+                                    }
+                                </a>
+                            </li>
+
                             @if (SignInManager.IsSignedIn(User))
                             {
                                 <li class="nav-item">
@@ -214,9 +243,13 @@
                             </div>
                         }
 
-                        <a class="nav-link text-white" asp-controller="Cart" asp-action="Index" style="padding: 0.5rem 1rem;">
-                            <i class="bi bi-cart4" style="font-size:25px;"></i>
-                        </a>
+
+                        @if (SignInManager.IsSignedIn(User))
+                        {
+                            <a class="nav-link text-white" asp-controller="Cart" asp-action="Index" style="padding: 0.5rem 1rem;">
+                                <i class="bi bi-cart4" style="font-size:25px;"></i>
+                            </a>
+                        }
 
                         <div class="nav-link">
                             <partial name="_LoginPartial.cshtml" />
@@ -260,6 +293,11 @@
                 <p class="mb-1">Wanna reach out to us?</p>
                 <a class="btn btn-outline-light btn-sm" asp-controller="Home" asp-action="Contact">Contact Us</a>
             </div>
+            <span class="mx-2 d-none d-md-inline">|</span>
+            <div class="text-center">
+                <p class="mb-1">What we do wh your data</p>
+                <a class="btn btn-outline-light btn-sm" asp-controller="Home" asp-action="Privacy">Privacy Statement</a>
+            </div>
         </div>
     </footer>
 
@@ -300,6 +338,9 @@
                 box-shadow: 0 0 0 0 rgba(255, 0, 0, 0);
             }
         }
+
+
+
     </style>
 
 

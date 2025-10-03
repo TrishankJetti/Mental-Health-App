@@ -6,7 +6,7 @@
 @{
     ViewData["Title"] = "How to Use Shanti";
     var currentUser = await UserManager.GetUserAsync(User);
-    var userRole = currentUser != null ? (await UserManager.GetRolesAsync(currentUser)).FirstOrDefault() : "";
+    var userRole = currentUser != null ? (await UserManager.GetRolesAsync(currentUser)).FirstOrDefault() : ""; // Grabs user's role so that we can show the user appropriate details on the page depending upon their role.
 }
 
 <div class="container py-5">
@@ -89,6 +89,24 @@
         </ul>
     </section>
 
+    <!-- Planner -->
+    <section class="mb-5">
+        <h2>8. Planner</h2>
+        <p>Use the <strong>Planner</strong> to stay organized and manage your daily schedule with ease:</p>
+        <ul>
+            <li><strong>Create events:</strong> Add important tasks, reminders, or appointments with start and end times.</li>
+            <li><strong>View by date:</strong> Use the calendar to pick a date and see your events instantly.</li>
+            <li><strong>Mark as complete:</strong> Tick off finished events to track your progress and stay motivated.</li>
+            <li><strong>Edit or delete:</strong> Update event details anytime or remove events you no longer need.</li>
+            <li><strong>All Events view:</strong> Quickly review every event you’ve planned in one place for a bigger picture.</li>
+        </ul>
+        <p class="text-muted"> // Muted text slightly greyish text.
+            The Planner is designed to help you stay consistent, reduce stress,
+            and keep your activities balanced across work, study, and personal life.
+        </p>
+    </section>
+
+
     <!-- Role-Specific Features -->
     @if (SignInManager.IsSignedIn(User))
     {
@@ -104,18 +122,7 @@
                 </ul>
             </section>
         }
-        else if (userRole == "Employee")
-        {
-            <section class="mb-5">
-                <h2>8. Employee Dashboard</h2>
-                <p>Employees can support the community:</p>
-                <ul>
-                    <li>View and assist visitors</li>
-                    <li>Monitor check-ins and trends</li>
-                    <li>Provide wellness support</li>
-                </ul>
-            </section>
-        }
+      
     }
 
     <!-- Privacy -->
@@ -139,3 +146,13 @@
         <a asp-controller="Home" asp-action="Index" class="btn btn-primary">Return to Home</a>
     </div>
 </div>
+
+
+            <style> /* background colour and text white*/
+    body {
+        background-color: #6b44b3;
+        color: white;
+        font-family: 'Segoe UI', sans-serif;
+        margin: 0;
+    }
+            </style>

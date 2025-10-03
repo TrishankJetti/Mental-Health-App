@@ -1,8 +1,53 @@
 ﻿@{
     ViewData["Title"] = "Privacy Policy";
+    ViewData["HideNavbar"] = false;
+    ViewData["ShowLoader"] = false;
 }
-<script src="~/js/site.js"> </script>
-<link rel="stylesheet" href="~/css/site.css" />
-<h1>@ViewData["Title"]</h1>
 
-<p>Use this page to detail your site's privacy policy.</p>
+
+<div class="container mt-5">
+    <h1>@ViewData["Title"]</h1>
+
+    <p>Your privacy is important to us. This page explains how we collect, use, and protect your information when you use our app.</p>
+
+    <h3>Information We Collect</h3>
+    <ul>
+        <li>Personal information like your name, email, and account details.</li>
+        <li>Data related to your mood entries, planner events, messages, and interactions within the app.</li>
+        <li>Technical information such as your IP address, browser type, and device information.</li>
+    </ul>
+
+    <h3>How We Use Your Information</h3>
+    <ul>
+        <li>To provide and improve the services in the app.</li>
+        <li>To communicate with you about updates, notifications, and support.</li>
+        <li>To monitor and enhance user experience and security.</li>
+    </ul>
+
+    <h3>Data Protection</h3>
+    <p>We take your privacy seriously and implement appropriate security measures to protect your personal information from unauthorized access, disclosure, or alteration.</p>
+
+    <h3>Third-Party Services</h3>
+    <p>We do not sell your information to third parties. However, we may use third-party services for hosting, analytics, or email notifications that comply with privacy regulations.</p>
+
+    <h3>Your Rights</h3>
+    <ul>
+        <li>You can access, update, or delete your personal information at any time by contacting support or using the app's account settings.</li>
+        <li>You have the right to opt-out of certain notifications or data collection where applicable.</li>
+    </ul>
+
+    <h3>Changes to this Policy</h3>
+    <p>We may update this privacy policy occasionally. We encourage you to review it periodically to stay informed about how we protect your information.</p>
+
+    <p>If you have any questions about this privacy policy, please contact our support team.</p>
+</div>
+
+
+        <style>
+    body {
+        background-color: #6b44b3;
+        color: white;
+        font-family: 'Segoe UI', sans-serif;
+        margin: 0;
+    }
+        </style>

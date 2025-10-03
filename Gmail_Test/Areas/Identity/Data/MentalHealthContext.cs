@@ -18,6 +18,7 @@ namespace MentalHealthApp.Data
         public DbSet<Product> Products { get; set; }
         public DbSet<Friendship> Friendships { get; set; }
 
+        public DbSet<PlannerEvent> PlannerEvents { get; set; }
         public DbSet<Message> Messages { get; set; }
         public DbSet<MoodEntry> MoodEntries { get; set; }
 
@@ -25,8 +26,15 @@ namespace MentalHealthApp.Data
         {
             base.OnModelCreating(builder);
 
+            builder.Entity<PlannerEvent>() // Planner Event relation ship with CustomerUser class with the foreign key being UserId
+            .HasOne(p => p.User)
+            .WithMany()
+            .HasForeignKey(p => p.UserId)
+            .OnDelete(DeleteBehavior.Cascade);
 
-            builder.Entity<Friendship>()
+
+            builder.Entity<Friendship>()      //Friendships have two users involved, one thats sending and one thats receiving the friendship. These Addresse and RequesterId point to UserId 
+                                              // That belong to user's within the application that are using the CustomUser class. When either party is deleted the firendship will still stay.
                 .HasOne(f => f.Requester)
                 .WithMany()
                 .HasForeignKey(f => f.RequesterId)
@@ -38,7 +46,7 @@ namespace MentalHealthApp.Data
                   .HasForeignKey(f => f.AddresseeId)
                   .OnDelete(DeleteBehavior.Restrict);
 
-            builder.Entity<Message>()
+            builder.Entity<Message>()   // A Message also has two aprties invovled the one sending and receiving the message. Both are linked to application users, or the CustomUser class and also have restrictions on delte.
                 .HasOne(m => m.Sender)
                 .WithMany()
                 .HasForeignKey(m => m.SenderId)
@@ -56,7 +64,7 @@ namespace MentalHealthApp.Data
                 .HasForeignKey(n => n.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            builder.Entity<Notification>()
+            builder.Entity<Notification>() // A Notification has a user and sender linked to it. The sender is the person sending the notificaiton and the user sis the one receiving the notificaiton. The notifcation will delete if the user is deleted, hence the cascade whilst when the sender is deleted the notifications stay in tact.
                 .HasOne(n => n.Sender)
                 .WithMany()
                 .HasForeignKey(n => n.SenderId)
@@ -633,6 +641,140 @@ namespace MentalHealthApp.Data
                     Message = "New message from Emily",
                     CreatedAt = DateTime.Now.AddHours(-1),
                     IsRead = false
+                }
+            );
+
+           //Sample data for PlannerEvents table.
+            builder.Entity<PlannerEvent>().HasData(
+         
+                new PlannerEvent
+                {
+                    Id = 1,
+                    UserId = "14",
+                    Title = "Morning Jog",
+                    Description = "Jog in the park for 30 minutes",
+                    StartTime = DateTime.Now.Date.AddHours(6),     
+                    EndTime = DateTime.Now.Date.AddHours(6).AddMinutes(30),
+                    EventType = EventType.Personal,
+                    Priority = PriorityLevel.Medium,
+                    IsCompleted = false,
+                    CreatedAt = DateTime.Now
+                },
+                new PlannerEvent
+                {
+                    Id = 2,
+                    UserId = "14",
+                    Title = "Therapy Session",
+                    Description = "Weekly online therapy",
+                    StartTime = DateTime.Now.Date.AddDays(1).AddHours(14), 
+                    EndTime = DateTime.Now.Date.AddDays(1).AddHours(15),  
+                    EventType = EventType.Health,
+                    Priority = PriorityLevel.High,
+                    IsCompleted = false,
+                    CreatedAt = DateTime.Now
+                },
+
+              
+                new PlannerEvent
+                {
+                    Id = 3,
+                    UserId = "15",
+                    Title = "Work Meeting",
+                    Description = "Project planning meeting",
+                    StartTime = DateTime.Now.Date.AddHours(10),  
+                    EndTime = DateTime.Now.Date.AddHours(11),    
+                    EventType = EventType.Work,
+                    Priority = PriorityLevel.High,
+                    IsCompleted = false,
+                    CreatedAt = DateTime.Now
+                },
+                new PlannerEvent
+                {
+                    Id = 4,
+                    UserId = "15",
+                    Title = "Evening Walk",
+                    Description = "Walk around neighborhood",
+                    StartTime = DateTime.Now.Date.AddHours(18),  
+                    EndTime = DateTime.Now.Date.AddHours(18).AddMinutes(45),
+                    EventType = EventType.Health,
+                    Priority = PriorityLevel.Low,
+                    IsCompleted = false,
+                    CreatedAt = DateTime.Now
+                },
+
+   
+                new PlannerEvent
+                {
+                    Id = 5,
+                    UserId = "16",
+                    Title = "Read a Book",
+                    Description = "Read for 1 hour before bed",
+                    StartTime = DateTime.Now.Date.AddDays(1).AddHours(20), // Tomorrow 8 PM
+                    EndTime = DateTime.Now.Date.AddDays(1).AddHours(21),
+                    EventType = EventType.Other,
+                    Priority = PriorityLevel.Low,
+                    IsCompleted = false,
+                    CreatedAt = DateTime.Now
+                },
+
+              
+                new PlannerEvent
+                {
+                    Id = 6,
+                    UserId = "17",
+                    Title = "Gym Session",
+                    Description = "Strength training",
+                    StartTime = DateTime.Now.Date.AddHours(7),   // Today 7 AM
+                    EndTime = DateTime.Now.Date.AddHours(8),
+                    EventType = EventType.Health,
+                    Priority = PriorityLevel.Medium,
+                    IsCompleted = false,
+                    CreatedAt = DateTime.Now
+                },
+
+               
+                new PlannerEvent
+                {
+                    Id = 7,
+                    UserId = "18",
+                    Title = "Meditation",
+                    Description = "Morning meditation",
+                    StartTime = DateTime.Now.Date.AddHours(6).AddMinutes(30), // Today 6:30 AM
+                    EndTime = DateTime.Now.Date.AddHours(7),
+                    EventType = EventType.Personal,
+                    Priority = PriorityLevel.Medium,
+                    IsCompleted = false,
+                    CreatedAt = DateTime.Now
+                },
+
+            
+                new PlannerEvent
+                {
+                    Id = 8,
+                    UserId = "19",
+                    Title = "Doctor Appointment",
+                    Description = "Routine check-up",
+                    StartTime = DateTime.Now.Date.AddDays(2).AddHours(9),  // Day after tomorrow 9 AM
+                    EndTime = DateTime.Now.Date.AddDays(2).AddHours(10),
+                    EventType = EventType.Health,
+                    Priority = PriorityLevel.High,
+                    IsCompleted = false,
+                    CreatedAt = DateTime.Now
+                },
+
+           
+                new PlannerEvent
+                {
+                    Id = 9,
+                    UserId = "20",
+                    Title = "Study Session",
+                    Description = "Work on homework",
+                    StartTime = DateTime.Now.Date.AddHours(16),  // Today 4 PM
+                    EndTime = DateTime.Now.Date.AddHours(18),    // Today 6 PM
+                    EventType = EventType.Study,
+                    Priority = PriorityLevel.Medium,
+                    IsCompleted = false,
+                    CreatedAt = DateTime.Now
                 }
             );
 

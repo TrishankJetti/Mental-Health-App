@@ -1,0 +1,70 @@
+﻿@model MentalHealthApp.Models.PlannerEvent
+
+@{
+    ViewData["Title"] = "Edit Event";
+    ViewData["HideNavbar"] = true;
+    ViewData["ShowLoader"] = true;
+}
+
+<link rel="stylesheet" href="~/css/form.css" />
+
+<a href="javascript:history.back()" class="back-arrow" data-toggle="tooltip"
+   data-placement="bottom" title="Go Back">&#8592;</a>
+
+<br />
+<br />
+
+<h1>Edit your Planner Event 📅</h1>
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit" method="post">
+            <input type="hidden" asp-for="Id" />
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">
+                <label asp-for="Title" class="control-label">Title</label>
+                <input asp-for="Title" class="form-control" placeholder="Event Title" />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Description" class="control-label">Description</label>
+                <textarea asp-for="Description" class="form-control" rows="3" placeholder="Optional notes..."></textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="StartTime" class="control-label">Start Time</label>
+                <input asp-for="StartTime" type="datetime-local" class="form-control" />
+                <span asp-validation-for="StartTime" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="EndTime" class="control-label">End Time</label>
+                <input asp-for="EndTime" type="datetime-local" class="form-control" />
+                <span asp-validation-for="EndTime" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="EventType" class="control-label">Event Type</label>
+                <select asp-for="EventType" class="form-select" asp-items="Html.GetEnumSelectList<EventType>()"></select>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Priority" class="control-label">Priority</label>
+                <select asp-for="Priority" class="form-select" asp-items="Html.GetEnumSelectList<PriorityLevel>()"></select>
+            </div>
+
+            <div class="form-group mt-3">
+                <input type="submit" value="Update" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

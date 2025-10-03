@@ -296,4 +296,35 @@ public class FriendsController : Controller
         TempData["Message"] = "User has been blocked. They can no longer contact you."; //Message for blocked using Temp Data.
         return RedirectToAction(nameof(Index));
     }
+
+
+
+    // POST: Unblock someone
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Unblock(string userId)
+    {
+        var currentUser = await _userManager.GetUserAsync(User);
+        if (currentUser == null) return Challenge();
+
+        // Find all friendships that bleong to the signed in user and friendships that have the blocked status
+        var blockedRelationship = await _context.Friendships
+            .FirstOrDefaultAsync(f =>
+                ((f.RequesterId == currentUser.Id && f.AddresseeId == userId) ||
+                 (f.RequesterId == userId && f.AddresseeId == currentUser.Id)) &&
+                f.Status == FriendshipStatus.Blocked);
+
+        if (blockedRelationship == null)
+        {
+            TempData["Error"] = "No blocked relationship found with this user.";
+            return RedirectToAction(nameof(Index));
+        }
+
+        // Remove the blocked relationship entirely
+        _context.Friendships.Remove(blockedRelationship);
+        await _context.SaveChangesAsync();
+
+        TempData["UnblockedMessage"] = "User has been unblocked successfully. Go to Find Page to add them back!";
+        return RedirectToAction(nameof(Index));
+    }
 }
