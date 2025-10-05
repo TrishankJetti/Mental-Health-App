@@ -23,7 +23,7 @@ namespace MentalHealthApp.Controllers
 
             var products = _context.Products.AsQueryable();
 
-            // ✅ Only show non-private products if NOT admin
+            //  Only show non-private products if NOT admin
             if (!User.IsInRole("Admin"))
             {
                 products = products.Where(p => !p.IsPrivate);
@@ -50,7 +50,7 @@ namespace MentalHealthApp.Controllers
             };
             ViewData["CurrentPriceOrder"] = priceOrder;
 
-            int pageSize = 5;
+            int pageSize = 5; // Shows 5 items per page// 
             var paginatedList = await PaginatedList<Product>.CreateAsync(
                 products.AsNoTracking(),
                 pageNumber.Value,
