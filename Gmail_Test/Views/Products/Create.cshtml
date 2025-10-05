@@ -15,46 +15,49 @@
     <div class="col-md-4">
         <form asp-action="Create" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
             <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
+                <label asp-for="Name" class="control-label">Product Name</label>
+                <input asp-for="Name"
+                       class="form-control"
+                       maxlength="100"
+                       required
+                       placeholder="Enter product name" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
+
             <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
+                <label asp-for="Description" class="control-label">Description:</label>
+                <textarea asp-for="Description" class="form-control" rows="4" maxlength="500" required placeholder="Enter product description"></textarea>
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
+
+
             <div class="form-group">
                 <label asp-for="Price" class="control-label"></label>
-                <input asp-for="Price" class="form-control" type="number" step="0.01" min="0.01" max="10000" />
+                <input asp-for="Price" type="number" class="form-control" min="0.01" max="10000" step="0.01" />
                 <span asp-validation-for="Price" class="text-danger"></span>
+            </div>
 
-            </div>
             <div class="form-group">
-                <label asp-for="ImageFile" class="control-label"></label>
-                <input asp-for="ImageFile" type="file" class="form-control" />
-            </div>
-            <div class="mb-3 form-check">
-                <input type="checkbox" class="form-check-input" asp-for="IsPrivate" />
-                <label class="form-check-label" asp-for="IsPrivate">Private (hidden from normal users)</label>
-            </div>
-            <div class="form-group">
-                <label asp-for="Category" class="control-label">Category:</label>
-                <div class="input-group">
-                    <select asp-for="Category" class="form-control" asp-items="Html.GetEnumSelectList<ProductCategory>()" required>
-                        <option value="" disabled selected>Select Category from dropdown</option>
-                    </select>
-                </div>
+                <label asp-for="Category" class="control-label"></label>
+                <select asp-for="Category" class="form-select" asp-items="Html.GetEnumSelectList<ProductCategory>()">
+                    <option value="" disabled selected>Select a category</option>
+                </select>
                 <span asp-validation-for="Category" class="text-danger"></span>
             </div>
 
-
-
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <label asp-for="ImageFile" class="control-label"></label>
+                <input asp-for="ImageFile" type="file" class="form-control" accept="image/*" />
+                <span asp-validation-for="ImageFile" class="text-danger"></span>
             </div>
+
+            <button type="submit" class="btn btn-primary">Create</button>
         </form>
+
+        <partial name="_ValidationScriptsPartial" />
+
     </div>
 </div>
 
@@ -63,6 +66,8 @@
 </div>
 
 @section Scripts {
-    <partial name="_ValidationScriptsPartial" />
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }
 

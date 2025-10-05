@@ -257,11 +257,11 @@ namespace MentalHealthApp.Controllers
                 .ToListAsync();
 
             var csv = new StringBuilder();
-            csv.AppendLine("Date,Mood,Notes"); // Changed from "Time" to "Date"
+            csv.AppendLine("Date,Mood,Notes"); 
 
             foreach (var entry in Entries)
             {
-                csv.AppendLine($"{entry.Date:yyyy-MM-dd},{entry.Mood},\"{entry.Notes}\""); // Changed to full date format
+                csv.AppendLine($"{entry.Date:yyyy-MM-dd},{entry.Mood},\"{entry.Notes}\""); 
             }
 
             return File(Encoding.UTF8.GetBytes(csv.ToString()), "text/csv", $"mood-export-{DateTime.Today:yyyy-MM-dd}.csv");

@@ -11,6 +11,20 @@
         You haven’t written any entries yet.<br />
         <a asp-action="Create" class="btn btn-purple">➕ WRITE Your First!</a>
     </div>
+
+    @if (TempData["SuccessToast"] != null) // If the user only has one entry and they delete it we wtill want them to know their deletion was successful.
+    {
+        <div class="toast-container position-fixed bottom-0 end-0 p-3">
+            <div class="toast show text-white shadow" style="background-color:#6b44b3;" role="alert">
+                <div class="d-flex">
+                    <div class="toast-body">
+                        @TempData["SuccessToast"]
+                    </div>
+                    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+                </div>
+            </div>
+        </div>
+    }
 }
 else if (!Model.Any())
 {
@@ -96,8 +110,8 @@ else
             </div>
         </div>
     </div>
-
-    @if (TempData["SuccessToast"] != null)
+     
+    @if (TempData["SuccessToast"] != null) // Checking is success toast has a value so we can display the toast with the MESSAGE.
     {
         <div class="toast-container position-fixed bottom-0 end-0 p-3">
             <div class="toast show text-white shadow" style="background-color:#6b44b3;" role="alert">
