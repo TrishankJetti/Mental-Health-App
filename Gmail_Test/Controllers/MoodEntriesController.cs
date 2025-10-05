@@ -60,7 +60,6 @@ namespace MentalHealthApp.Controllers
             return View();
         }
 
-        // POST: MoodEntries/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Mood,Date,Notes")] MoodEntry moodEntry)
@@ -71,6 +70,7 @@ namespace MentalHealthApp.Controllers
             var user = await _userManager.FindByIdAsync(userId);
             if (user == null) return Unauthorized();
 
+            // always set server-side values
             moodEntry.UserId = userId;
             moodEntry.Date = DateTime.UtcNow;
 
@@ -79,7 +79,7 @@ namespace MentalHealthApp.Controllers
                 _context.Add(moodEntry);
                 await _context.SaveChangesAsync();
 
-                
+                // update streaks
                 if (user.LastMoodCheckIn.HasValue)
                 {
                     if (user.LastMoodCheckIn.Value.Date == DateTime.Today.AddDays(-1))
@@ -97,6 +97,7 @@ namespace MentalHealthApp.Controllers
 
                 user.LastMoodCheckIn = DateTime.Today;
 
+                // badge logic
                 if (user.CurrentStreak >= 30)
                     user.Badge = "Gold";
                 else if (user.CurrentStreak >= 14)
@@ -112,10 +113,12 @@ namespace MentalHealthApp.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
+            // repopulate dropdown if invalid
             ViewData["MoodList"] = new SelectList(Enum.GetValues(typeof(MoodType)), moodEntry.Mood);
             TempData["FailedToast"] = "Failed to add mood entry. Please try again.";
             return View(moodEntry);
         }
+
 
 
         // GET: MoodEntries/Edit/5
@@ -246,17 +249,17 @@ namespace MentalHealthApp.Controllers
             return View(model);
         }
 
-        public async Task<IActionResult> ExportToday()
+        public async Task<IActionResult> ExportCSV()
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var todaysEntries = await _context.MoodEntries
+            var Entries = await _context.MoodEntries
                 .Where(m => m.UserId == userId)
                 .ToListAsync();
 
             var csv = new StringBuilder();
             csv.AppendLine("Date,Mood,Notes"); // Changed from "Time" to "Date"
 
-            foreach (var entry in todaysEntries)
+            foreach (var entry in Entries)
             {
                 csv.AppendLine($"{entry.Date:yyyy-MM-dd},{entry.Mood},\"{entry.Notes}\""); // Changed to full date format
             }

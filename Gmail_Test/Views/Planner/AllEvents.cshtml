@@ -1,59 +1,104 @@
-﻿@model List<MentalHealthApp.Models.PlannerEvent>
+﻿@model IEnumerable<MentalHealthApp.Models.PlannerEvent>
+@using MentalHealthApp.Models
+
 @{
     ViewData["Title"] = "All Events";
 }
+<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+<h1>All Events 📅</h1>
 
-<h1>@ViewData["Title"]</h1>
+<form method="get" asp-action="AllEvents" class="row g-3 mb-4">
+    <div class="col-md-3">
+        <input type="text" name="search" value="@Context.Request.Query["search"]" class="form-control" placeholder="Search by title or description" />
+    </div>
+    <div class="col-md-2">
+        <input type="date" name="startDate" value="@Context.Request.Query["startDate"]" class="form-control" />
+    </div>
+    <div class="col-md-2">
+        <input type="date" name="endDate" value="@Context.Request.Query["endDate"]" class="form-control" />
+    </div>
+    <div class="col-md-2">
+        <select name="eventType" class="form-select">
+            <option value="">All Types</option>
+            @foreach (var type in Enum.GetValues(typeof(EventType)))
+            {
+                <option value="@type" selected="@(Context.Request.Query["eventType"] == type.ToString() ? "selected" : null)">@type</option>
+            }
+        </select>
+    </div>
+    <div class="col-md-2">
+        <select name="isCompleted" class="form-select">
+            <option value="">All</option>
+            <option value="true" selected="@(Context.Request.Query["isCompleted"] == "true" ? "selected" : null)">Completed</option>
+            <option value="false" selected="@(Context.Request.Query["isCompleted"] == "false" ? "selected" : null)">Not Completed</option>
+        </select>
+    </div>
+    <div class="col-md-1">
+        <button type="submit" class="btn btn-primary w-100">Filter</button>
+    </div>
+</form>
 
-
-
-    @if (TempData["Success"] != null)
-    {
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-            @TempData["Success"]
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-    }
-
-
-<div class="mb-3">
-    <a class="btn btn-success" asp-action="Create">Add Event</a>
-    <a class="btn btn-warning" asp-action="Index">Filter Page ⌛</a> <!--filter page where users can filter events through date-->
+<div class="col-md-1">
+    <a href="@Url.Action("AllEvents")" class="btn btn-secondary w-100">Reset Filter</a>
+</div>
+<div class="col-md-1">
+    <a href="@Url.Action("Create")" class="btn btn-success w-100">Create</a>
 </div>
 
-<table class="table table-striped table-hover">
-    <thead>
-        <tr>
-            <th>Title</th>
-            <th>Start → End</th>
-            <th>Type</th>
-            <th>Priority</th>
-            <th>Completed</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var e in Model)
-        {
-            <tr class="@(e.IsCompleted ? "table-success" : "")">
-                <td>@e.Title</td>
-                <td>@e.StartTime.ToString("HH:mm, MMM dd yyyy") - @e.EndTime.ToString("HH:mm, MMM dd yyyy")</td>
-                <td>@e.EventType</td>
-                <td>@e.Priority</td>
-                <td>
-                    <form asp-action="ToggleCompleteFilter" asp-route-id="@e.Id" method="post">
-                        <input type="checkbox" onchange="this.form.submit();" @(e.IsCompleted ? "checked" : "") />
-                    </form>
-                </td>
-                <td>
-                    <a class="btn btn-sm btn-secondary" asp-action="Edit" asp-route-id="@e.Id">Edit</a>
-                    <form asp-action="Delete" asp-route-id="@e.Id" method="post" style="display:inline">
-                        <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Delete this event?');">❌</button>
-                    </form>
-                </td>
+@if (!Model.Any())
+{
+    <div class="alert @(ViewBag.HasFilters ? "alert-warning" : "alert-info")">
+        @(ViewBag.HasFilters ? "No events matched your filters or search." : "You don’t have any events yet. ")<a asp-action="Create">Create one now</a>!
+    </div>
+}
+else
+{
+    <table class="table purple-table">
+        <thead>
+            <tr>
+                <th>Status</th>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Start</th>
+                <th>End</th>
+                <th>Type</th>
+                <th>Priority</th>
+                <th>Actions</th>
             </tr>
-        }
-    </tbody>
-</table>
-
-
+        </thead>
+        <tbody>
+            @foreach (var e in Model)
+            {
+                <tr>
+                    <td class="text-center">
+                        <form asp-action="ToggleComplete" method="post" style="display:inline;">
+                            <input type="hidden" name="id" value="@e.Id" />
+                            <input type="checkbox" onchange="this.form.submit()" @(e.IsCompleted ? "checked" : "") />
+                        </form>
+                        @if (e.IsCompleted)
+                        {
+                            <span class="badge bg-success ms-2">Completed</span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-warning ms-2">Pending</span>
+                        }
+                    </td>
+                    <td>@e.Title</td>
+                    <td>@e.Description</td>
+                    <td>@e.StartTime.ToString("g")</td>
+                    <td>@e.EndTime.ToString("g")</td>
+                    <td>@e.EventType</td>
+                    <td>@e.Priority</td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@e.Id" class="btn btn-sm btn-info">Edit</a>
+                        <form asp-action="Delete" method="post" style="display:inline;" onsubmit="return confirm('Delete this event?')">
+                            <input type="hidden" name="id" value="@e.Id" />
+                            <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

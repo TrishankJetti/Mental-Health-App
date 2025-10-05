@@ -24,10 +24,21 @@ public class ProductsController : Controller
     }
 
     // GET: Products
-    public async Task<IActionResult> Index()
+
+    public async Task<IActionResult> Index(string searchString)
     {
-        return View(await _context.Products.ToListAsync());
+        var products = _context.Products.AsQueryable();
+
+        if (!string.IsNullOrEmpty(searchString))
+        {
+            products = products.Where(p => p.Name.Contains(searchString)
+                                        || p.Description.Contains(searchString));
+            ViewData["CurrentFilter"] = searchString;
+        }
+
+        return View(await products.ToListAsync());
     }
+
 
     // GET: Products/Create
     public IActionResult Create()
@@ -82,58 +93,47 @@ public class ProductsController : Controller
 
         return View(product);
     }
-
-    // POST: Products/Edit/5
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Edit(int id, Product product, IFormFile ImageFile)
     {
         if (id != product.Id) return NotFound();
 
-        if (!ModelState.IsValid) // Fixed condition
+        if (!ModelState.IsValid)
         {
-            try
+            var existingProduct = await _context.Products.FirstOrDefaultAsync(p => p.Id == id);
+            if (existingProduct == null) return NotFound();
+
+            // Update properties
+            existingProduct.Name = product.Name;
+            existingProduct.Description = product.Description;
+            existingProduct.Price = product.Price;
+            existingProduct.Category = product.Category;
+            existingProduct.IsPrivate = product.IsPrivate;
+
+            // Handle image upload
+            if (ImageFile != null && ImageFile.Length > 0)
             {
-                // Preserve the original CreatedAt date
-                var existingProduct = await _context.Products.AsNoTracking()
-                    .Where(p => p.Id == id)
-                    .Select(p => new { p.CreatedAt })
-                    .FirstOrDefaultAsync();
-
-                if (existingProduct != null)
+                var uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "img");
+                var uniqueFileName = Guid.NewGuid().ToString() + "_" + ImageFile.FileName;
+                var filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                using (var stream = new FileStream(filePath, FileMode.Create))
                 {
-                    product.CreatedAt = existingProduct.CreatedAt;
+                    await ImageFile.CopyToAsync(stream);
                 }
-
-                if (ImageFile != null && ImageFile.Length > 0)
-                {
-                    var uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "img");
-                    var uniqueFileName = Guid.NewGuid().ToString() + "_" + ImageFile.FileName;
-                    var filePath = Path.Combine(uploadsFolder, uniqueFileName);
-
-                    using (var stream = new FileStream(filePath, FileMode.Create))
-                    {
-                        await ImageFile.CopyToAsync(stream);
-                    }
-
-                    product.ImageUrl = uniqueFileName;
-                }
-
-                _context.Update(product);
-                await _context.SaveChangesAsync();
+                existingProduct.ImageUrl = uniqueFileName;
             }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!_context.Products.Any(e => e.Id == product.Id))
-                    return NotFound();
-                else
-                    throw;
-            }
+            // else keep existing image
+
+            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         return View(product);
     }
+
+
+
 
     // GET: Products/Delete/5
     public async Task<IActionResult> Delete(int? id)

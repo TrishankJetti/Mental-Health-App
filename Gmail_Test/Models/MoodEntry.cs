@@ -11,7 +11,8 @@ namespace MentalHealthApp.Models
         [Required(ErrorMessage = "User ID is required.")]
         public string UserId { get; set; }   //UserId of current signed in user.
 
-        [Required(ErrorMessage = "Mood selection is required.")]
+        [Required(ErrorMessage = "Please select a mood")]
+        [Range(1, int.MaxValue, ErrorMessage = "Please select a valid mood")]
         public MoodType Mood { get; set; }    //Enum for mood for each mood entry
          
         [Required(ErrorMessage = "Date is required.")]
@@ -19,7 +20,7 @@ namespace MentalHealthApp.Models
         public DateTime Date { get; set; } = DateTime.Now;    //Automatically sets the default value of the Date to the current DateTime.
 
         [MaxLength(200, ErrorMessage = "Notes cannot exceed 200 characters.")]
-        public string Notes { get; set; }    // Extra notes for the MoodEntry
+        public string? Notes { get; set; }    // Extra notes for the MoodEntry
     }
 
     public enum MoodType //Enum for the Mood. 

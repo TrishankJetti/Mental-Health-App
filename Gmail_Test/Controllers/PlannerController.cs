@@ -18,40 +18,49 @@ public class PlannerController : Controller
         _userManager = userManager;
     }
 
-    // GET: Daily view
-    public async Task<IActionResult> Index(string selectedDate = null)
+    public async Task<IActionResult> AllEvents(string search, DateTime? startDate, DateTime? endDate, EventType? eventType, bool? isCompleted)
     {
         var user = await _userManager.GetUserAsync(User);
-        DateTime date;
 
-        if (!string.IsNullOrEmpty(selectedDate) && DateTime.TryParse(selectedDate, out var parsedDate))
+        var query = _context.PlannerEvents
+            .Where(e => e.UserId == user.Id)
+            .AsQueryable();
+
+        bool hasFilters = !string.IsNullOrEmpty(search) || startDate.HasValue || endDate.HasValue || eventType.HasValue || isCompleted.HasValue;
+
+        if (!string.IsNullOrEmpty(search))
         {
-            date = parsedDate.Date;
+            query = query.Where(e => e.Title.Contains(search) || e.Description.Contains(search));
         }
-        else
+        if (startDate.HasValue)
         {
-            date = DateTime.Today;
+            query = query.Where(e => e.StartTime.Date >= startDate.Value.Date);
+        }
+        if (endDate.HasValue)
+        {
+            query = query.Where(e => e.EndTime.Date <= endDate.Value.Date);
+        }
+        if (eventType.HasValue)
+        {
+            query = query.Where(e => e.EventType == eventType.Value);
+        }
+        if (isCompleted.HasValue)
+        {
+            query = query.Where(e => e.IsCompleted == isCompleted.Value);
         }
 
-        var events = await _context.PlannerEvents
-           .Where(e => e.UserId == user.Id &&
-                      e.StartTime.Date <= date &&
-                      e.EndTime.Date >= date) // include events that span this date
-           .OrderBy(e => e.StartTime)
-           .ToListAsync();
+        var events = await query.OrderBy(e => e.StartTime).ToListAsync();
 
-        ViewBag.SelectedDate = date;
+        ViewBag.HasFilters = hasFilters;
         return View(events);
     }
 
 
-
-
-    // GET: Create
+    // CREATE
     public IActionResult Create() => View();
 
-    // POST: Create
     [HttpPost]
+    [ValidateAntiForgeryToken]
     public async Task<IActionResult> Create(PlannerEvent plannerEvent)
     {
         if (!ModelState.IsValid)
@@ -64,44 +73,29 @@ public class PlannerController : Controller
             await _context.SaveChangesAsync();
 
             TempData["Success"] = "Event added!";
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(AllEvents));
         }
         return View(plannerEvent);
     }
 
-    // GET: Edit
+    // EDIT
     public async Task<IActionResult> Edit(int id)
     {
         var user = await _userManager.GetUserAsync(User);
-        var plannerEvent = await _context.PlannerEvents
-            .FirstOrDefaultAsync(e => e.Id == id && e.UserId == user.Id);
+        var plannerEvent = await _context.PlannerEvents.FirstOrDefaultAsync(e => e.Id == id && e.UserId == user.Id);
 
         if (plannerEvent == null) return NotFound();
         return View(plannerEvent);
     }
 
-    [Authorize]
-    public async Task<IActionResult> AllEvents() // All Events page that selects all events that belong to the user.
-    {
-        var user = await _userManager.GetUserAsync(User);
-        var events = await _context.PlannerEvents
-            .Where(e => e.UserId == user.Id) 
-            .OrderBy(e => e.StartTime)
-            .ToListAsync();
-
-        return View(events);
-    }
-
-
-    // POST: Edit
     [HttpPost]
+    [ValidateAntiForgeryToken]
     public async Task<IActionResult> Edit(int id, PlannerEvent plannerEvent)
     {
         if (!ModelState.IsValid)
         {
             var user = await _userManager.GetUserAsync(User);
-            var existingEvent = await _context.PlannerEvents
-                .FirstOrDefaultAsync(e => e.Id == id && e.UserId == user.Id);
+            var existingEvent = await _context.PlannerEvents.FirstOrDefaultAsync(e => e.Id == id && e.UserId == user.Id);
 
             if (existingEvent == null) return NotFound();
 
@@ -111,22 +105,22 @@ public class PlannerController : Controller
             existingEvent.EndTime = plannerEvent.EndTime;
             existingEvent.EventType = plannerEvent.EventType;
             existingEvent.Priority = plannerEvent.Priority;
+            existingEvent.IsCompleted = plannerEvent.IsCompleted;
             existingEvent.UpdatedAt = DateTime.Now;
 
             await _context.SaveChangesAsync();
             TempData["Success"] = "Event updated!";
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(AllEvents));
         }
         return View(plannerEvent);
     }
 
-    // POST: Delete
+    // DELETE
     [HttpPost]
     public async Task<IActionResult> Delete(int id)
     {
         var user = await _userManager.GetUserAsync(User);
-        var plannerEvent = await _context.PlannerEvents
-            .FirstOrDefaultAsync(e => e.Id == id && e.UserId == user.Id);
+        var plannerEvent = await _context.PlannerEvents.FirstOrDefaultAsync(e => e.Id == id && e.UserId == user.Id);
 
         if (plannerEvent != null)
         {
@@ -134,16 +128,15 @@ public class PlannerController : Controller
             await _context.SaveChangesAsync();
             TempData["Success"] = "Event deleted!";
         }
-        return RedirectToAction(nameof(Index));
+        return RedirectToAction(nameof(AllEvents));
     }
 
-
+    // TOGGLE COMPLETE
     [HttpPost]
-    public async Task<IActionResult> ToggleComplete(int id, string selectedDate)
+    public async Task<IActionResult> ToggleComplete(int id)
     {
         var user = await _userManager.GetUserAsync(User);
-        var plannerEvent = await _context.PlannerEvents
-            .FirstOrDefaultAsync(e => e.Id == id && e.UserId == user.Id);
+        var plannerEvent = await _context.PlannerEvents.FirstOrDefaultAsync(e => e.Id == id && e.UserId == user.Id);
 
         if (plannerEvent == null) return NotFound();
 
@@ -152,28 +145,6 @@ public class PlannerController : Controller
 
         await _context.SaveChangesAsync();
 
-        // Redirect back to the same date
-        return RedirectToAction(nameof(Index), new { selectedDate });
+        return RedirectToAction(nameof(AllEvents));
     }
-
-    [HttpPost]
-    public async Task<IActionResult> ToggleCompleteFilter(int id, string selectedDate)
-    {
-        var user = await _userManager.GetUserAsync(User);
-        var plannerEvent = await _context.PlannerEvents
-            .FirstOrDefaultAsync(e => e.Id == id && e.UserId == user.Id);
-
-        if (plannerEvent == null) return NotFound();
-
-        plannerEvent.IsCompleted = !plannerEvent.IsCompleted;
-        plannerEvent.UpdatedAt = DateTime.Now;
-
-        await _context.SaveChangesAsync();
-
-        // Redirect to AllEvents action
-        return RedirectToAction("AllEvents");
-    }
-
-
-
 }

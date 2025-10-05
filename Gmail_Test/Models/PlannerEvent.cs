@@ -10,12 +10,13 @@ namespace MentalHealthApp.Models
         [Required]
         public string UserId { get; set; } // UserId to differentiate between each user's Planner so they are unique
 
-        [Required(ErrorMessage = "Title is required.")]
         [StringLength(100, ErrorMessage = "Title cannot be longer than 100 characters.")]
+        [Required]
         public string Title { get; set; } // Title of the Event
 
+        
         [StringLength(500, ErrorMessage = "Description cannot be longer than 500 characters.")]
-        public string Description { get; set; } // Description of event
+        public string? Description { get; set; } // Description of event
 
         [Required(ErrorMessage = "Start time is required.")]
         [DataType(DataType.DateTime)]

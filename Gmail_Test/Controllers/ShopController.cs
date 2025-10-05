@@ -3,8 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using MentalHealthApp.Data;
 using System.Linq;
 using MentalHealthApp.Models;
-using System.Threading.Tasks; // Add this for Task
-
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MentalHealthApp.Controllers
 {
@@ -17,14 +17,19 @@ namespace MentalHealthApp.Controllers
             _context = context;
         }
 
-        // Change to async method and return Task<IActionResult>
         public async Task<IActionResult> Index(string searchString, string priceOrder, ProductCategory? categoryFilter, int? pageNumber)
         {
             pageNumber = pageNumber ?? 1;
 
             var products = _context.Products.AsQueryable();
 
-            // Apply filters and sorting...
+            // ✅ Only show non-private products if NOT admin
+            if (!User.IsInRole("Admin"))
+            {
+                products = products.Where(p => !p.IsPrivate);
+            }
+
+            // Apply filters and sorting
             if (!string.IsNullOrEmpty(searchString))
             {
                 products = products.Where(p => p.Name.Contains(searchString) || p.Description.Contains(searchString));
@@ -45,9 +50,12 @@ namespace MentalHealthApp.Controllers
             };
             ViewData["CurrentPriceOrder"] = priceOrder;
 
-            // Return PaginatedList instead of IEnumerable
             int pageSize = 5;
-            var paginatedList = await PaginatedList<Product>.CreateAsync(products.AsNoTracking(), pageNumber.Value, pageSize);
+            var paginatedList = await PaginatedList<Product>.CreateAsync(
+                products.AsNoTracking(),
+                pageNumber.Value,
+                pageSize
+            );
 
             return View(paginatedList);
         }
